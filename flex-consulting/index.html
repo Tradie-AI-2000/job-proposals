@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joe Ward | Interactive Proposal for Flex Consulting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- 
+        Application Plan:
+        This is a single-page interactive proposal designed to showcase my suitability for the Automation Consultant roles at Flex Consulting.
+        The narrative structure guides the hiring manager through a story:
+        1. The Hook: A direct, confident introduction framing this as a proposal, not just an application.
+        2. The Alignment: A visually engaging radar chart mapping my skills directly to the core requirements of a modern automation consultant.
+        3. The Toolkit: An interactive tabbed section detailing my technical skills in automation, AI, and development.
+        4. The Proof: Highlighting key projects (TradieAI, North Harbour Rugby SaaS) as case studies of my capabilities.
+        5. The Pitch: A strong closing statement and clear call to action.
+        This approach immediately establishes a consulting mindset and focuses on value delivery.
+    -->
+    <style>
+        :root {
+            --primary-color: #00A79D; /* Vibrant Teal */
+            --primary-hover: #007A72;
+            --dark-bg: #1A202C; /* Charcoal */
+            --light-bg: #F7FAFC;
+            --text-dark: #2D3748;
+            --text-light: #E2E8F0;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+        }
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        .nav-link.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: -4px;
+            left: 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #CBD5E0;
+            border: 4px solid var(--light-bg);
+        }
+         .timeline-item:hover::before {
+            background-color: var(--primary-color);
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 14px rgba(0, 167, 157, 0.3);
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: #E2E8F0;
+            color: var(--text-dark);
+            padding: 0.4rem 0.8rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 0.25rem;
+            transition: all 0.2s ease-in-out;
+            cursor: default;
+        }
+        .tool-badge:hover {
+            background-color: #CBD5E0;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/90 backdrop-blur-lg sticky top-0 z-50 shadow-sm transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-gray-800">Joe Ward</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#intro" class="nav-link text-gray-600 font-medium">Proposal</a>
+                <a href="#alignment" class="nav-link text-gray-600 font-medium">Alignment</a>
+                <a href="#toolkit" class="nav-link text-gray-600 font-medium">Toolkit</a>
+                <a href="#proof" class="nav-link text-gray-600 font-medium">Proof</a>
+                <a href="#contact" class="nav-link text-gray-600 font-medium">Connect</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#intro" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Proposal</a>
+            <a href="#alignment" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Alignment</a>
+            <a href="#toolkit" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Toolkit</a>
+            <a href="#proof" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Proof</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Connect</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: Intro / The Hook -->
+        <section id="intro" class="py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward Profile" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-lg ring-4 ring-white">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Gidday Flex Consulting.</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    You deliver mission-critical automations. I build the strategies behind them. My passion is dissecting complex business challenges and engineering elegant, automated solutions. This is my proposal to help you continue delivering innovative outcomes for your clients.
+                </p>
+                <a href="#alignment" class="bg-[var(--primary-color)] text-white font-bold py-3 px-8 rounded-full hover:bg-[var(--primary-hover)] transition duration-300 transform hover:scale-105 shadow-lg">View the Proposal</a>
+            </div>
+        </section>
+
+        <!-- Section 2: The Alignment -->
+        <section id="alignment" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Modern Consultant's DNA</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+                        You need more than a technician; you need a consultant. This chart maps my experience to the core competencies of a high-impact automation consultant.
+                    </p>
+                </div>
+
+                <div id="tooltip-container" class="mt-8 text-center bg-teal-50 border border-teal-200 p-4 rounded-lg shadow-md text-gray-800 max-w-2xl mx-auto min-h-[80px] flex items-center justify-center mb-8 transition-opacity duration-300">
+                    <p id="tooltip-text" class="text-base md:text-lg">Click on the teal points on the chart to see the evidence.</p>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="alignmentChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: My Automation & AI Toolkit -->
+        <section id="toolkit" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My Automation & AI Arsenal</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+                        A great consultant knows the tools of the trade. Here’s a look at my hands-on experience across the automation and AI landscape.
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
+                        <button class="tab-button active bg-gray-200 text-gray-700 py-2 px-6 rounded-full font-medium" data-tab="core-automation">Core Automation</button>
+                        <button class="tab-button bg-gray-200 text-gray-700 py-2 px-6 rounded-full font-medium" data-tab="ai-agentic">AI & Agentic Systems</button>
+                        <button class="tab-button bg-gray-200 text-gray-700 py-2 px-6 rounded-full font-medium" data-tab="dev-integration">Development & Integration</button>
+                    </div>
+
+                    <div id="tab-content" class="bg-white rounded-lg shadow-xl p-8 min-h-[250px]">
+                        <!-- Content will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: The Proof / Case Studies -->
+        <section id="proof" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Putting Theory into Practice</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+                        Here are two projects that demonstrate my ability to deliver real-world solutions and my passion for building innovative products.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <!-- Project Card 1 -->
+                    <div class="bg-gray-50 rounded-lg shadow-lg p-8 transform hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">TradieAI: An Automation Consultancy</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">My own venture, where I act as a solo automation consultant for small to medium businesses. I manage the full project lifecycle: from initial client audit and pain-point discovery to designing and implementing bespoke automation solutions. This is real-world experience in delivering tangible business value.</p>
+                        <a href="https://www.tradieai.co.nz" target="_blank" class="text-[var(--primary-color)] font-semibold hover:text-[var(--primary-hover)] self-start">Visit TradieAI &rarr;</a>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="bg-gray-50 rounded-lg shadow-lg p-8 transform hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">North Harbour Rugby SaaS</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">To truly understand the products I consult on, I build them myself. This performance analysis platform demonstrates my ability to conceptualize, design, and build a functional SaaS product from the ground up, giving me a deep, practical understanding of the development lifecycle.</p>
+                        <a href="https://north-harbour-performance-tradiesai.replit.app/" target="_blank" class="text-[var(--primary-color)] font-semibold hover:text-[var(--primary-hover)] self-start">View the Project &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: The Final Pitch / Contact -->
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Let's Build Together.</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto mt-4 mb-8">
+                    I'm not just looking for a job; I'm looking to contribute to a team at the forefront of automation in New Zealand. My unique blend of business leadership, entrepreneurial drive, and hands-on technical skill will allow me to adapt quickly and start delivering value for your clients from day one.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                    <a href="mailto:joe@tradieai.co.nz" class="bg-[var(--primary-color)] text-white font-bold py-3 px-8 rounded-full hover:bg-[var(--primary-hover)] transition duration-300 transform hover:scale-105 shadow-lg">Email Me</a>
+                    <span class="text-gray-500">or</span>
+                    <a href="tel:021993285" class="font-semibold text-gray-700 text-lg hover:text-[var(--primary-color)]">Call me on 021 993 285</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[var(--dark-bg)] text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Joe Ward. An interactive proposal built with passion (and a bit of code).</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Active nav link highlighting on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            const isActive = link.getAttribute('href').substring(1) === entry.target.id;
+                            link.classList.toggle('active', isActive);
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+            sections.forEach(section => observer.observe(section));
+
+            // Chart.js Radar Chart
+            const ctx = document.getElementById('alignmentChart').getContext('2d');
+            const tooltipText = document.getElementById('tooltip-text');
+            const tooltipContainer = document.getElementById('tooltip-container');
+            const chartLabels = [
+                'Consulting Mindset',
+                'Agentic AI Expertise',
+                'Enterprise Problem-Solving',
+                'Rapid Learning & Adaptability',
+                'Programming Fundamentals',
+                'End-to-End Project Delivery'
+            ];
+            const chartEvidence = [
+                "Through TradieAI, I've acted as a consultant, auditing client businesses, identifying pain points, and proposing strategic automation solutions to drive growth and efficiency.",
+                "My passion for AI is practical. I have hands-on experience with the Google Cloud/VertexAI platform and building applications leveraging LLMs like Gemini Pro to create agentic workflows.",
+                "As NZ/AU Business Manager for EBOS Group, I managed B2B sales and operations, honing my skills in strategy and pipeline management within a large enterprise environment.",
+                "My transition from professional rugby to business owner and tech builder demonstrates a proven ability to rapidly acquire new skills and excel in dynamic, fast-paced environments.",
+                "While not a senior developer, my hands-on experience building SaaS products with tools like Replit and Cursor provides a strong foundation in programming logic and system architecture.",
+                "From running my own businesses, I'm adept at managing projects from initial discovery and proposal writing through to successful implementation and ongoing support."
+            ];
+            const chartData = {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Joe Ward\'s Alignment',
+                    data: [5, 4.5, 4, 5, 4, 5],
+                    fill: true,
+                    backgroundColor: 'rgba(0, 167, 157, 0.2)',
+                    borderColor: 'rgb(0, 167, 157)',
+                    pointBackgroundColor: 'rgb(0, 167, 157)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(0, 167, 157)',
+                    pointRadius: 6,
+                    pointHoverRadius: 10,
+                    pointBorderWidth: 2,
+                    pointHoverBorderWidth: 4
+                }]
+            };
+            const chartConfig = {
+                type: 'radar',
+                data: chartData,
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                            pointLabels: { font: { size: 14, family: "'Inter', sans-serif" }, color: '#2D3748' },
+                            ticks: { display: false, beginAtZero: true, max: 5, stepSize: 1 }
+                        }
+                    },
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const dataIndex = elements[0].index;
+                            tooltipText.textContent = chartEvidence[dataIndex];
+                            tooltipContainer.style.opacity = 1;
+                        }
+                    }
+                }
+            };
+            const alignmentChart = new Chart(ctx, chartConfig);
+
+            // Tabbed content for Toolkit
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContent = document.getElementById('tab-content');
+            const tabData = {
+                'core-automation': `
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Core Automation Platforms</h3>
+                    <p class="text-gray-700 mb-4">I'm a fast learner, comfortable with the logic behind enterprise platforms like <strong>UiPath, Power Automate, and Blue Prism</strong>. My deep, hands-on experience comes from building complex, multi-step workflows to solve real-world business problems using the following:</p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tool-badge">N8N</span>
+                        <span class="tool-badge">Make.com</span>
+                        <span class="tool-badge">Zapier</span>
+                        <span class="tool-badge">Workflow Design</span>
+                        <span class="tool-badge">Process Mining</span>
+                    </div>
+                `,
+                'ai-agentic': `
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">AI & Agentic Systems</h3>
+                    <p class="text-gray-700 mb-4">My passion extends to the forefront of innovation. I actively build with and explore agentic systems to create more intelligent and autonomous solutions. My practical experience includes:</p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tool-badge">Google Cloud / VertexAI</span>
+                        <span class="tool-badge">Google AI Studio</span>
+                        <span class="tool-badge">Gemini Pro</span>
+                        <span class="tool-badge">OpenAI</span>
+                        <span class="tool-badge">LindyAI</span>
+                        <span class="tool-badge">LLM Integration</span>
+                    </div>
+                `,
+                'dev-integration': `
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Development & Integration</h3>
+                    <p class="text-gray-700 mb-4">A great consultant understands how systems connect. My experience in building actual software solutions provides a strong foundation for delivering robust, end-to-end automations that integrate seamlessly with existing client infrastructure.</p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tool-badge">Cursor / VS Code</span>
+                        <span class="tool-badge">Replit</span>
+                        <span class="tool-badge">Xcode</span>
+                        <span class="tool-badge">API Integration</span>
+                        <span class="tool-badge">System Architecture</span>
+                    </div>
+                `
+            };
+            function showTab(tabId) {
+                tabContent.innerHTML = tabData[tabId];
+                tabButtons.forEach(button => {
+                    button.classList.toggle('active', button.dataset.tab === tabId);
+                });
+            }
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => showTab(button.dataset.tab));
+            });
+            showTab('core-automation'); // Initialize with the first tab
+        });
+    </script>
+</body>
+</html>
