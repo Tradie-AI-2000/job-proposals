@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joe Ward | Interactive Proposal: Digital Sales Consultant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: A single-page, multi-section narrative guiding the user from the role's challenges to my solution. The structure is designed to tell a story: 1. Intro (Hook), 2. The Fit (Skill Alignment), 3. My Digital Toolkit for Sales (Tabbed Interface), 4. Solving Their Challenges (Problem-Solution Selector), 5. My Journey (Timeline), 6. The Proof (Projects), 7. The Ask (Contact). This flow mirrors a sales/consulting approach—understanding the client's problem before presenting a tailored solution—perfect for a Digital Sales Consultant. -->
+    <!-- Visualization & Content Choices: 1. Intro: Text, profile image. Goal: Hook, set tone. 2. Skill Alignment: Radar Chart (Chart.js). Goal: Visually demonstrate direct fit to sales requirements. Interaction: Click on points for evidence. 3. My Digital Toolkit for Sales: Tabbed interface (HTML/JS). Goal: Detail specific tech skills and how they apply to digital sales. Interaction: Click tabs to reveal content. 4. Solving Their Challenges: Problem-solution selector (HTML/JS). Goal: Showcase problem-solving and strategic thinking in a sales context. Interaction: Select problem, see solution. 5. My Journey: HTML/CSS Timeline. Goal: Show diverse background and transferable skills. Interaction: Hover for details. 6. The Proof: HTML/CSS Cards. Goal: Showcase relevant projects. Interaction: Links to projects. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #2D3748;
+        }
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #4A90E2;
+            transform: translateY(-2px);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #CBD5E0;
+            border: 4px solid #F8F7F4;
+        }
+         .timeline-item:hover::before {
+            background-color: #4A90E2;
+        }
+        .tab-button.active {
+            background-color: #4A90E2;
+            color: white;
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: #E2E8F0;
+            color: #2D3748;
+            padding: 0.4rem 0.8rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 0.25rem;
+            transition: all 0.2s ease-in-out;
+            cursor: default;
+        }
+        .tool-badge:hover {
+            background-color: #CBD5E0;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-gray-800">Joe Ward</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#intro" class="nav-link text-gray-600 font-medium">The Pitch</a>
+                <a href="#alignment" class="nav-link text-gray-600 font-medium">The Fit</a>
+                <a href="#toolkit" class="nav-link text-gray-600 font-medium">My Toolkit</a>
+                <a href="#challenges" class="nav-link text-gray-600 font-medium">My Approach</a>
+                <a href="#journey" class="nav-link text-gray-600 font-medium">The Journey</a>
+                <a href="#projects" class="nav-link text-gray-600 font-medium">The Proof</a>
+                <a href="#contact" class="nav-link text-gray-600 font-medium">The Ask</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#intro" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">The Pitch</a>
+            <a href="#alignment" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">The Fit</a>
+            <a href="#toolkit" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">My Toolkit</a>
+            <a href="#challenges" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">My Approach</a>
+            <a href="#journey" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">The Journey</a>
+            <a href="#projects" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">The Proof</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">The Ask</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: Intro / The Pitch -->
+        <section id="intro" class="py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward Profile" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow-lg">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4 animate-fade-in-down">Gidday! Ready to build?</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    Hi there! I'm Joe Ward. You're looking for a Digital Sales Consultant who understands the construction sector. I'm a business owner, a digital solutions builder, and I speak fluent 'tradie'. Instead of a standard pitch, let's dive into an interactive overview of how I'll drive growth and help your clients stand out.
+                </p>
+                <a href="#alignment" class="bg-[#4A90E2] text-white font-bold py-3 px-8 rounded-full hover:bg-[#357ABD] transition duration-300 transform hover:scale-105">See How I'm the Right Fit</a>
+            </div>
+        </section>
+
+        <!-- Section 2: The Fit -->
+        <section id="alignment" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Perfect Fit: My Skills for Your Sales Growth</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+                        You need a "natural closer" who understands digital and the construction sector. This chart highlights how my diverse background directly aligns with the core responsibilities of this role.
+                    </p>
+                </div>
+
+                <!-- Tooltip text moved above the chart and styled as a pop-up -->
+                <div id="tooltip-container" class="mt-8 text-center bg-blue-50 border border-blue-200 p-4 rounded-lg shadow-md text-gray-800 max-w-2xl mx-auto min-h-[80px] flex items-center justify-center mb-8 transition-opacity duration-300">
+                    <p id="tooltip-text" class="text-base md:text-lg">Click on the blue points on the chart to see how I fit into your job description.</p>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="alignmentChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: My Digital Toolkit for Sales -->
+        <section id="toolkit" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My Digital Toolkit for Driving Sales & Impact</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+                        Selling digital solutions isn't just about talking; it's about understanding and demonstrating value. Here's how my hands-on experience with various digital tools directly supports the sales cycle and client success in the construction sector.
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
+                        <button class="tab-button active bg-gray-200 text-gray-700 py-2 px-6 rounded-full font-medium hover:bg-gray-300 transition duration-200" data-tab="website-design-sales">Website & Design Sales</button>
+                        <button class="tab-button bg-gray-200 text-gray-700 py-2 px-6 rounded-full font-medium hover:bg-gray-300 transition duration-200" data-tab="digital-marketing-automation">Digital Marketing & Automation</button>
+                        <button class="tab-button bg-gray-200 text-gray-700 py-2 px-6 rounded-full font-medium hover:bg-gray-300 transition duration-200" data-tab="client-relationship-tech">Client Relationship Tech</button>
+                    </div>
+
+                    <div id="tab-content" class="bg-white rounded-lg shadow-md p-8 min-h-[250px]">
+                        <!-- Content will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Solving Their Challenges -->
+        <section id="challenges" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My Approach: Solving Key Challenges for Your Clients</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+                        Success in digital sales means understanding client pain points and offering clear, actionable solutions. Choose a common challenge faced by construction businesses, and I'll outline my approach.
+                    </p>
+                </div>
+
+                <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
+                    <div class="mb-6">
+                        <label for="problem-selector" class="block text-gray-700 text-lg font-medium mb-2">Select a client challenge:</label>
+                        <select id="problem-selector" class="block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-[#4A90E2] focus:ring focus:ring-[#4A90E2] focus:ring-opacity-50">
+                            <option value="winning-more-work">Winning More Work Online</option>
+                            <option value="streamlining-operations">Streamlining Back-Office Operations</option>
+                            <option value="standing-out-market">Standing Out in a Crowded Market</option>
+                            <option value="managing-leads-clients">Managing Leads & Clients Effectively</option>
+                        </select>
+                    </div>
+                    <div id="solution-display" class="bg-gray-50 p-6 rounded-md border border-gray-200 min-h-[120px]">
+                        <p class="text-gray-700 italic">Select a challenge above to see my proposed solution.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: The Journey -->
+        <section id="journey" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My Journey: Building a Foundation for Digital Sales</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+                        From the rugby field to leading businesses, my path has equipped me with unique skills in communication, strategy, and understanding diverse markets – all crucial for a Digital Sales Consultant.
+                    </p>
+                </div>
+
+                <div class="relative w-full max-w-3xl mx-auto">
+                    <!-- The timeline line -->
+                    <div class="absolute left-0 h-full border-l-2 border-gray-300" style="left: -22px;"></div>
+                    
+                    <div class="space-y-12">
+                        <!-- Timeline Item -->
+                        <div class="timeline-item relative pl-8">
+                            <h3 class="text-xl font-bold text-gray-800">Owner, Director & Founder (TradieAI)</h3>
+                            <p class="text-sm text-gray-500">2019 - Present</p>
+                            <p class="mt-2 text-gray-600">Directly engaged with tradies and small business owners, identifying their digital needs and delivering automated solutions. This is where I truly learned to "speak the language" of your target market and close deals on digital services.</p>
+                        </div>
+                        
+                        <!-- Timeline Item -->
+                        <div class="timeline-item relative pl-8">
+                            <h3 class="text-xl font-bold text-gray-800">NZ/AU Business Manager (Sales & Operations)</h3>
+                             <p class="text-sm text-gray-500">2014 - 2019</p>
+                            <p class="mt-2 text-gray-600">Managed sales and operations across NZ/AU, driving growth and optimizing processes. This honed my B2B sales experience, pipeline management, and strategic market identification skills.</p>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="timeline-item relative pl-8">
+                            <h3 class="text-xl font-bold text-gray-800">Professional Rugby Player & Coach</h3>
+                             <p class="text-sm text-gray-500">2005 - 2015</p>
+                            <img src="https://static.wixstatic.com/media/7b20bf_6939dbe67c87499d8554a2c0ba30ab5c~mv2.jpeg" alt="Joe Ward Rugby Player" class="w-full h-48 object-cover rounded-lg mt-4 shadow-md">
+                            <p class="mt-2 text-gray-600">A decade in high-performance sport taught me relentless drive, clear communication, teamwork, and performing under pressure – all directly transferable to exceeding sales KPIs and building strong client relationships.</p>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="timeline-item relative pl-8">
+                            <h3 class="text-xl font-bold text-gray-800">Education & Certifications</h3>
+                            <p class="mt-2 text-gray-600">Formal education including a Bachelor of Business Studies and a Google Generative AI Leader qualification provides a strong theoretical and practical foundation for understanding business processes and digital innovation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: The Proof / Projects -->
+        <section id="projects" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Proof is in the Projects</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
+                        I don't just talk the talk; I've walked the walk. Here are a couple of projects that directly demonstrate my ability to deliver digital solutions and understand the construction/trades market.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Project Card 1 -->
+                    <div class="bg-gray-50 rounded-lg shadow-md p-8 transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">TradieAI: Digital Solutions for Tradies</h3>
+                        <p class="text-gray-600 mb-4">My own venture, directly serving the construction and trades sector. I identify pain points, pitch bespoke digital solutions (automation, lead generation, website optimization), and manage the full client lifecycle. This is real-world experience in your target market.</p>
+                        <a href="https://www.tradieai.co.nz" target="_blank" class="text-[#4A90E2] font-semibold hover:underline">Check it out &rarr;</a>
+                    </div>
+                    <!-- Project Card 2 -->
+                    <div class="bg-gray-50 rounded-lg shadow-md p-8 transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">North Harbour Rugby SaaS: Building Digital Products</h3>
+                        <p class="text-gray-600 mb-4">A performance analysis SaaS platform I'm building. This demonstrates my ability to conceptualize, design, and build digital products from scratch, giving me a deep understanding of the solutions you'll be selling.</p>
+                        <a href="https://north-harbour-performance-tradiesai.replit.app/" target="_blank" class="text-[#4A90E2] font-semibold hover:underline">View Project &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: The Ask / Contact -->
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Ready to talk shop?</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto mt-4 mb-8">
+                    I'm genuinely excited about the opportunity to drive growth for a digital agency focused on the construction sector. My unique blend of sales experience, digital expertise, and understanding of tradies makes me a prime candidate to hit the ground running. Let's connect!
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                    <a href="mailto:joe@tradieai.co.nz" class="bg-[#4A90E2] text-white font-bold py-3 px-8 rounded-full hover:bg-[#357ABD] transition duration-300">Email Me</a>
+                    <span class="text-gray-500">or</span>
+                    <a href="tel:021993285" class="font-semibold text-gray-700 text-lg hover:text-[#4A90E2]">Call me on 021 993 285</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Joe Ward. This interactive proposal was built with passion (and a bit of code).</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Active nav link highlighting on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+
+            // Chart.js Radar Chart
+            const ctx = document.getElementById('alignmentChart').getContext('2d');
+            const tooltipText = document.getElementById('tooltip-text');
+            const tooltipContainer = document.getElementById('tooltip-container');
+
+            const labels = [
+                'New Business Generation',
+                'Digital Solution Presentation',
+                'Sales Pipeline Management',
+                'Client Relationship Building',
+                'Sales KPI Achievement',
+                'Tradie/Construction Sector Understanding'
+            ];
+
+            const evidence = [
+                "As owner of TradieAI, I've consistently generated new leads and closed deals by understanding the specific needs of tradies and offering tailored digital solutions.",
+                "I regularly present complex digital concepts (like automation workflows and website strategies) in a clear, value-driven way that resonates with business owners and tradies.",
+                "My experience as a Business Manager and entrepreneur involved managing full sales cycles, from prospecting to closing, and nurturing long-term client relationships.",
+                "Building strong, lasting client relationships is at the core of my business philosophy, ensuring trust and repeat business through clear communication and reliable delivery.",
+                "My background in professional sport instilled a relentless focus on performance and exceeding targets, a mindset I bring to sales KPIs and driving measurable results.",
+                "Through TradieAI, I've gained deep, first-hand knowledge of the construction and trades sector, understanding their unique challenges and how digital solutions can directly impact their success."
+            ];
+            
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: 'Joe Ward\'s Alignment',
+                    data: [5, 5, 4.5, 5, 5, 5],
+                    fill: true,
+                    backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                    borderColor: 'rgb(74, 144, 226)',
+                    pointBackgroundColor: 'rgb(74, 144, 226)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(74, 144, 226)',
+                    pointRadius: 6,
+                    pointHoverRadius: 10,
+                    pointBorderWidth: 2,
+                    pointHoverBorderWidth: 4
+                }]
+            };
+
+            const config = {
+                type: 'radar',
+                data: data,
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    family: "'Inter', sans-serif"
+                                },
+                                color: '#2D3748'
+                            },
+                            ticks: {
+                                display: false,
+                                beginAtZero: true,
+                                max: 5,
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false } // Disable native tooltip
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const clickedElement = elements[0];
+                            const dataIndex = clickedElement.index;
+                            tooltipText.textContent = evidence[dataIndex];
+                            tooltipContainer.classList.remove('hidden'); // Show the pop-up
+                            tooltipContainer.style.opacity = 1;
+                        } else {
+                            // If clicked outside a point on the canvas, hide the tooltip
+                            tooltipContainer.style.opacity = 0;
+                            setTimeout(() => {
+                                tooltipContainer.classList.add('hidden'); // Hide after fade
+                                tooltipText.textContent = 'Click on the blue points on the chart to see how I fit into your job description.';
+                            }, 300); // Match transition duration
+                        }
+                    }
+                }
+            };
+
+            const myChart = new Chart(ctx, config);
+
+            // Initial state for the tooltip container (visible with instructions)
+            tooltipContainer.classList.remove('hidden');
+            tooltipText.textContent = 'Click on the blue points on the chart to see how I fit into your job description.';
+
+            // Add a global click listener to hide the tooltip if clicked anywhere else
+            document.addEventListener('click', (event) => {
+                // Check if the click was inside the chart canvas or the tooltip container
+                const isClickInsideChart = myChart.canvas.contains(event.target);
+                const isClickInsideTooltip = tooltipContainer.contains(event.target);
+
+                // If click is outside both, hide the tooltip
+                if (!isClickInsideChart && !isClickInsideTooltip && !tooltipContainer.classList.contains('hidden')) {
+                    tooltipContainer.style.opacity = 0;
+                    setTimeout(() => {
+                        tooltipContainer.classList.add('hidden');
+                        tooltipText.textContent = 'Click on the blue points on the chart to see how I fit into your job description.';
+                    }, 300);
+                }
+            });
+
+            // Tabbed content for My Digital Toolkit for Sales
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContent = document.getElementById('tab-content');
+
+            const tabData = {
+                'website-design-sales': `
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Website & Design Sales: Converting Digital Presence into Leads</h3>
+                    <p class="text-gray-700 mb-4">I understand that a website for a tradie isn't just pretty; it's a lead-generating machine. My experience allows me to sell and collaborate effectively:</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong>Wix & WordPress:</strong> I've built and managed my own business websites on these platforms, giving me first-hand knowledge of their capabilities and how to articulate their value to clients. I know what makes a site effective for lead capture in the trades.</li>
+                        <li><strong>Figma/Figjam & Canva:</strong> Essential for 'presenting tailored solutions'. I use these for ideation and creating compelling visual proposals that help clients envision their new digital presence and understand the design process.</li>
+                        <li><strong>Understanding SEO & Mobile Optimization:</strong> My own website development includes a focus on these areas, allowing me to sell the benefits of a 'mobile-optimised, SEO-friendly site' with confidence and credibility.</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tool-badge">Wix</span>
+                        <span class="tool-badge">WordPress</span>
+                        <span class="tool-badge">Figma/Figjam</span>
+                        <span class="tool-badge">Canva</span>
+                        <span class="tool-badge">Web Design Principles</span>
+                    </div>
+                `,
+                'digital-marketing-automation': `
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Digital Marketing & Automation: Driving Client Growth</h3>
+                    <p class="text-gray-700 mb-4">Beyond websites, I can articulate and sell the power of digital marketing and automation to construction businesses, turning clicks into calls:</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong>N8N:</strong> My go-to for 'workflow and process automation'. I can pitch and implement automated lead qualification, CRM updates, and follow-up sequences, showing clients how to streamline their sales and marketing efforts.</li>
+                        <li><strong>VoiceFlow:</strong> For 'automated answering services' and interactive customer engagement. I can demonstrate how a smart chatbot on their website or social media can capture leads 24/7 and answer common queries, improving client service and lead conversion.</li>
+                        <li><strong>Google Cloud & VertexAI:</strong> While more advanced, my familiarity with these means I can discuss scalable solutions for data analysis, targeted advertising, or even custom AI tools that could give construction firms a competitive edge in their marketing.</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tool-badge">N8N</span>
+                        <span class="tool-badge">VoiceFlow</span>
+                        <span class="tool-badge">Google Cloud</span>
+                        <span class="tool-badge">VertexAI</span>
+                        <span class="tool-badge">Marketing Automation</span>
+                    </div>
+                `,
+                'client-relationship-tech': `
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Client Relationship Tech: Managing the Pipeline & Nurturing Leads</h3>
+                    <p class="text-gray-700 mb-4">Effective sales rely on strong relationships and efficient pipeline management. My tech understanding supports this directly:</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong>CRM Integration (via N8N):</strong> I can discuss and implement how digital marketing efforts can feed directly into a client's CRM, ensuring no lead is lost and follow-ups are automated, improving 'sales pipeline management'.</li>
+                        <li><strong>Replit Agent & Cursor/Xcode:</strong> My experience in building actual software solutions means I can speak confidently about 'system integration' and custom tools that might enhance a client's ability to manage projects, leads, or internal communications, fostering stronger 'client relationships'.</li>
+                        <li><strong>Problem-Solving Mindset:</strong> My overall approach to tech is about solving client problems. This translates into being able to identify how digital tools can help construction firms manage their customer interactions more effectively, from initial inquiry to project completion.</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tool-badge">N8N</span>
+                        <span class="tool-badge">CRM Integration</span>
+                        <span class="tool-badge">Replit Agent</span>
+                        <span class="tool-badge">Cursor/Xcode</span>
+                        <span class="tool-badge">Client Management</span>
+                    </div>
+                `
+            };
+
+            function showTab(tabId) {
+                tabContent.innerHTML = tabData[tabId];
+                tabButtons.forEach(button => {
+                    if (button.dataset.tab === tabId) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    showTab(button.dataset.tab);
+                });
+            });
+
+            // Initialize with the first tab active
+            showTab('website-design-sales');
+
+
+            // Problem-Solution Selector
+            const problemSelector = document.getElementById('problem-selector');
+            const solutionDisplay = document.getElementById('solution-display');
+
+            const solutions = {
+                'winning-more-work': `
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Winning More Work Online:</h4>
+                    <p class="text-gray-700">Many tradies struggle to convert online interest into actual jobs. I'd propose a strategy focused on a high-impact, mobile-optimized website (built on <strong>Wix/WordPress</strong>) with clear calls-to-action. We'd then implement digital marketing tactics, potentially using <strong>N8N</strong> for automated lead follow-up, ensuring every inquiry is actioned quickly.</p>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <span class="tool-badge">Website Development</span>
+                        <span class="tool-badge">Lead Generation</span>
+                        <span class="tool-badge">N8N Automation</span>
+                    </div>
+                `,
+                'streamlining-operations': `
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Streamlining Back-Office Operations:</h4>
+                    <p class="text-gray-700">Construction businesses often get bogged down in admin. I'd identify key bottlenecks and propose automation solutions using <strong>N8N</strong> to connect their quoting, scheduling, and invoicing systems. This frees up time for tradies to focus on what they do best: building.</p>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <span class="tool-badge">Process Automation</span>
+                        <span class="tool-badge">N8N</span>
+                        <span class="tool-badge">Operational Efficiency</span>
+                    </div>
+                `,
+                'standing-out-market': `
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Standing Out in a Crowded Market:</h4>
+                    <p class="text-gray-700">Differentiation is key. I'd work with clients on developing a strong online brand identity using <strong>Figma/Canva</strong> for compelling visuals and messaging. For customer service differentiation, we could implement <strong>VoiceFlow</strong> for instant, intelligent responses to client queries, setting them apart from competitors.</p>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <span class="tool-badge">Brand Identity</span>
+                        <span class="tool-badge">Figma/Canva</span>
+                        <span class="tool-badge">VoiceFlow</span>
+                    </div>
+                `,
+                'managing-leads-clients': `
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Managing Leads & Clients Effectively:</h4>
+                    <p class="text-gray-700">As a business grows, managing incoming leads and existing client relationships becomes critical. I'd propose integrated solutions where website forms or social media inquiries automatically feed into a simple CRM (via <strong>N8N</strong>), triggering automated follow-ups and reminders, ensuring no lead falls through the cracks and client communication is consistent.</p>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <span class="tool-badge">CRM Integration</span>
+                        <span class="tool-badge">Lead Nurturing</span>
+                        <span class="tool-badge">N8N Automation</span>
+                    </div>
+                `
+            };
+
+            problemSelector.addEventListener('change', (event) => {
+                solutionDisplay.innerHTML = solutions[event.target.value];
+            });
+
+            // Initialize with the first solution
+            solutionDisplay.innerHTML = solutions[problemSelector.value];
+        });
+    </script>
+</body>
+</html>
