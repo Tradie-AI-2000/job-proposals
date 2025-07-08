@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joe Ward | Interactive Proposal: Business Development Manager</title>
-    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-    <link href="[https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;600&display=swap](https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;600&display=swap)" rel="stylesheet">
+    <title>Joe Ward | Interactive Proposal for Business Development Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-cyan: #00F5FF;
             --neon-cyan-hover: #00B8D4;
-            --accent-magenta: #FF00FF;
             --bg-gradient-start: #0A0A1A;
             --bg-gradient-end: #1A202C;
             --container-bg: rgba(26, 32, 44, 0.7);
             --text-primary: #F7FAFC;
             --text-secondary: #A0AEC0;
         }
-
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
@@ -26,411 +29,403 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-
         h1, h2, h3, h4 {
             font-family: 'Poppins', sans-serif;
             color: var(--text-primary);
-            text-shadow: 0 0 5px rgba(0, 245, 255, 0.3);
+            text-shadow: 0 0 8px rgba(0, 245, 255, 0.3);
         }
-
-        .glow-text {
-            color: var(--neon-cyan);
-            text-shadow:
-                0 0 7px var(--neon-cyan),
-                0 0 10px var(--neon-cyan),
-                0 0 21px var(--neon-cyan),
-                0 0 42px var(--accent-magenta),
-                0 0 82px var(--accent-magenta);
-        }
-
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* --- Header & Navigation --- */
-        .header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: rgba(10, 10, 26, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
-            padding: 1rem 0;
-        }
-
         .nav-link {
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            position: relative;
+            transition: color 0.3s ease;
             color: var(--text-secondary);
-            font-weight: 500;
-            border: 1px solid transparent;
-            text-decoration: none;
+            font-weight: 600;
         }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-primary);
-            background-color: var(--container-bg);
-            border-color: rgba(0, 245, 255, 0.4);
-            text-shadow: 0 0 8px rgba(0, 245, 255, 0.5);
+        .nav-link:hover {
+             color: var(--neon-cyan);
         }
-
-        /* --- Content Sections --- */
-        .content-section {
-            padding: 6rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--neon-cyan);
+            transition: width 0.3s ease;
         }
-        .content-section:last-child {
-            border-bottom: none;
+        .nav-link:hover:after, .nav-link.active:after {
+            width: 100%;
         }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 1.125rem;
-            line-height: 1.6;
-        }
-
-        /* --- Interactive Elements --- */
-        .neon-button {
-            display: inline-block;
+        .glow-button {
             background-color: var(--neon-cyan);
             color: var(--bg-gradient-end);
-            padding: 0.75rem 2rem;
-            border-radius: 8px;
             font-weight: 700;
-            font-family: 'Poppins', sans-serif;
-            text-decoration: none;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
             transition: all 0.3s ease;
-            box-shadow: 0 0 15px var(--neon-cyan), 0 0 25px var(--neon-cyan) inset;
-            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.7);
+            border: 0;
         }
-
-        .neon-button:hover {
+        .glow-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--neon-cyan);
             background-color: var(--neon-cyan-hover);
-            box-shadow: 0 0 25px var(--neon-cyan-hover), 0 0 35px var(--neon-cyan-hover) inset;
-            transform: translateY(-3px) scale(1.05);
         }
-        
-        /* --- Skill Match Section --- */
-        .skill-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        .section-container {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
         }
-
-        .skill-card {
-            background: var(--container-bg);
-            padding: 2rem;
+        .content-box {
+            background-color: var(--container-bg);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            backdrop-filter: blur(10px);
             border-radius: 12px;
-            border: 1px solid rgba(0, 245, 255, 0.2);
-            transition: all 0.4s ease;
+            padding: 2rem;
         }
-
-        .skill-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.15);
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
         }
-
-        .skill-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            color: var(--neon-cyan);
-        }
-
-        /* --- Approach Section (Tabs) --- */
-        .approach-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
         .tab-button {
-            padding: 0.75rem 1.5rem;
+            padding: 10px 20px;
             cursor: pointer;
-            border-radius: 8px;
-            font-weight: 600;
-            background: var(--container-bg);
-            border: 1px solid rgba(0, 245, 255, 0.2);
-            transition: all 0.3s ease;
+            background-color: transparent;
             color: var(--text-secondary);
+            border: 2px solid var(--container-bg);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
-
+        .tab-button:hover {
+            color: var(--text-primary);
+            border-color: var(--neon-cyan-hover);
+        }
         .tab-button.active {
-            background: var(--neon-cyan);
+            background-color: var(--neon-cyan);
             color: var(--bg-gradient-end);
+            border-color: var(--neon-cyan);
             box-shadow: 0 0 15px var(--neon-cyan);
         }
-
-        .tab-content {
-            display: none;
+        .problem-solver-select {
+             background-color: rgba(26, 32, 44, 0.9);
+             color: var(--text-primary);
+             border: 1px solid rgba(0, 245, 255, 0.2);
+             padding: 0.75rem 1rem;
+             border-radius: 8px;
+             width: 100%;
+        }
+        .timeline {
+            position: relative;
+            max-width: 36rem;
+            margin: 0 auto;
+        }
+        .timeline:after {
+            content: '';
+            position: absolute;
+            width: 6px;
             background: var(--container-bg);
-            padding: 2.5rem;
-            border-radius: 12px;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-container.left {
+            left: 0;
+        }
+        .timeline-container.right {
+            left: 50%;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: var(--text-primary);
+            border: 4px solid var(--neon-cyan);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        .timeline-container.right::after {
+            left: -16px;
+        }
+        .timeline-container:hover::after {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--container-bg);
+            position: relative;
+            border-radius: 6px;
             border: 1px solid rgba(0, 245, 255, 0.2);
-            min-height: 150px;
         }
-        .tab-content.active {
-            display: block;
-        }
-        .tab-content h3 {
-             color: var(--neon-cyan);
-             margin-bottom: 1rem;
-        }
-
-        /* --- Proof Section (Project Cards) --- */
-        .proof-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-        }
-        
         .project-card {
-            background: var(--container-bg);
+            background-color: var(--container-bg);
             border-radius: 12px;
-            overflow: hidden;
+            padding: 2rem;
             border: 1px solid rgba(0, 245, 255, 0.2);
             transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            height: 100%;
         }
         .project-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 25px rgba(0, 245, 255, 0.2);
+            transform: translateY(-5px);
             border-color: var(--neon-cyan);
+            box-shadow: 0 10px 30px -10px rgba(0, 245, 255, 0.3);
         }
-
-        .project-card-content {
-            padding: 2rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .project-card-content p {
-            flex-grow: 1;
-        }
-        .project-card-content a {
-            margin-top: 1.5rem;
-        }
-        
-        /* --- Contact Section --- */
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-        .contact-info a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 1.125rem;
-            transition: color 0.3s ease;
-        }
-        .contact-info a:hover {
-            color: var(--neon-cyan);
-            text-shadow: 0 0 8px var(--neon-cyan);
-        }
-        
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            .nav-links { display: none; } /* Simple hide for mobile for this example */
-            .proof-grid { grid-template-columns: 1fr; }
-            .section-header h2 { font-size: 2rem; }
-            h1 { font-size: 2.5rem !important; }
-        }
-
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <header class="header">
-        <nav class="main-container" style="display: flex; justify-content: space-between; align-items: center;">
-            <a href="#pitch" style="font-size: 1.5rem; font-family: 'Poppins'; color: var(--text-primary); text-decoration: none;">Joe Ward</a>
-            <div class="nav-links" style="display: flex; gap: 0.5rem;">
-                <a href="#pitch" class="nav-link active">The Pitch</a>
-                <a href="#skill-match" class="nav-link">Skill Match</a>
-                <a href="#my-approach" class="nav-link">My Approach</a>
-                <a href="#the-proof" class="nav-link">The Proof</a>
-                <a href="#connect" class="nav-link">Let's Connect</a>
+    <header class="sticky top-0 z-50 backdrop-blur-lg bg-black/30">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">JOE WARD</h1>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link">HOME</a>
+                <a href="#alignment" class="nav-link">ALIGNMENT</a>
+                <a href="#playbook" class="nav-link">PLAYBOOK</a>
+                <a href="#proof" class="nav-link">PROOF</a>
+                <a href="#journey" class="nav-link">JOURNEY</a>
             </div>
+            <a href="#contact" class="glow-button hidden md:block">CONNECT</a>
         </nav>
     </header>
 
-    <main class="main-container">
+    <main class="container mx-auto px-6">
 
-        <!-- SECTION 1: THE PITCH -->
-        <section id="pitch" class="content-section" style="min-height: 80vh; display: flex; align-items: center; text-align: center;">
-            <div>
-                <img src="[https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg](https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg)" alt="Joe Ward Profile" style="width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 2rem auto; border: 3px solid var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan); object-fit: cover;" onerror="this.onerror=null;this.src='[https://placehold.co/150x150/0A0A1A/00F5FF?text=JW](https://placehold.co/150x150/0A0A1A/00F5FF?text=JW)';">
-                <h1 style="font-size: 3.5rem; line-height: 1.2; margin-bottom: 1.5rem;">You need a BDM who gets <span class="glow-text">construction</span> and <span class="glow-text">tech</span>.</h1>
-                <p style="font-size: 1.25rem; max-width: 800px; margin: 0 auto 2.5rem auto;">I don't just sell; I solve. With a background in B2B sales, hands-on experience building tech solutions for tradies, and a past life in professional rugby, I bring a unique blend of strategic thinking, technical know-how, and relentless drive. I'm here to build your pipeline and close deals that last.</p>
-                <a href="#skill-match" class="neon-button">See Why I'm The Right Fit</a>
+        <section id="home" class="section-container flex items-center justify-center min-h-[80vh]">
+            <div class="text-center">
+                <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 border-neon-cyan shadow-[0_0_20px_var(--neon-cyan)]">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">You need a door opener. A deal closer.</h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">
+                    I'm a B2B sales professional who gets a buzz from solving problems and winning new business. I don't just sell; I build relationships and deliver value. This interactive proposal shows exactly why I'm the right person to drive new business for your team.
+                </p>
+                <a href="#alignment" class="glow-button">See The Fit</a>
             </div>
         </section>
 
-        <!-- SECTION 2: SKILL MATCH -->
-        <section id="skill-match" class="content-section">
-            <div class="section-header">
-                <h2>Directly Aligning With Your Needs</h2>
-                <p>You've outlined what it takes to succeed in this role. Here’s how my experience lines up, point for point, with your requirements.</p>
+        <section id="alignment" class="section-container">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold">Direct Alignment: Skills vs. Role</h2>
+                <p class="text-lg max-w-3xl mx-auto mt-4">You need a specific blend of skills. This chart visualizes my direct experience against your key requirements. <br><strong>(Click the points to see the proof).</strong></p>
             </div>
-            <div class="skill-grid">
-                <div class="skill-card">
-                    <h3>Proven B2B Sales Success</h3>
-                    <p>As the NZ/AU Business Manager for EBOS Group, I managed sales across two countries, consistently driving growth in a competitive B2B environment. I know how to navigate complex sales cycles and build lasting partnerships.</p>
+            <div class="content-box">
+                 <div id="tooltip-container" class="text-center p-4 rounded-lg text-lg min-h-[80px] flex items-center justify-center mb-8 transition-opacity duration-300">
+                    <p id="tooltip-text" class="text-primary">Click a point for evidence...</p>
                 </div>
-                <div class="skill-card">
-                    <h3>Construction Sector Insight</h3>
-                    <p>Founding TradieAI wasn't just a side project; it was a deep dive into the construction sector's biggest pain points. I've spoken to dozens of business owners, audited their operations, and built the exact kind of tech solutions they need to thrive.</p>
-                </div>
-                 <div class="skill-card">
-                    <h3>Consultative, Solution-First Mindset</h3>
-                    <p>My approach is never about a hard sell. It's about engagement and problem-solving. I thrive on understanding a client's challenges and demonstrating clear, practical solutions with demonstrable ROI, a skill honed through my AI consultancy work.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>New Business Driver</h3>
-                    <p>From launching my own businesses to managing national sales, I'm a self-starter who excels at project management from end-to-end. I have a proven track record of prospecting, pitching, and, most importantly, closing new business.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Excellent Comms & CRM Habits</h3>
-                    <p>A decade in professional rugby and coaching taught me the power of clear, concise communication and teamwork. This, combined with my business management experience, means I understand the value of a meticulously managed CRM for tracking the full sales cycle and ensuring nothing falls through the cracks.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>SaaS & Tech Fluency</h3>
-                    <p>I'm not just selling tech; I'm building it. With a Google Generative AI qualification and hands-on experience with a wide tech stack including Google Cloud/VertexAI, N8N, and various dev tools, I can run sharp, insight-driven demos that show real value because I understand the product inside and out.</p>
+                <div class="chart-container">
+                    <canvas id="alignmentChart"></canvas>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 3: MY APPROACH -->
-        <section id="my-approach" class="content-section">
-            <div class="section-header">
-                <h2>My Approach to Driving Growth</h2>
-                <p>Here’s my playbook for how I'll tackle the key responsibilities of the Business Development Manager role from day one.</p>
+        <section id="playbook" class="section-container">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">My B2B Sales Playbook</h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto mt-4">Here’s how I approach the sales cycle, from first contact to a successful close. It's a proven process focused on value, not hard sells.</p>
             </div>
-            <div class="approach-tabs">
-                <button class="tab-button active" data-tab="prospecting">1. Prospecting & Pitching</button>
-                <button class="tab-button" data-tab="pipeline">2. Pipeline Management</button>
-                <button class="tab-button" data-tab="onboarding">3. Client Onboarding & Follow-up</button>
-            </div>
-            <div id="prospecting" class="tab-content active">
-                <h3>Running Insight-Driven Demos</h3>
-                <p>My pitches are built on a foundation of genuine understanding. I'll leverage my experience auditing businesses with TradieAI to quickly diagnose potential client needs. The demos won't be generic walkthroughs; they'll be tailored sessions showing exactly how your platform solves their specific problems, focusing on the "real value" and ROI. My deep familiarity with SaaS products means I can answer tough questions and build credibility instantly.</p>
-            </div>
-            <div id="pipeline" class="tab-content">
-                <h3>Building a Healthy Sales Pipeline</h3>
-                <p>A strong pipeline is the lifeblood of B2B sales. I'll use CRM tools (like Zoho or Salesforce, as mentioned in your description) with discipline, ensuring every interaction is tracked and every opportunity is nurtured. My experience managing businesses and sales cycles means I understand the importance of consistent follow-through and am not afraid to chase a deal. The goal is a predictable, growing pipeline that consistently meets targets.</p>
-            </div>
-            <div id="onboarding" class="tab-content">
-                <h3>Ensuring Long-Term Value</h3>
-                <p>Closing the deal is just the beginning. I believe in seamless handovers to the support crew to ensure a smooth client onboarding. Critically, I'll execute the 3–4 month post-sale follow-up to confirm that the client is seeing the value we promised. This builds trust, creates up-sell opportunities, and turns clients into advocates—a core part of my client engagement philosophy.</p>
+            <div class="max-w-4xl mx-auto">
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <button class="tab-button active" data-tab="prospecting">1. Prospecting &amp; Opening Doors</button>
+                    <button class="tab-button" data-tab="pitching">2. Pitching &amp; Insightful Demos</button>
+                    <button class="tab-button" data-tab="closing">3. Closing &amp; Client Success</button>
+                </div>
+                <div id="tab-content-display" class="tab-content">
+                    </div>
             </div>
         </section>
-
-        <!-- SECTION 4: THE PROOF -->
-        <section id="the-proof" class="content-section">
-            <div class="section-header">
-                <h2>The Proof is in the Projects</h2>
-                <p>Talk is cheap. Here are two projects that demonstrate my real-world ability to understand the market, build tech, and deliver value.</p>
+        
+        <section id="proof" class="section-container">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">The Proof is in the Projects</h2>
+                <p class="text-lg max-w-3xl mx-auto mt-4">Talk is cheap. Here’s tangible proof of my ability to understand a market, build solutions, and drive results.</p>
             </div>
-            <div class="proof-grid">
+            <div class="grid md:grid-cols-2 gap-8">
                 <div class="project-card">
-                    <div class="project-card-content">
-                        <h3>TradieAI - AI Consultancy</h3>
-                        <h4>Live Case Study in Your Target Market</h4>
-                        <p>My own venture, TradieAI, is direct proof of my ability to engage the construction and trades sector. I identify their pain points, develop and pitch bespoke AI and automation solutions, and manage the entire client relationship. This is hands-on experience in prospecting, selling, and delivering tech solutions to your exact customer base.</p>
-                        <a href="[http://www.tradieai.co.nz](http://www.tradieai.co.nz)" target="_blank" class="neon-button" style="text-align: center;">View TradieAI Website</a>
+                    <h3 class="text-2xl font-bold mb-2">TradieAI: Founder & Consultant</h3>
+                    <p class="mb-4">My own venture, born from identifying a critical need in the construction sector. I personally handle the entire B2B sales cycle: prospecting, pitching bespoke AI and automation solutions, and closing deals. This is direct, hands-on experience in your target market.</p>
+                    <a href="https://www.tradieai.co.nz" target="_blank" class="font-semibold text-neon-cyan hover:text-neon-cyan-hover transition-colors">Visit TradieAI &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3 class="text-2xl font-bold mb-2">Performance Analysis SaaS</h3>
+                    <p class="mb-4">I'm currently building a SaaS platform for performance analysis. This project demonstrates my deep understanding of software development, product value, and the ability to speak credibly about technology—essential for running "sharp, insight-driven online demos."</p>
+                    <a href="https://north-harbour-performance-tradiesai.replit.app/" target="_blank" class="font-semibold text-neon-cyan hover:text-neon-cyan-hover transition-colors">View the App &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="journey" class="section-container">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold">The Journey: Building a Top Performer</h2>
+                <p class="text-lg max-w-3xl mx-auto mt-4">A non-traditional path has equipped me with resilience, strategic thinking, and a powerful drive to succeed.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-bold">Entrepreneur & Founder</h3>
+                        <p class="text-sm text-neon-cyan">2019 - Present</p>
+                        <p>Founded and directed multiple businesses, including TradieAI. This is where I honed my B2B sales, project management, and problem-solving skills in the real world.</p>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-card-content">
-                        <h3>North Harbour Rugby SaaS</h3>
-                        <h4>Proof of Deep Tech Understanding</h4>
-                        <p>I'm currently building a performance analysis SaaS platform. This project showcases my ability to not just sell technology, but to understand it from the ground up—from concept and design to development and deployment. This deep knowledge is crucial for giving credible, insight-driven demos and truly understanding a client's technical needs.</p>
-                        <a href="[https://north-harbour-performance-tradiesai.replit.app/](https://north-harbour-performance-tradiesai.replit.app/)" target="_blank" class="neon-button" style="text-align: center;">View The Live App</a>
+                <div class="timeline-container right">
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-bold">NZ/AU Business Manager</h3>
+                        <p class="text-sm text-neon-cyan">2014 - 2019</p>
+                        <p>Managed sales and operations for EBOS Group, a major player. Drove revenue growth and learned the ins and outs of a structured, high-performance sales environment.</p>
+                    </div>
+                </div>
+                 <div class="timeline-container left">
+                    <div class="timeline-content">
+                        <h3 class="text-xl font-bold">Pro Rugby Player & Coach</h3>
+                        <p class="text-sm text-neon-cyan">1999 - 2015</p>
+                        <p>A decade in a high-pressure, results-driven environment taught me discipline, teamwork, and the relentless pursuit of targets—a mindset I apply directly to sales KPIs.</p>
+                        <img src="https://static.wixstatic.com/media/7b20bf_6939dbe67c87499d8554a2c0ba30ab5c~mv2.jpeg" alt="Rugby Background" class="mt-4 rounded-lg w-full h-auto object-cover">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 5: LET'S CONNECT -->
-        <section id="connect" class="content-section">
-            <div class="section-header" style="margin-bottom: 0;">
-                <h2>Let's build something great together.</h2>
-                <p>I am genuinely excited by this opportunity. My blend of B2B sales discipline, hands-on tech skills, and deep understanding of the construction sector makes me confident I can hit the ground running and start delivering results immediately. I'm ready to talk when you are.</p>
-                <div class="contact-info">
-                    <a href="mailto:joe@tradieai.co.nz">joe@tradieai.co.nz</a>
-                    <a href="tel:021993285">021 993 285</a>
+        <section id="contact" class="section-container text-center">
+             <h2 class="text-3xl md:text-4xl font-bold">Let's talk.</h2>
+                <p class="text-lg max-w-2xl mx-auto mt-4 mb-8">
+                    I have the drive, the experience, and the solution-first mindset to hit the ground running and deliver results. I'm ready to start opening doors and closing deals.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                    <a href="mailto:joe@tradieai.co.nz" class="glow-button">Email Me: joe@tradieai.co.nz</a>
+                    <p class="text-xl font-semibold text-text-primary">Call: 021 993 285</p>
                 </div>
-            </div>
         </section>
 
     </main>
-
-    <footer style="text-align: center; padding: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-        <p>&copy; 2024 Joe Ward. This interactive proposal was built to cut through the noise.</p>
+    
+    <footer class="text-center py-8">
+        <p>&copy; 2024 Joe Ward. Built with AI, passion, and a bit of code.</p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Active Nav Link on Scroll ---
-            const sections = document.querySelectorAll('.content-section');
+            // Active nav link on scroll
+            const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-link');
-
-            const observer = new IntersectionObserver((entries) => {
+            const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
-                                link.classList.add('active');
-                            }
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
                         });
                     }
                 });
-            }, { rootMargin: '-30% 0px -70% 0px' });
-
+            }, { rootMargin: "-50% 0px -50% 0px"});
             sections.forEach(section => observer.observe(section));
 
-            // --- Tab Functionality for "My Approach" section ---
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const tabId = button.getAttribute('data-tab');
-
-                    // Update button active state
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-
-                    // Update content active state
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                        if (content.id === tabId) {
-                            content.classList.add('active');
+            // Radar Chart
+            const ctx = document.getElementById('alignmentChart').getContext('2d');
+            const tooltipText = document.getElementById('tooltip-text');
+            const evidence = [
+                "With 3+ years B2B sales experience as a Business Manager and founder of TradieAI, I have a proven track record of driving new business and exceeding targets.",
+                "My experience with TradieAI gives me a deep, authentic understanding of the construction sector's pain points, making my consultative approach highly effective.",
+                "As an entrepreneur, my focus is always on prospecting and closing. I am self-motivated and thrive on the challenge of building a healthy sales pipeline from the ground up.",
+                "I build and present tech solutions (AI, SaaS, websites). I excel at running sharp, insight-driven demos that focus on genuine value and ROI, not a hard sell.",
+                "My background in professional sport and business management has ingrained a relentless drive to meet and exceed KPIs. I'm motivated by measurable success.",
+                "I built my own CRM and automation workflows using tools like N8N. I have excellent CRM habits and understand the importance of a well-managed pipeline."
+            ];
+            const data = {
+                labels: ['B2B Sales Success', 'Construction Sector Knowledge', 'Prospecting & Closing', 'Tech-Savvy Demos', 'KPI Driven', 'CRM Proficiency'],
+                datasets: [{
+                    label: 'Joe Ward\'s Alignment',
+                    data: [5, 5, 5, 4.5, 5, 4.5],
+                    backgroundColor: 'rgba(0, 245, 255, 0.2)',
+                    borderColor: 'rgb(0, 245, 255)',
+                    pointBackgroundColor: 'rgb(0, 245, 255)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(0, 245, 255)',
+                    pointRadius: 6,
+                    pointHoverRadius: 10,
+                }]
+            };
+            const config = {
+                type: 'radar',
+                data: data,
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                            pointLabels: { 
+                                font: { size: 14, family: "'Inter', sans-serif" },
+                                color: 'var(--text-primary)'
+                            },
+                            ticks: { display: false, beginAtZero: true, max: 5, stepSize: 1 }
                         }
-                    });
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            tooltipText.textContent = evidence[elements[0].index];
+                        }
+                    }
+                }
+            };
+            new Chart(ctx, config);
+
+            // Tabbed Content for Playbook
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContentDisplay = document.getElementById('tab-content-display');
+            const tabData = {
+                'prospecting': `
+                    <h3 class="text-2xl font-bold mb-4">1. Prospecting & Opening Doors</h3>
+                    <p class="mb-2">This is about intelligent, targeted outreach. I leverage my entrepreneurial mindset to identify high-value leads who have a genuine need for the solution. My approach is consultative from the first touchpoint, focusing on understanding their challenges rather than pushing a product.</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Strategy:</strong> Researching potential clients to understand their project pipeline and current challenges.</li>
+                        <li><strong>Execution:</strong> Using a multi-channel approach (email, phone, LinkedIn) with a value-led message.</li>
+                        <li><strong>Goal:</strong> To book a discovery call or demo by sparking curiosity about a better way of working.</li>
+                    </ul>`,
+                'pitching': `
+                    <h3 class="text-2xl font-bold mb-4">2. Pitching & Insightful Demos</h3>
+                    <p class="mb-2">A demo shouldn't be a generic feature list. It's a "show, don't tell" session tailored to the prospect's specific pain points. Having built tech solutions myself, I can confidently demonstrate how the platform solves their problems, turning abstract benefits into tangible ROI.</p>
+                     <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Preparation:</strong> Customizing the demo to address challenges uncovered in the discovery phase.</li>
+                        <li><strong>Delivery:</strong> Running a sharp, engaging online presentation that highlights demonstrable value.</li>
+                        <li><strong>Mindset:</strong> Acting as a consultant, not a salesperson, guiding them to the right solution.</li>
+                    </ul>`,
+                'closing': `
+                    <h3 class="text-2xl font-bold mb-4">3. Closing & Client Success</h3>
+                    <p class="mb-2">Closing is the natural result of a value-driven process. It's about ensuring all stakeholders are aligned and any barriers have been removed. My experience managing projects end-to-end means I have strong follow-through. I'm not afraid to chase a deal and ensure a smooth handover to the support team for successful onboarding.</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Action:</strong> Clearly outlining next steps and managing negotiations with a win-win focus.</li>
+                        <li><strong>Follow-through:</strong> Proactively managing the pipeline in the CRM to ensure no opportunity is missed.</li>
+                        <li><strong>Post-Sale:</strong> Following up post-sale to ensure the client is achieving the value promised, strengthening the relationship for the long term.</li>
+                    </ul>`
+            };
+            function showTab(tabId) {
+                tabContentDisplay.innerHTML = tabData[tabId];
+                tabButtons.forEach(button => {
+                    button.classList.toggle('active', button.dataset.tab === tabId);
                 });
+            }
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => showTab(button.dataset.tab));
             });
+            showTab('prospecting'); // Initial tab
         });
     </script>
-
 </body>
 </html>
