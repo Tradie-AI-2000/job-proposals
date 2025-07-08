@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joe Ward | Interactive Proposal for Outrun</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #00F5FF;
+            --neon-cyan-hover: #00B8D4;
+            --accent-magenta: #FF00FF;
+            --bg-gradient-start: #0A0A1A;
+            --bg-gradient-end: #1A202C;
+            --container-bg: rgba(26, 32, 44, 0.7);
+            --container-border: rgba(0, 245, 255, 0.2);
+            --text-primary: #F7FAFC;
+            --text-secondary: #A0AEC0;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-secondary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-primary);
+            text-shadow: 0 0 8px rgba(0, 245, 255, 0.3);
+        }
+        .section-container { padding-top: 6rem; padding-bottom: 6rem; }
+        .content-box {
+            background-color: var(--container-bg);
+            border: 1px solid var(--container-border);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .glow-button {
+            background-color: var(--neon-cyan);
+            color: var(--bg-gradient-end);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.7);
+            border: 0;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .glow-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--neon-cyan);
+            background-color: var(--neon-cyan-hover);
+        }
+        
+        /* Journey to Impact Timeline Styles */
+        .timeline-node {
+            position: relative;
+            padding: 20px 0;
+            cursor: pointer;
+        }
+        .timeline-node:before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--container-bg);
+            border: 4px solid var(--neon-cyan);
+            transition: all 0.3s ease;
+        }
+        .timeline-node.active:before, .timeline-node:hover:before {
+            transform: translateY(-50%) scale(1.2);
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+        .data-card {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-in-out, padding 0.7s ease-in-out;
+            padding: 0 1.5rem;
+            border-left: 2px solid var(--neon-cyan);
+            margin-left: -22px;
+            margin-top: 10px;
+        }
+        .data-card.open {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+        .skill-badge {
+            background: var(--container-bg);
+            color: var(--text-secondary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            transition: all 0.5s ease;
+            border: 1px solid var(--container-border);
+        }
+        .skill-badge.unlocked {
+            background: var(--neon-cyan);
+            color: var(--bg-gradient-end);
+            box-shadow: 0 0 10px var(--neon-cyan);
+            font-weight: 600;
+        }
+
+        /* Problem-Solution Matrix Styles */
+        .problem-matrix {
+            position: relative;
+            background: linear-gradient(rgba(10,10,26,0.9), rgba(10,10,26,0.9)), url('https://www.transparenttextures.com/patterns/cubes.png');
+            height: 400px;
+            border-radius: 12px;
+        }
+        .problem-hotspot {
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border: 2px dashed var(--container-border);
+            border-radius: 50%;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            padding: 10px;
+        }
+        .problem-hotspot:hover {
+            border-style: solid;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+            transform: scale(1.05);
+        }
+        .solution-capsule {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 600px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 100;
+        }
+        .solution-capsule.visible {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+        .impact-graph .bar {
+            width: 0%;
+            transition: width 1s ease-out 0.3s;
+        }
+        .solution-capsule.visible .impact-graph .bar {
+            width: 75%;
+        }
+        
+        /* Project Deep Dive Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="sticky top-0 z-40 backdrop-blur-lg bg-black/30 border-b border-container-border">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">JOE WARD</h1>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#journey" class="font-semibold text-white hover:text-neon-cyan transition-colors">JOURNEY</a>
+                <a href="#matrix" class="font-semibold text-white hover:text-neon-cyan transition-colors">MATRIX</a>
+                <a href="#proof" class="font-semibold text-white hover:text-neon-cyan transition-colors">PROOF</a>
+                <a href="#audit" class="font-semibold text-white hover:text-neon-cyan transition-colors">PROCESS</a>
+            </div>
+            <a href="#contact" class="glow-button hidden md:block">PARTNER UP</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <section id="home" class="section-container flex items-center justify-center min-h-[80vh]">
+            <div class="text-center">
+                <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 border-neon-cyan shadow-[0_0_20px_var(--neon-cyan)]">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">Hunter. Builder. Advisor.</h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">
+                    Outrun isn't looking for an employee; you're looking for a partner. An entrepreneur who can build a client base from the ground up because they understand the challenges. I've built businesses, sold B2B solutions across NZ/AU, and delivered the very tech and AI strategies you champion. Let's build together.
+                </p>
+                <a href="#journey" class="glow-button">See The Alignment</a>
+            </div>
+        </section>
+
+        <section id="journey" class="section-container">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold">An Entrepreneurial Journey</h2>
+                <p class="text-lg max-w-3xl mx-auto mt-4">My career has been defined by building things from scratch and driving growth. This is the exact DNA required for success at Outrun. Click each node to see why.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="md:col-span-2">
+                    <div class="relative border-l-2 border-dashed border-container-border ml-2">
+                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard(this, 'card1', ['skill-entrepreneurship', 'skill-consultation', 'skill-b2b'])">
+                            <h3 class="text-xl font-bold ml-10">Founder & AI Consultant (TradieAI)</h3>
+                            <p class="text-sm text-neon-cyan ml-10">2022 - Present</p>
+                            <div id="card1" class="data-card">
+                                <p class="mb-4">This isn't a side project; it's a blueprint for the Outrun model. I identify business pain points, then consult, build, and deploy tech and AI solutions to solve them. This is hands-on experience in building a client portfolio by delivering tangible, cost-saving value.</p>
+                                <h4 class="font-bold text-white mb-2">Direct Alignment:</h4>
+                                <p>This role required me to source clients, conduct needs analysis, and implement solutions—the core functions of an Outrun Consultant.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard(this, 'card2', ['skill-b2b', 'skill-engagement'])">
+                            <h3 class="text-xl font-bold ml-10">NZ/AU Business Manager (EBOS Group)</h3>
+                            <p class="text-sm text-neon-cyan ml-10">2014 - 2019</p>
+                            <div id="card2" class="data-card">
+                                <p class="mb-4">Managing B2B sales across New Zealand and Australia for a major corporation honed my ability to engage with senior leaders and decision-makers, understand complex business needs, and manage long-term client relationships in your target markets.</p>
+                            </div>
+                        </div>
+                         <div class="timeline-node ml-[-12px]" onclick="toggleDataCard(this, 'card3', ['skill-resilience', 'skill-selfmanagement'])">
+                            <h3 class="text-xl font-bold ml-10">Professional Rugby Player & Coach</h3>
+                            <p class="text-sm text-neon-cyan ml-10">1999 - 2015</p>
+                            <div id="card3" class="data-card">
+                                <p class="mb-4">A commission-only role requires immense discipline, ambition, and resilience. A 16-year career in professional sport is a testament to my drive, self-management, and unwavering focus on performance—key attributes for thriving as an independent consultant.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-1">
+                    <div class="content-box sticky top-32">
+                        <h3 class="text-2xl font-bold mb-4">Core Attributes</h3>
+                        <p class="text-sm mb-4">These are the capabilities I bring to the table, directly aligning with what you're looking for in a consultant.</p>
+                        <div id="skills-dashboard" class="flex flex-wrap gap-3">
+                           <span id="skill-b2b" class="skill-badge">B2B Sales Expertise</span>
+                           <span id="skill-consultation" class="skill-badge">Strategic Consultation</span>
+                           <span id="skill-engagement" class="skill-badge">C-Suite Engagement</span>
+                           <span id="skill-entrepreneurship" class="skill-badge">Entrepreneurial Drive</span>
+                           <span id="skill-resilience" class="skill-badge">Ambition & Resilience</span>
+                           <span id="skill-selfmanagement" class="skill-badge">Self-Management</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="matrix" class="section-container">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">The Outrun Opportunity Matrix</h2>
+                <p class="text-lg max-w-3xl mx-auto mt-4">I understand the dual value proposition of Outrun. Here's how I would approach common business challenges using your powerful toolkit. Click a problem to see the solution.</p>
+            </div>
+            <div class="problem-matrix content-box p-0">
+                <div class="problem-hotspot" style="top: 15%; left: 10%;" onclick="showSolution('solution1')"><span>High Local Labour Costs</span></div>
+                <div class="problem-hotspot" style="top: 55%; left: 25%;" onclick="showSolution('solution2')"><span>Repetitive Admin Overload</span></div>
+                <div class="problem-hotspot" style="top: 25%; right: 15%;" onclick="showSolution('solution3')"><span>Stagnant Sales Pipeline</span></div>
+                <div class="problem-hotspot" style="top: 65%; right: 5%;" onclick="showSolution('solution4')"><span>Inefficient Scaling</span></div>
+            </div>
+        </section>
+
+        <section id="proof" class="section-container">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">Proof of Capability: Project Deep Dive</h2>
+                <p class="text-lg max-w-3xl mx-auto mt-4">These projects are tangible proof of my ability to think like a consultant and act like a builder—the exact combination needed to succeed with Outrun.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="content-box cursor-pointer hover:border-neon-cyan transition-colors" onclick="openProjectModal('tradieai')">
+                    <h3 class="text-2xl font-bold mb-2">Case Study: The Consultant Mindset</h3>
+                    <p>My TradieAI venture is a real-world example of the Outrun model in action: consulting with SMEs, diagnosing operational drag, and implementing tech to boost profitability.</p>
+                    <a href="https://www.tradieai.co.nz" target="_blank" class="text-neon-cyan font-semibold mt-4 inline-block">Explore The Project &rarr;</a>
+                </div>
+                 <div class="content-box cursor-pointer hover:border-neon-cyan transition-colors" onclick="openProjectModal('rugbyapp')">
+                    <h3 class="text-2xl font-bold mb-2">Case Study: Concept to Execution</h3>
+                    <p>This SaaS build demonstrates my self-starter mentality. I can take an idea, learn the required systems, and build a functional product—proving I can independently drive results.</p>
+                     <a href="https://north-harbour-performance-tradiesai.replit.app/" target="_blank" class="text-neon-cyan font-semibold mt-4 inline-block">Explore The App &rarr;</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="audit" class="section-container">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">My Consultative Process</h2>
+                <p class="text-lg max-w-4xl mx-auto mt-4">
+                    The goal of showing you this AI Audit and report? To show you how I would tackle the consultative process when dealing with clients, leveraging the practical ways AI, automation & SaaS products can tackle operational niggles, from quoting and scheduling to keeping clients happy and the cash flow healthy. We're not about baffling you with buzzwords; we're about finding real solutions that fit your business.
+                </p>
+            </div>
+            <div class="content-box">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">A Real-World Example</h3>
+                        <p class="mb-6">This live report for a client is an example of my process. It shows my ability to analyze a business, identify key cost-centres and inefficiencies, and present tailored, high-value solutions—the very essence of the Outrun advisory role.</p>
+                        <a href="https://www.tradieai.co.nz/lifebuilt-ai-audit-report" target="_blank" class="glow-button">View Live Client Report</a>
+                    </div>
+                    <div>
+                        <img src="https://static.wixstatic.com/media/7b20bf_2273933dc26c42d7a6ec016cb4b67889~mv2.png" alt="AI Audit Report Example" class="rounded-lg shadow-lg border-2 border-container-border">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="section-container text-center">
+             <h2 class="text-3xl md:text-4xl font-bold">Let's Build a Portfolio.</h2>
+                <p class="text-lg max-w-2xl mx-auto mt-4 mb-8">
+                    For me, a commission-only role isn't a risk; it's an opportunity that aligns perfectly with my entrepreneurial background. I'm ready to leverage my experience, your platform, and our shared vision to build a significant client asset and drive exceptional results for businesses across NZ and Australia.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                    <a href="mailto:joe@tradieai.co.nz" class="glow-button">Email: joe@tradieai.co.nz</a>
+                    <p class="text-xl font-semibold text-text-primary">Call: 021 993 285</p>
+                </div>
+        </section>
+
+    </main>
+
+    <div id="solution-overlay" class="modal-overlay" onclick="closeAllModals()">
+        <div id="solution1" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
+        <div id="solution2" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
+        <div id="solution3" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
+        <div id="solution4" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
+    </div>
+    <div id="projectModal" class="modal-overlay" onclick="closeAllModals()">
+        <div class="modal-content content-box" onclick="event.stopPropagation()"></div>
+    </div>
+   
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Journey to Impact ---
+        const skillsDashboard = document.getElementById('skills-dashboard');
+        const allSkillBadges = skillsDashboard.querySelectorAll('.skill-badge');
+
+        window.toggleDataCard = function(element, cardId, skillsToUnlock) {
+            document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('active'));
+            element.classList.add('active');
+            
+            const alreadyOpen = document.querySelector('.data-card.open');
+            const card = document.getElementById(cardId);
+            
+            if (alreadyOpen && alreadyOpen.id !== cardId) {
+                alreadyOpen.classList.remove('open');
+            }
+            card.classList.toggle('open');
+            
+            allSkillBadges.forEach(badge => badge.classList.remove('unlocked'));
+            
+            if (card.classList.contains('open')) {
+                skillsToUnlock.forEach(skillId => {
+                    document.getElementById(skillId).classList.add('unlocked');
+                });
+            }
+        }
+
+        // --- Problem-Solution Matrix ---
+        const solutionOverlay = document.getElementById('solution-overlay');
+        const solutionCapsulesData = {
+            solution1: {
+                title: "Solution for High Local Labour Costs",
+                strategy: "Introduce Outrun's core offering: highly qualified, low-cost remote professionals from the Philippines. I would model the direct financial benefit, showcasing the potential 60-80% savings on specific roles (e.g., admin, customer service, marketing) and how that capital can be reinvested for growth.",
+                impact: "Radically improve profitability and operational leverage.",
+            },
+            solution2: {
+                title: "Solution for Repetitive Admin Overload",
+                strategy: "Deploy AI and automation tools to handle time-consuming tasks. My experience building these exact systems allows me to identify opportunities to automate invoicing, data entry, scheduling, and email management, freeing up key local staff for high-value work.",
+                impact: "Increase productivity and reduce operational friction.",
+            },
+            solution3: {
+                title: "Solution for Stagnant Sales Pipeline",
+                strategy: "Propose a blended solution. Use cost-effective offshore Sales Development Reps (SDRs) for lead generation and appointment setting, and pair them with an AI-powered CRM automation to ensure flawless follow-up and tracking. This creates a scalable growth engine.",
+                impact: "Boost lead volume and conversion rates at a fraction of the cost.",
+            },
+            solution4: {
+                title: "Solution for Inefficient Scaling",
+                strategy: "As a trusted advisor, I would present a strategic roadmap. We can place an offshore team to handle core operational delivery, managed by Outrun's proven systems. Simultaneously, we can implement tech solutions to manage the increased workload, ensuring the business scales smoothly and profitably.",
+                impact: "Enable sustainable growth without runaway costs.",
+            }
+        };
+
+        window.showSolution = function(solutionId) {
+            closeAllModals();
+            const capsule = document.getElementById(solutionId);
+            const data = solutionCapsulesData[solutionId];
+            capsule.innerHTML = `
+                <h3 class="text-2xl font-bold mb-4">${data.title}</h3>
+                <p class="mb-2"><strong>My Strategic Approach:</strong> ${data.strategy}</p>
+                <p class="mb-4"><strong>Anticipated Impact:</strong> <span class="text-neon-cyan">${data.impact}</span></p>
+                <h4 class="font-bold text-white mb-2">Profitability Boost Projection</h4>
+                <div class="impact-graph w-full bg-black/20 rounded-full h-4"><div class="bar bg-neon-cyan h-4 rounded-full" style="width: 30%;"></div></div>
+                <button class="glow-button mt-6 text-sm" onclick="closeAllModals()">Close Window</button>
+            `;
+            solutionOverlay.classList.add('visible');
+            capsule.classList.add('visible');
+            setTimeout(() => {
+                const bar = capsule.querySelector('.impact-graph .bar');
+                if (bar) {
+                    bar.style.width = '75%';
+                }
+            }, 100);
+        }
+
+        // --- Project Deep Dive ---
+        const projectModal = document.getElementById('projectModal');
+        const projectModalContent = projectModal.querySelector('.modal-content');
+        const projectData = {
+            tradieai: {
+                title: "Deep Dive: The Consultant Mindset in Action",
+                description: "This venture proves I can execute the Outrun playbook. It involved B2B prospecting, in-depth business audits, and delivering tech solutions to improve efficiency and profitability. This is my track record of building a business by being a trusted advisor who delivers measurable value.",
+                img: "https://static.wixstatic.com/media/7b20bf_2273933dc26c42d7a6ec016cb4b67889~mv2.png", 
+                metrics: { "Role": "Founder & Consultant", "Core Service": "Process Automation", "Market": "SMEs" }
+            },
+            rugbyapp: {
+                title: "Deep Dive: From Concept to Execution",
+                description: "Building this SaaS app demonstrates the self-discipline and drive essential for a commission-only role. It shows that I am a self-starter who can independently manage a project from idea to a finished product, a crucial skill for building a client portfolio from scratch.",
+                img: "https://static.wixstatic.com/media/7b20bf_6939dbe67c87499d8554a2c0ba30ab5c~mv2.jpeg",
+                metrics: { "Attribute": "Self-Starter", "Skill": "Rapid Tech Adoption", "Outcome": "Functional SaaS" }
+            }
+        };
+
+        window.openProjectModal = function(projectId) {
+            const data = projectData[projectId];
+            let metricsHTML = Object.entries(data.metrics).map(([key, value]) => `
+                <div class="text-center bg-black/20 p-3 rounded-lg">
+                    <p class="text-sm text-neon-cyan">${key}</p>
+                    <p class="text-xl font-bold text-white">${value}</p>
+                </div>
+            `).join('');
+
+            projectModalContent.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <h2 class="text-3xl font-bold mb
