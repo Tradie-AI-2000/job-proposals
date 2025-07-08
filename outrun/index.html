@@ -158,6 +158,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
         .modal-overlay.visible {
             opacity: 1;
@@ -171,6 +172,7 @@
             overflow-y: auto;
             transform: scale(0.9);
             transition: transform 0.4s ease;
+            cursor: default;
         }
         .modal-overlay.visible .modal-container {
              transform: scale(1);
@@ -199,10 +201,11 @@
 
         <section id="home" class="section-container flex items-center justify-center min-h-[80vh]">
             <div class="text-center">
-                <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 border-neon-cyan shadow-[0_0_20px_var(--neon-cyan)]">
+                <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward" class="w-40 h-40 rounded-full mx-auto mb-8 object-cover border-4 border-neon-cyan shadow-[0_0_20px_var(--neon-cyan)]">
+                <img src="https://www.outrun.co.nz/site/outrun/images//outrun-logo.png" alt="Outrun Logo" class="h-12 mx-auto mb-8">
                 <h2 class="text-4xl md:text-6xl font-bold mb-4">Hunter. Builder. Advisor.</h2>
                 <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">
-                    Outrun isn't looking for an employee; you're looking for a partner. An entrepreneur who can build a client base from the ground up because they understand the challenges. I've built businesses, sold B2B solutions across NZ/AU, and delivered the very tech and AI strategies you champion. Let's build together.
+                    Hi there, my name is Joe Ward and thanks for taking the time to look through this interactive job application. Outrun isn't looking for an employee; you're looking for a partner. An entrepreneur who can build a client base from the ground up because they understand the challenges. I've built businesses, sold B2B solutions across NZ/AU, and delivered the very tech and AI strategies you champion. Let's build together.
                 </p>
                 <a href="#journey" class="glow-button">See The Alignment</a>
             </div>
@@ -341,8 +344,8 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
     
-        // --- Data for Modals ---
-        const solutionCapsulesData = {
+        // --- DATA STORE ---
+        const solutionData = {
             solution1: {
                 title: "Solution for High Local Labour Costs",
                 strategy: "Introduce Outrun's core offering: highly qualified, low-cost remote professionals from the Philippines. I would model the direct financial benefit, showcasing the potential 60-80% savings on specific roles (e.g., admin, customer service, marketing) and how that capital can be reinvested for growth.",
@@ -382,28 +385,23 @@
             }
         };
 
-        // --- Generic Modal Functions ---
+        // --- ELEMENTS ---
         const solutionModal = document.getElementById('solutionModal');
         const projectModal = document.getElementById('projectModal');
         const solutionContent = document.getElementById('solutionContent');
         const projectContent = document.getElementById('projectContent');
-
+        
+        // --- FUNCTIONS ---
         function closeAllModals() {
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
+            document.querySelectorAll('.modal-overlay.visible').forEach(modal => {
                 modal.classList.remove('visible');
             });
         }
 
-        // Add event listeners to modal overlays to close them
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', closeAllModals);
-            modal.querySelector('.modal-container').addEventListener('click', e => e.stopPropagation());
-        });
-        
-        // --- Journey Timeline Interaction ---
-        const timelineNodes = document.querySelectorAll('.timeline-node');
-        const allSkillBadges = document.querySelectorAll('.skill-badge');
+        // --- EVENT LISTENERS ---
 
+        // 1. Journey Timeline Interaction
+        const timelineNodes = document.querySelectorAll('.timeline-node');
         timelineNodes.forEach(node => {
             node.addEventListener('click', () => {
                 const cardId = node.dataset.cardId;
@@ -411,21 +409,13 @@
                 const card = document.getElementById(cardId);
                 const isOpening = !card.classList.contains('open');
 
-                // Close all other cards and remove active state
-                document.querySelectorAll('.data-card.open').forEach(openCard => {
-                    if (openCard.id !== cardId) {
-                        openCard.classList.remove('open');
-                    }
-                });
-                timelineNodes.forEach(otherNode => otherNode.classList.remove('active'));
+                document.querySelectorAll('.data-card.open').forEach(c => c.classList.remove('open'));
+                timelineNodes.forEach(n => n.classList.remove('active'));
+                document.querySelectorAll('.skill-badge').forEach(b => b.classList.remove('unlocked'));
 
-                // Toggle the clicked card
-                card.classList.toggle('open');
-                
-                // Update skills and active state
-                allSkillBadges.forEach(badge => badge.classList.remove('unlocked'));
                 if (isOpening) {
                     node.classList.add('active');
+                    card.classList.add('open');
                     skills.forEach(skillId => {
                         document.getElementById(skillId)?.classList.add('unlocked');
                     });
@@ -433,45 +423,41 @@
             });
         });
 
-        // --- Problem Matrix Interaction ---
+        // 2. Problem Matrix Interaction
         document.querySelectorAll('.problem-hotspot').forEach(hotspot => {
             hotspot.addEventListener('click', () => {
-                const solutionId = hotspot.dataset.solutionId;
-                const data = solutionCapsulesData[solutionId];
+                const data = solutionData[hotspot.dataset.solutionId];
                 if (!data) return;
 
                 solutionContent.innerHTML = `
                     <div class="flex justify-between items-start">
                         <h3 class="text-2xl font-bold mb-4">${data.title}</h3>
-                        <button class="text-3xl font-semibold text-white hover:text-neon-cyan leading-none -mt-2" onclick="document.getElementById('solutionModal').classList.remove('visible')">&times;</button>
+                        <button class="text-3xl font-semibold text-white hover:text-neon-cyan leading-none -mt-2" data-close-button>&times;</button>
                     </div>
                     <p class="mb-2"><strong>My Strategic Approach:</strong> ${data.strategy}</p>
                     <p class="mb-4"><strong>Anticipated Impact:</strong> <span class="text-neon-cyan">${data.impact}</span></p>
                     <h4 class="font-bold text-white mb-2">Profitability Boost Projection</h4>
-                    <div class="w-full bg-black/20 rounded-full h-4"><div class="bar bg-neon-cyan h-4 rounded-full" style="width: 75%;"></div></div>
-                `;
+                    <div class="w-full bg-black/20 rounded-full h-4"><div class="bg-neon-cyan h-4 rounded-full" style="width: 75%;"></div></div>`;
                 solutionModal.classList.add('visible');
             });
         });
 
-        // --- Project Card Interaction ---
+        // 3. Project Card Interaction
         document.querySelectorAll('.interactive-card').forEach(card => {
             card.addEventListener('click', () => {
-                const projectId = card.dataset.projectId;
-                const data = projectData[projectId];
+                const data = projectData[card.dataset.projectId];
                 if (!data) return;
                 
-                let metricsHTML = Object.entries(data.metrics).map(([key, value]) => `
+                const metricsHTML = Object.entries(data.metrics).map(([key, value]) => `
                     <div class="text-center bg-black/20 p-3 rounded-lg">
                         <p class="text-sm text-neon-cyan">${key}</p>
                         <p class="text-xl font-bold text-white">${value}</p>
-                    </div>
-                `).join('');
+                    </div>`).join('');
 
                 projectContent.innerHTML = `
                     <div class="flex justify-between items-start">
                          <h2 class="text-3xl font-bold mb-4">${data.title}</h2>
-                         <button class="text-3xl font-semibold text-white hover:text-neon-cyan leading-none -mt-2" onclick="document.getElementById('projectModal').classList.remove('visible')">&times;</button>
+                         <button class="text-3xl font-semibold text-white hover:text-neon-cyan leading-none -mt-2" data-close-button>&times;</button>
                     </div>
                     <img src="${data.img}" alt="${data.title}" class="w-full h-64 object-cover rounded-lg mb-6 border-2 border-container-border">
                     <p class="mb-6">${data.description}</p>
@@ -479,14 +465,25 @@
                     <div class="grid grid-cols-3 gap-4 mb-6">${metricsHTML}</div>
                     <div class="text-center">
                         <a href="${data.link}" target="_blank" class="glow-button">Visit Live Project</a>
-                    </div>
-                `;
+                    </div>`;
                 projectModal.classList.add('visible');
             });
         });
 
-        // --- Keyboard Escape to close modals ---
-        document.addEventListener('keydown', function(event) {
+        // 4. Global Click Handler for Modals and Close Buttons (Event Delegation)
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('[data-close-button]') || e.target.matches('.modal-overlay')) {
+                closeAllModals();
+            }
+        });
+        
+        // Prevent clicks inside the modal from closing it
+        document.querySelectorAll('.modal-container').forEach(container => {
+            container.addEventListener('click', e => e.stopPropagation());
+        });
+
+        // 5. Keyboard Escape to close modals
+        document.addEventListener('keydown', (event) => {
             if (event.key === "Escape") {
                 closeAllModals();
             }
