@@ -61,7 +61,6 @@
             background-color: var(--neon-cyan-hover);
         }
         
-        /* Journey to Impact Timeline Styles */
         .timeline-node {
             position: relative;
             padding: 20px 0;
@@ -113,7 +112,6 @@
             font-weight: 600;
         }
 
-        /* Problem-Solution Matrix Styles */
         .problem-matrix {
             position: relative;
             background: linear-gradient(rgba(10,10,26,0.9), rgba(10,10,26,0.9)), url('https://www.transparenttextures.com/patterns/cubes.png');
@@ -122,8 +120,8 @@
         }
         .problem-hotspot {
             position: absolute;
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             border: 2px dashed var(--container-border);
             border-radius: 50%;
             color: var(--text-primary);
@@ -164,10 +162,9 @@
             transition: width 1s ease-out;
         }
         .solution-capsule.visible .impact-graph .bar {
-            width: 85%; /* Animate to this width */
+            width: 85%;
         }
         
-        /* Project Deep Dive Modal */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -197,12 +194,12 @@
 
     <header class="sticky top-0 z-40 backdrop-blur-lg bg-black/30">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <img src="https://www.parnell.net.nz/wp-content/uploads/2020/06/RUSH-Logo-Large-Positive-Fullname-copy.jpg" alt="Rush Digital Logo" class="h-10">
+            <h1 class="text-2xl font-bold">JOE WARD</h1>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#journey" class="font-semibold text-white hover:text-[var(--neon-cyan)] transition-colors">JOURNEY</a>
-                <a href="#matrix" class="font-semibold text-white hover:text-[var(--neon-cyan)] transition-colors">MATRIX</a>
-                <a href="#proof" class="font-semibold text-white hover:text-[var(--neon-cyan)] transition-colors">PROOF</a>
-                <a href="#audit" class="font-semibold text-white hover:text-[var(--neon-cyan)] transition-colors">AI AUDIT</a>
+                <a href="#journey" class="font-semibold text-white hover:text-neon-cyan transition-colors">JOURNEY</a>
+                <a href="#matrix" class="font-semibold text-white hover:text-neon-cyan transition-colors">MATRIX</a>
+                <a href="#proof" class="font-semibold text-white hover:text-neon-cyan transition-colors">PROOF</a>
+                <a href="#audit" class="font-semibold text-white hover:text-neon-cyan transition-colors">AI AUDIT</a>
             </div>
             <a href="#contact" class="glow-button hidden md:block">CONNECT</a>
         </nav>
@@ -212,50 +209,50 @@
 
         <section id="home" class="section-container flex items-center justify-center min-h-[80vh]">
             <div class="text-center">
-                <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 border-[var(--neon-cyan)] shadow-[0_0_20px_var(--neon-cyan)]">
-                <h2 class="text-4xl md:text-6xl font-bold mb-4">I Build What I Sell.</h2>
+                <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 border-neon-cyan shadow-[0_0_20px_var(--neon-cyan)]">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">A Builder Who Sells. A Strategist Who Delivers.</h2>
                 <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">
-                    Hi there, my name is Joe Ward. Thanks for taking the time to look through this interactive application. Rush isn't looking for an employee; you're looking for a partner. An entrepreneur who can build a client base from the ground up because they understand the challenges. I've built businesses, sold B2B solutions across NZ/AU, and delivered the very tech and AI strategies you champion. Let's build together.
+                    You don't just need a seller; you need a partner who can translate complex client challenges into tangible, human-centered technology. This is an interactive dive into how I build relationships and drive revenue for purpose-led tech.
                 </p>
-                <a href="#journey" class="glow-button">Explore My Proposal</a>
+                <a href="#journey" class="glow-button">Explore My Impact</a>
             </div>
         </section>
 
         <section id="journey" class="section-container">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold">Journey to Impact</h2>
-                <p class="text-lg max-w-3xl mx-auto mt-4">My career is a story of solving complex problems and delivering tangible results. Click each node to see the skills unlocked.</p>
+                <p class="text-lg max-w-3xl mx-auto mt-4">My career is a story of entrepreneurship, strategic growth, and relentless execution. Click each node to see the impact and the skills unlocked.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-12">
                 <div class="md:col-span-2">
-                    <div class="relative border-l-2 border-dashed border-[var(--container-border)] ml-2">
-                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard('card1', ['skill-b2b', 'skill-saas', 'skill-dm', 'skill-ai', 'skill-entrepreneur'])">
-                            <h3 class="text-xl font-bold ml-10">Entrepreneur & Founder (TradieAI)</h3>
-                            <p class="text-sm text-[var(--neon-cyan)] ml-10">2019 - Present</p>
+                    <div class="relative border-l-2 border-dashed border-container-border ml-2">
+                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard('card1', ['skill-entrepreneurship', 'skill-ai', 'skill-saas', 'skill-pm'])">
+                            <h3 class="text-xl font-bold ml-10">Founder & AI Consultant (TradieAI)</h3>
+                            <p class="text-sm text-neon-cyan ml-10">2022 - Present</p>
                             <div id="card1" class="data-card">
-                                <p class="mb-4">From concept to market, I handled the entire lifecycle. This venture proves my ability to identify a market need, build a technical solution, and drive B2B sales—the exact entrepreneurial mindset Rush values.</p>
+                                <p class="mb-4">Spearheaded a venture from concept to market, focusing on AI-driven solutions for SMEs. This involved end-to-end business development, client consultation, and building custom automations and applications to solve core business problems.</p>
                                 <h4 class="font-bold text-white mb-2">Quantifiable Achievements:</h4>
-                                <div class="w-full bg-[var(--container-bg)] rounded-full h-2.5 mb-4"><div class="bg-[var(--neon-cyan)] h-2.5 rounded-full" style="width: 80%"></div></div>
-                                <p class="text-sm italic">Achieved 80% client retention through strong outcomes and consultative support.</p>
+                                <div class="w-full bg-container-bg rounded-full h-2.5 mb-4"><div class="bg-neon-cyan h-2.5 rounded-full" style="width: 90%"></div></div>
+                                <p class="text-sm italic">Delivered solutions that reduced admin time for clients by up to 15 hours per week.</p>
                             </div>
                         </div>
-                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard('card2', ['skill-b2b', 'skill-sales', 'skill-csuite'])">
+                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard('card2', ['skill-b2b', 'skill-growth', 'skill-leadership'])">
                             <h3 class="text-xl font-bold ml-10">NZ/AU Business Manager (EBOS Group)</h3>
-                            <p class="text-sm text-[var(--neon-cyan)] ml-10">2014 - 2019</p>
+                            <p class="text-sm text-neon-cyan ml-10">2014 - 2019</p>
                             <div id="card2" class="data-card">
-                                <p class="mb-4">Managed complex B2B sales cycles and C-suite relationships across two countries for a major corporation. This role honed my skills in strategic account planning, pipeline management, and hitting ambitious revenue targets.</p>
+                                <p class="mb-4">Managed B2B sales and strategy across Australia and New Zealand. Drove revenue growth by building C-level relationships, managing complex sales cycles, and leading cross-functional teams to exceed ambitious targets.</p>
                                 <h4 class="font-bold text-white mb-2">Quantifiable Achievements:</h4>
-                                <div class="w-full bg-[var(--container-bg)] rounded-full h-2.5 mb-4"><div class="bg-[var(--neon-cyan)] h-2.5 rounded-full" style="width: 120%"></div></div>
+                                <div class="w-full bg-container-bg rounded-full h-2.5 mb-4"><div class="bg-neon-cyan h-2.5 rounded-full" style="width: 120%"></div></div>
                                 <p class="text-sm italic">Exceeded sales targets by an average of 20% year-on-year.</p>
                             </div>
                         </div>
-                         <div class="timeline-node ml-[-12px]" onclick="toggleDataCard('card3', ['skill-resilience', 'skill-leadership'])">
+                         <div class="timeline-node ml-[-12px]" onclick="toggleDataCard('card3', ['skill-resilience', 'skill-team'])">
                             <h3 class="text-xl font-bold ml-10">Professional Rugby Player & Coach</h3>
-                            <p class="text-sm text-[var(--neon-cyan)] ml-10">1999 - 2015</p>
+                            <p class="text-sm text-neon-cyan ml-10">1999 - 2015</p>
                             <div id="card3" class="data-card">
-                                <p class="mb-4">A career in high-performance sport instills a level of discipline, resilience, and focus on results that is directly transferable to a high-stakes business development environment where you 'live for the RUSH'.</p>
+                                <p class="mb-4">A 16-year career in high-performance sport instills a level of discipline, resilience, and a results-obsession that is directly transferable to a high-stakes business development environment. It's about strategy, teamwork, and execution under pressure.</p>
                                 <h4 class="font-bold text-white mb-2">Key Trait:</h4>
-                                <p>Unwavering focus on performance and a team-first, collaborative mindset essential for working with delivery teams.</p>
+                                <p>Unwavering focus on performance and a team-first, collaborative mindset to achieve a common goal.</p>
                             </div>
                         </div>
                     </div>
@@ -264,15 +261,15 @@
                     <div class="content-box sticky top-24">
                         <h3 class="text-2xl font-bold mb-4">Skills Dashboard</h3>
                         <div id="skills-dashboard" class="flex flex-wrap gap-3">
-                           <span id="skill-b2b" class="skill-badge">B2B Sales</span>
-                           <span id="skill-saas" class="skill-badge">SaaS & Tech</span>
-                           <span id="skill-dm" class="skill-badge">Digital Strategy</span>
-                           <span id="skill-ai" class="skill-badge">AI Solutions</span>
-                           <span id="skill-sales" class="skill-badge">Pipeline Management</span>
-                           <span id="skill-csuite" class="skill-badge">C-Suite Relationships</span>
-                           <span id="skill-entrepreneur" class="skill-badge">Entrepreneurship</span>
-                           <span id="skill-resilience" class="skill-badge">Resilience</span>
+                           <span id="skill-b2b" class="skill-badge">C-Suite B2B Sales</span>
+                           <span id="skill-growth" class="skill-badge">Strategic Growth</span>
+                           <span id="skill-ai" class="skill-badge">AI Transformation</span>
+                           <span id="skill-saas" class="skill-badge">SaaS & Product</span>
+                           <span id="skill-pm" class="skill-badge">Project Management</span>
                            <span id="skill-leadership" class="skill-badge">Leadership</span>
+                           <span id="skill-resilience" class="skill-badge">Resilience</span>
+                           <span id="skill-team" class="skill-badge">Team Collaboration</span>
+                           <span id="skill-entrepreneurship" class="skill-badge">Entrepreneurship</span>
                         </div>
                     </div>
                 </div>
@@ -282,29 +279,31 @@
         <section id="matrix" class="section-container">
              <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold">The Problem-Solution Matrix</h2>
-                <p class="text-lg max-w-3xl mx-auto mt-4">Rush solves complex challenges across key sectors. Here's how I'd approach them. Click a problem to see my proposed solution.</p>
+                <p class="text-lg max-w-3xl mx-auto mt-4">I excel at translating C-suite challenges into tangible technology solutions. Click a common industry problem to see how I'd approach it, aligning with RUSH's service portfolio.</p>
             </div>
             <div class="problem-matrix content-box p-0">
-                <div class="problem-hotspot" style="top: 15%; left: 10%;" onclick="showSolution('solution1')"><span>Legacy Systems in Fintech</span></div>
-                <div class="problem-hotspot" style="top: 55%; left: 25%;" onclick="showSolution('solution2')"><span>Patient Engagement in Health</span></div>
-                <div class="problem-hotspot" style="top: 25%; right: 15%;" onclick="showSolution('solution3')"><span>Grid Inefficiency in Energy</span></div>
-                <div class="problem-hotspot" style="top: 65%; right: 5%;" onclick="showSolution('solution4')"><span>Site Safety in Construction</span></div>
+                <div class="problem-hotspot" style="top: 15%; left: 10%;" onclick="showSolution('solution1')"><span>Fragmented Customer Experience (Retail)</span></div>
+                <div class="problem-hotspot" style="top: 55%; left: 25%;" onclick="showSolution('solution2')"><span>Supply Chain Inefficiency (Logistics)</span></div>
+                <div class="problem-hotspot" style="top: 25%; right: 15%;" onclick="showSolution('solution3')"><span>Scaling Legacy Systems (Fintech)</span></div>
+                <div class="problem-hotspot" style="top: 65%; right: 5%;" onclick="showSolution('solution4')"><span>Proving Innovation ROI (Enterprise)</span></div>
             </div>
         </section>
 
         <section id="proof" class="section-container">
              <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold">Project Deep Dive</h2>
-                <p class="text-lg max-w-3xl mx-auto mt-4">I don't just talk strategy; I build solutions. Click a card to launch an immersive deep dive into my work.</p>
+                <p class="text-lg max-w-3xl mx-auto mt-4">I don't just sell technology, I build it. This hands-on experience is my advantage in creating credible, high-value propositions. Click a card to see the proof.</p>
             </div>
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="content-box cursor-pointer hover:border-[var(--neon-cyan)] transition-colors" onclick="openProjectModal('tradieai')">
-                    <h3 class="text-2xl font-bold mb-2">TradieAI: AI & Automation Engine</h3>
-                    <p>My own venture, proving my ability to manage the full B2B sales cycle for digital and AI solutions in a specific niche. This is my entrepreneurial mindset in action.</p>
+                <div class="content-box cursor-pointer hover:border-neon-cyan transition-colors" onclick="openProjectModal('tradieai')">
+                     <img src="https://static.wixstatic.com/media/7b20bf_5132ad6d359e467c88404bbb59681508~mv2.png" alt="TradieAI Project" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <h3 class="text-2xl font-bold mb-2">TradieAI: AI Consultancy</h3>
+                    <p>My own venture, proving my ability to manage the full B2B lifecycle for AI and automation solutions in a specific niche.</p>
                 </div>
-                 <div class="content-box cursor-pointer hover:border-[var(--neon-cyan)] transition-colors" onclick="openProjectModal('rugbyapp')">
-                    <h3 class="text-2xl font-bold mb-2">Performance Analysis SaaS</h3>
-                    <p>A ground-up SaaS build that showcases my deep technical understanding, crucial for collaborating with technical leads and shaping credible, value-driven proposals.</p>
+                 <div class="content-box cursor-pointer hover:border-neon-cyan transition-colors" onclick="openProjectModal('nhp_saas')">
+                     <img src="https://static.wixstatic.com/media/7b20bf_6311bb07696b48759ad871ae968359e7~mv2.png" alt="North Harbour Performance SaaS" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <h3 class="text-2xl font-bold mb-2">North Harbour Performance SaaS</h3>
+                    <p>A ground-up SaaS build that showcases my deep technical understanding, crucial for credible, value-driven demos with technical leads.</p>
                 </div>
             </div>
         </section>
@@ -320,11 +319,13 @@
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div>
                         <h3 class="text-2xl font-bold mb-4">A Real-World Example</h3>
-                        <p class="mb-6">This is a link to a live, interactive report generated for a real client. It demonstrates my ability to analyze a business's needs, identify key pain points, and present tailored, high-value digital solutions in a clear and compelling way. This is the foundation of my sales process.</p>
+                        <p class="mb-6">This is a link to a live, interactive report for a real client. It demonstrates my ability to analyze needs, identify pain points, and present tailored, high-value digital solutions clearly and compellingly. This is the foundation of my sales process: moving from discovery to a tangible, valuable proposal.</p>
                         <a href="https://www.tradieai.co.nz/lifebuilt-ai-audit-report" target="_blank" class="glow-button">View Live AI Audit Report</a>
                     </div>
                     <div>
-                        <img src="https://static.wixstatic.com/media/7b20bf_2273933dc26c42d7a6ec016cb4b67889~mv2.png" alt="AI Audit Report Example" class="rounded-lg shadow-lg border-2 border-[var(--container-border)]">
+                        <a href="https://www.tradieai.co.nz/lifebuilt-ai-audit-report" target="_blank">
+                             <img src="https://static.wixstatic.com/media/7b20bf_2273933dc26c42d7a6ec016cb4b67889~mv2.png" alt="AI Audit Report Example" class="rounded-lg shadow-lg border-2 border-container-border hover:border-neon-cyan transition-all duration-300 transform hover:scale-105">
+                        </a>
                     </div>
                 </div>
             </div>
@@ -333,11 +334,11 @@
         <section id="contact" class="section-container text-center">
              <h2 class="text-3xl md:text-4xl font-bold">Let's Make Better Happen.</h2>
                 <p class="text-lg max-w-2xl mx-auto mt-4 mb-8">
-                    I have the B2B sales experience, the technical understanding, and the entrepreneurial mindset to drive new business for Rush. I'm ready to 'play the long game' and build sustainable growth. Let's talk about how I can start delivering results.
+                    I have the B2B sales experience, the technical understanding, and the resilient, results-focused mindset to be a top performer on your team. I'm ready to push the boundaries and help build technology that better serves humankind. Let's talk.
                 </p>
                 <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
                     <a href="mailto:joe@tradieai.co.nz" class="glow-button">Email: joe@tradieai.co.nz</a>
-                    <p class="text-xl font-semibold text-text-primary">Call: 021 993 285</p>
+                    <p class="text-xl font-semibold text-text-primary">Phone: 021 993 285</p>
                 </div>
         </section>
 
@@ -355,7 +356,6 @@
    
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // --- Journey to Impact ---
         const skillsDashboard = document.getElementById('skills-dashboard');
         const allSkillBadges = skillsDashboard.querySelectorAll('.skill-badge');
 
@@ -370,34 +370,32 @@
             
             if (card.classList.contains('open')) {
                 skillsToUnlock.forEach(skillId => {
-                    const skillEl = document.getElementById(skillId);
-                    if(skillEl) skillEl.classList.add('unlocked');
+                    document.getElementById(skillId).classList.add('unlocked');
                 });
             }
         }
 
-        // --- Problem-Solution Matrix ---
         const solutionOverlay = document.getElementById('solution-overlay');
         const solutionCapsulesData = {
             solution1: {
-                title: "Solution for Legacy Fintech Systems",
-                strategy: "Propose a phased modernization roadmap, starting with a microservices architecture to decouple critical functions. Introduce AI-driven fraud detection and personalized customer experience platforms to create immediate value and demonstrate ROI, paving the way for full transformation.",
-                tools: "Google Cloud/VertexAI, N8N, Figma",
+                title: "Solving Fragmented CX (Retail)",
+                strategy: "Utilise RUSH's 'Envision' & 'Explore' services. We'd conduct human-centred research to map the current customer journey, identifying pain points and opportunities for digital intervention. The goal is a unified commerce strategy, validated through rapid prototyping.",
+                tools: "Figma, User Journey Mapping, PoC Development",
             },
             solution2: {
-                title: "Solution for Patient Engagement",
-                strategy: "Develop a human-centered digital health platform that provides patients with easy access to their records, personalized health insights via AI, and automated appointment/medication reminders. Focus on accessibility and intuitive UI to drive adoption across all demographics.",
-                tools: "AppSheet, Google AI, Figma/FigJam",
+                title: "Solving Supply Chain Inefficiency (Logistics)",
+                strategy: "Deploy RUSH's 'Empower' service. We'd run an AI transformation workshop to pinpoint key bottlenecks, followed by developing a bespoke data and automation strategy to improve visibility, forecasting, and operational efficiency.",
+                tools: "AI/ML Modelling, N8N/Make.com, VertexAI",
             },
             solution3: {
-                title: "Solution for Grid Inefficiency",
-                strategy: "Implement an IoT and AI-powered monitoring system to predict demand, detect faults in real-time, and optimize energy distribution. This creates a more resilient and efficient grid, reducing waste and lowering operational costs for energy providers.",
-                tools: "Google Cloud, IoT Platforms, N8N",
+                title: "Solving Legacy System Scalability (Fintech)",
+                strategy: "A combination of 'Execute' and 'Evolve'. We'd architect and build a modern, scalable microservices-based platform, allowing for iterative development and seamless integration of new financial products while ensuring security and compliance.",
+                tools: "Cloud Architecture (Google Cloud), API Design, Agile Dev",
             },
             solution4: {
-                title: "Solution for Construction Site Safety",
-                strategy: "Deploy an AI-powered computer vision system (like R/VISION) to monitor sites for safety hazards, such as lack of PPE or proximity to heavy machinery. Real-time alerts to site managers can drastically reduce incidents and improve compliance.",
-                tools: "VertexAI, Computer Vision Models, Automation Agents",
+                title: "Solving The Innovation ROI Challenge (Enterprise)",
+                strategy: "My approach is to 'Play the long game'. I build strategic account plans that begin with small, high-impact 'Explore' projects to validate concepts and build trust with C-suite stakeholders, creating a clear roadmap for larger 'Execute' programs with demonstrable ROI at each stage.",
+                tools: "Strategic Account Planning, Value Proposition Design",
             }
         };
 
@@ -407,33 +405,32 @@
             const data = solutionCapsulesData[solutionId];
             capsule.innerHTML = `
                 <h3 class="text-2xl font-bold mb-4">${data.title}</h3>
-                <p class="mb-2"><strong>My Strategic Approach:</strong> ${data.strategy}</p>
-                <p class="mb-4"><strong>My Toolkit:</strong> ${data.tools}</p>
-                <h4 class="font-bold text-white mb-2">Impact Projection:</h4>
-                <div class="impact-graph w-full bg-black/20 rounded-full h-4"><div class="bar bg-[var(--neon-cyan)] h-4 rounded-full"></div></div>
+                <p class="mb-2"><strong>My Proposed Strategy:</strong> ${data.strategy}</p>
+                <p class="mb-4"><strong>My Toolkit / Relevant Experience:</strong> ${data.tools}</p>
+                <h4 class="font-bold text-white mb-2">Projected Impact Score:</h4>
+                <div class="impact-graph w-full bg-black/20 rounded-full h-4"><div class="bar bg-neon-cyan h-4 rounded-full"></div></div>
                 <button class="glow-button mt-6" onclick="closeAllModals()">Close</button>
             `;
             solutionOverlay.classList.add('visible');
             capsule.classList.add('visible');
         }
 
-        // --- Project Deep Dive ---
         const projectModal = document.getElementById('projectModal');
         const projectModalContent = projectModal.querySelector('.modal-content');
         const projectData = {
             tradieai: {
                 title: "Deep Dive: TradieAI",
-                description: "This venture is my live case study in building and selling a tech solution. It involved identifying a niche (trades & services), building a brand, and executing the full B2B sales cycle for AI and automation services. It's proof I can generate new business from the ground up.",
-                img: "https://static.wixstatic.com/media/7b20bf_6939dbe67c87499d8554a2c0ba30ab5c~mv2.jpeg", 
-                metrics: { "Sales Cycle": "30 Days Avg.", "Client Retention": "80%", "Key Service": "AI Automation" },
-                link: "https://www.tradieai.co.nz"
+                description: "This venture is my live case study in full-cycle business development. It involved identifying a niche (trades & services), building a brand, creating the service offering (AI Audits & Automation), and executing the B2B sales process from lead generation to closing and delivery.",
+                img: "https://static.wixstatic.com/media/7b20bf_5132ad6d359e467c88404bbb59681508~mv2.png",
+                link: "https://www.tradieai.co.nz",
+                metrics: { "Role": "Founder", "Key Service": "AI Automation", "Core Skill": "B2B Sales" }
             },
-            rugbyapp: {
+            nhp_saas: {
                 title: "Deep Dive: North Harbour Performance SaaS",
-                description: "Building this app showcases my ability to understand and articulate complex technical concepts, a key skill for selling SaaS and digital solutions credibly. It was built from scratch to solve a real-world data analysis problem for sports coaches.",
+                description: "Building this app from the ground up demonstrates my ability to understand and articulate complex technical concepts. This is critical for collaborating with technical leads at RUSH and building credible, value-driven solutions for clients.",
                 img: "https://static.wixstatic.com/media/7b20bf_6311bb07696b48759ad871ae968359e7~mv2.png",
-                metrics: { "Dev Cycle": "6 Months", "Core Tech": "Replit/JS", "Target User": "Coaches" },
-                link: "https://north-harbour-performance-tradiesai.replit.app/"
+                link: "https://north-harbour-performance-tradiesai.replit.app/",
+                metrics: { "Role": "Developer", "Core Tech": "Replit/JS", "Target User": "Coaches" }
             }
         };
 
@@ -441,26 +438,22 @@
             const data = projectData[projectId];
             let metricsHTML = Object.entries(data.metrics).map(([key, value]) => `
                 <div class="text-center">
-                    <p class="text-sm text-[var(--neon-cyan)]">${key}</p>
+                    <p class="text-sm text-neon-cyan">${key}</p>
                     <p class="text-xl font-bold">${value}</p>
                 </div>
             `).join('');
 
             projectModalContent.innerHTML = `
                 <h2 class="text-3xl font-bold mb-4">${data.title}</h2>
-                <img src="${data.img}" alt="${data.title}" class="w-full h-64 object-cover rounded-lg mb-4">
+                <a href="${data.link}" target="_blank"><img src="${data.img}" alt="${data.title}" class="w-full h-64 object-cover rounded-lg mb-4 border-2 border-transparent hover:border-neon-cyan transition-all"></a>
                 <p class="mb-6">${data.description}</p>
-                <h3 class="text-2xl font-bold mb-4 text-center">Key Metrics Dashboard</h3>
                 <div class="grid grid-cols-3 gap-4 content-box mb-6">${metricsHTML}</div>
-                <div class="text-center">
-                    <a href="${data.link}" target="_blank" class="glow-button">View Live Project</a>
-                </div>
-                 <button class="glow-button mt-6" onclick="closeAllModals()">Close</button>
+                <a href="${data.link}" target="_blank" class="glow-button">View Live Project</a>
+                <button class="glow-button mt-6" style="float: right;" onclick="closeAllModals()">Close</button>
             `;
             projectModal.classList.add('visible');
         }
 
-        // --- General Modal Closing ---
         window.closeAllModals = function() {
             document.querySelectorAll('.solution-capsule.visible').forEach(el => el.classList.remove('visible'));
             document.querySelectorAll('.modal-overlay.visible').forEach(el => el.classList.remove('visible'));
