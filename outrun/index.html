@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joe Ward | Interactive Proposal for Outrun</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -59,6 +58,9 @@
             transform: translateY(-3px);
             box-shadow: 0 0 25px var(--neon-cyan);
             background-color: var(--neon-cyan-hover);
+        }
+        .interactive-card {
+             cursor: pointer;
         }
         
         /* Journey to Impact Timeline Styles */
@@ -142,32 +144,8 @@
             box-shadow: 0 0 20px var(--neon-cyan);
             transform: scale(1.05);
         }
-        .solution-capsule {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            width: 90%;
-            max-width: 600px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            z-index: 100;
-        }
-        .solution-capsule.visible {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-            visibility: visible;
-        }
-        .impact-graph .bar {
-            width: 0%;
-            transition: width 1s ease-out 0.3s;
-        }
-        .solution-capsule.visible .impact-graph .bar {
-            width: 75%;
-        }
         
-        /* Project Deep Dive Modal */
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -176,7 +154,7 @@
             z-index: 50;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.4s ease;
+            transition: opacity 0.4s ease, visibility 0s 0.4s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -184,12 +162,21 @@
         .modal-overlay.visible {
             opacity: 1;
             visibility: visible;
+            transition: opacity 0.4s ease;
         }
-        .modal-content {
+        .modal-container {
             width: 90%;
-            max-width: 900px;
+            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+        .modal-overlay.visible .modal-container {
+             transform: scale(1);
+        }
+        #projectModal .modal-container {
+            max-width: 900px;
         }
     </style>
 </head>
@@ -229,7 +216,7 @@
             <div class="grid md:grid-cols-3 gap-12">
                 <div class="md:col-span-2">
                     <div class="relative border-l-2 border-dashed border-container-border ml-2">
-                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard(this, 'card1', ['skill-entrepreneurship', 'skill-consultation', 'skill-b2b'])">
+                        <div class="timeline-node" data-card-id="card1" data-skills="skill-entrepreneurship,skill-consultation,skill-b2b">
                             <h3 class="text-xl font-bold ml-10">Founder & AI Consultant (TradieAI)</h3>
                             <p class="text-sm text-neon-cyan ml-10">2022 - Present</p>
                             <div id="card1" class="data-card">
@@ -238,14 +225,14 @@
                                 <p>This role required me to source clients, conduct needs analysis, and implement solutions—the core functions of an Outrun Consultant.</p>
                             </div>
                         </div>
-                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard(this, 'card2', ['skill-b2b', 'skill-engagement'])">
+                        <div class="timeline-node" data-card-id="card2" data-skills="skill-b2b,skill-engagement">
                             <h3 class="text-xl font-bold ml-10">NZ/AU Business Manager (EBOS Group)</h3>
                             <p class="text-sm text-neon-cyan ml-10">2014 - 2019</p>
                             <div id="card2" class="data-card">
                                 <p class="mb-4">Managing B2B sales across New Zealand and Australia for a major corporation honed my ability to engage with senior leaders and decision-makers, understand complex business needs, and manage long-term client relationships in your target markets.</p>
                             </div>
                         </div>
-                         <div class="timeline-node ml-[-12px]" onclick="toggleDataCard(this, 'card3', ['skill-resilience', 'skill-selfmanagement'])">
+                         <div class="timeline-node" data-card-id="card3" data-skills="skill-resilience,skill-selfmanagement">
                             <h3 class="text-xl font-bold ml-10">Professional Rugby Player & Coach</h3>
                             <p class="text-sm text-neon-cyan ml-10">1999 - 2015</p>
                             <div id="card3" class="data-card">
@@ -277,10 +264,10 @@
                 <p class="text-lg max-w-3xl mx-auto mt-4">I understand the dual value proposition of Outrun. Here's how I would approach common business challenges using your powerful toolkit. Click a problem to see the solution.</p>
             </div>
             <div class="problem-matrix content-box p-0">
-                <div class="problem-hotspot" style="top: 15%; left: 10%;" onclick="showSolution('solution1')"><span>High Local Labour Costs</span></div>
-                <div class="problem-hotspot" style="top: 55%; left: 25%;" onclick="showSolution('solution2')"><span>Repetitive Admin Overload</span></div>
-                <div class="problem-hotspot" style="top: 25%; right: 15%;" onclick="showSolution('solution3')"><span>Stagnant Sales Pipeline</span></div>
-                <div class="problem-hotspot" style="top: 65%; right: 5%;" onclick="showSolution('solution4')"><span>Inefficient Scaling</span></div>
+                <div class="problem-hotspot" data-solution-id="solution1" style="top: 15%; left: 10%;"><span>High Local Labour Costs</span></div>
+                <div class="problem-hotspot" data-solution-id="solution2" style="top: 55%; left: 25%;"><span>Repetitive Admin Overload</span></div>
+                <div class="problem-hotspot" data-solution-id="solution3" style="top: 25%; right: 15%;"><span>Stagnant Sales Pipeline</span></div>
+                <div class="problem-hotspot" data-solution-id="solution4" style="top: 65%; right: 5%;"><span>Inefficient Scaling</span></div>
             </div>
         </section>
 
@@ -290,15 +277,15 @@
                 <p class="text-lg max-w-3xl mx-auto mt-4">These projects are tangible proof of my ability to think like a consultant and act like a builder—the exact combination needed to succeed with Outrun.</p>
             </div>
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="content-box cursor-pointer hover:border-neon-cyan transition-colors" onclick="openProjectModal('tradieai')">
+                <div class="content-box interactive-card" data-project-id="tradieai">
                     <h3 class="text-2xl font-bold mb-2">Case Study: The Consultant Mindset</h3>
                     <p>My TradieAI venture is a real-world example of the Outrun model in action: consulting with SMEs, diagnosing operational drag, and implementing tech to boost profitability.</p>
-                    <a href="https://www.tradieai.co.nz" target="_blank" class="text-neon-cyan font-semibold mt-4 inline-block">Explore The Project &rarr;</a>
+                    <span class="text-neon-cyan font-semibold mt-4 inline-block">Explore The Project &rarr;</span>
                 </div>
-                 <div class="content-box cursor-pointer hover:border-neon-cyan transition-colors" onclick="openProjectModal('rugbyapp')">
+                 <div class="content-box interactive-card" data-project-id="rugbyapp">
                     <h3 class="text-2xl font-bold mb-2">Case Study: Concept to Execution</h3>
                     <p>This SaaS build demonstrates my self-starter mentality. I can take an idea, learn the required systems, and build a functional product—proving I can independently drive results.</p>
-                     <a href="https://north-harbour-performance-tradiesai.replit.app/" target="_blank" class="text-neon-cyan font-semibold mt-4 inline-block">Explore The App &rarr;</a>
+                     <span class="text-neon-cyan font-semibold mt-4 inline-block">Explore The App &rarr;</span>
                 </div>
             </div>
         </section>
@@ -337,45 +324,24 @@
 
     </main>
 
-    <div id="solution-overlay" class="modal-overlay" onclick="closeAllModals()">
-        <div id="solution1" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
-        <div id="solution2" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
-        <div id="solution3" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
-        <div id="solution4" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
+    <div id="solutionModal" class="modal-overlay">
+        <div class="modal-container">
+            <div id="solutionContent" class="content-box">
+                </div>
+        </div>
     </div>
-    <div id="projectModal" class="modal-overlay" onclick="closeAllModals()">
-        <div class="modal-content content-box" onclick="event.stopPropagation()"></div>
+    
+    <div id="projectModal" class="modal-overlay">
+         <div class="modal-container">
+            <div id="projectContent" class="content-box">
+                </div>
+        </div>
     </div>
    
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // --- Journey to Impact ---
-        const skillsDashboard = document.getElementById('skills-dashboard');
-        const allSkillBadges = skillsDashboard.querySelectorAll('.skill-badge');
-
-        window.toggleDataCard = function(element, cardId, skillsToUnlock) {
-            document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('active'));
-            element.classList.add('active');
-            
-            const alreadyOpen = document.querySelector('.data-card.open');
-            const card = document.getElementById(cardId);
-            
-            if (alreadyOpen && alreadyOpen.id !== cardId) {
-                alreadyOpen.classList.remove('open');
-            }
-            card.classList.toggle('open');
-            
-            allSkillBadges.forEach(badge => badge.classList.remove('unlocked'));
-            
-            if (card.classList.contains('open')) {
-                skillsToUnlock.forEach(skillId => {
-                    document.getElementById(skillId).classList.add('unlocked');
-                });
-            }
-        }
-
-        // --- Problem-Solution Matrix ---
-        const solutionOverlay = document.getElementById('solution-overlay');
+    
+        // --- Data for Modals ---
         const solutionCapsulesData = {
             solution1: {
                 title: "Solution for High Local Labour Costs",
@@ -399,55 +365,133 @@
             }
         };
 
-        window.showSolution = function(solutionId) {
-            closeAllModals();
-            const capsule = document.getElementById(solutionId);
-            const data = solutionCapsulesData[solutionId];
-            capsule.innerHTML = `
-                <h3 class="text-2xl font-bold mb-4">${data.title}</h3>
-                <p class="mb-2"><strong>My Strategic Approach:</strong> ${data.strategy}</p>
-                <p class="mb-4"><strong>Anticipated Impact:</strong> <span class="text-neon-cyan">${data.impact}</span></p>
-                <h4 class="font-bold text-white mb-2">Profitability Boost Projection</h4>
-                <div class="impact-graph w-full bg-black/20 rounded-full h-4"><div class="bar bg-neon-cyan h-4 rounded-full" style="width: 30%;"></div></div>
-                <button class="glow-button mt-6 text-sm" onclick="closeAllModals()">Close Window</button>
-            `;
-            solutionOverlay.classList.add('visible');
-            capsule.classList.add('visible');
-            setTimeout(() => {
-                const bar = capsule.querySelector('.impact-graph .bar');
-                if (bar) {
-                    bar.style.width = '75%';
-                }
-            }, 100);
-        }
-
-        // --- Project Deep Dive ---
-        const projectModal = document.getElementById('projectModal');
-        const projectModalContent = projectModal.querySelector('.modal-content');
         const projectData = {
             tradieai: {
                 title: "Deep Dive: The Consultant Mindset in Action",
                 description: "This venture proves I can execute the Outrun playbook. It involved B2B prospecting, in-depth business audits, and delivering tech solutions to improve efficiency and profitability. This is my track record of building a business by being a trusted advisor who delivers measurable value.",
                 img: "https://static.wixstatic.com/media/7b20bf_2273933dc26c42d7a6ec016cb4b67889~mv2.png", 
-                metrics: { "Role": "Founder & Consultant", "Core Service": "Process Automation", "Market": "SMEs" }
+                metrics: { "Role": "Founder & Consultant", "Core Service": "Process Automation", "Market": "SMEs" },
+                link: "https://www.tradieai.co.nz"
             },
             rugbyapp: {
                 title: "Deep Dive: From Concept to Execution",
                 description: "Building this SaaS app demonstrates the self-discipline and drive essential for a commission-only role. It shows that I am a self-starter who can independently manage a project from idea to a finished product, a crucial skill for building a client portfolio from scratch.",
                 img: "https://static.wixstatic.com/media/7b20bf_6939dbe67c87499d8554a2c0ba30ab5c~mv2.jpeg",
-                metrics: { "Attribute": "Self-Starter", "Skill": "Rapid Tech Adoption", "Outcome": "Functional SaaS" }
+                metrics: { "Attribute": "Self-Starter", "Skill": "Rapid Tech Adoption", "Outcome": "Functional SaaS" },
+                link: "https://north-harbour-performance-tradiesai.replit.app/"
             }
         };
 
-        window.openProjectModal = function(projectId) {
-            const data = projectData[projectId];
-            let metricsHTML = Object.entries(data.metrics).map(([key, value]) => `
-                <div class="text-center bg-black/20 p-3 rounded-lg">
-                    <p class="text-sm text-neon-cyan">${key}</p>
-                    <p class="text-xl font-bold text-white">${value}</p>
-                </div>
-            `).join('');
+        // --- Generic Modal Functions ---
+        const solutionModal = document.getElementById('solutionModal');
+        const projectModal = document.getElementById('projectModal');
+        const solutionContent = document.getElementById('solutionContent');
+        const projectContent = document.getElementById('projectContent');
 
-            projectModalContent.innerHTML = `
-                <div class="flex justify-between items-start">
-                    <h2 class="text-3xl font-bold mb
+        function closeAllModals() {
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.classList.remove('visible');
+            });
+        }
+
+        // Add event listeners to modal overlays to close them
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', closeAllModals);
+            modal.querySelector('.modal-container').addEventListener('click', e => e.stopPropagation());
+        });
+        
+        // --- Journey Timeline Interaction ---
+        const timelineNodes = document.querySelectorAll('.timeline-node');
+        const allSkillBadges = document.querySelectorAll('.skill-badge');
+
+        timelineNodes.forEach(node => {
+            node.addEventListener('click', () => {
+                const cardId = node.dataset.cardId;
+                const skills = node.dataset.skills.split(',');
+                const card = document.getElementById(cardId);
+                const isOpening = !card.classList.contains('open');
+
+                // Close all other cards and remove active state
+                document.querySelectorAll('.data-card.open').forEach(openCard => {
+                    if (openCard.id !== cardId) {
+                        openCard.classList.remove('open');
+                    }
+                });
+                timelineNodes.forEach(otherNode => otherNode.classList.remove('active'));
+
+                // Toggle the clicked card
+                card.classList.toggle('open');
+                
+                // Update skills and active state
+                allSkillBadges.forEach(badge => badge.classList.remove('unlocked'));
+                if (isOpening) {
+                    node.classList.add('active');
+                    skills.forEach(skillId => {
+                        document.getElementById(skillId)?.classList.add('unlocked');
+                    });
+                }
+            });
+        });
+
+        // --- Problem Matrix Interaction ---
+        document.querySelectorAll('.problem-hotspot').forEach(hotspot => {
+            hotspot.addEventListener('click', () => {
+                const solutionId = hotspot.dataset.solutionId;
+                const data = solutionCapsulesData[solutionId];
+                if (!data) return;
+
+                solutionContent.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-2xl font-bold mb-4">${data.title}</h3>
+                        <button class="text-3xl font-semibold text-white hover:text-neon-cyan leading-none -mt-2" onclick="document.getElementById('solutionModal').classList.remove('visible')">&times;</button>
+                    </div>
+                    <p class="mb-2"><strong>My Strategic Approach:</strong> ${data.strategy}</p>
+                    <p class="mb-4"><strong>Anticipated Impact:</strong> <span class="text-neon-cyan">${data.impact}</span></p>
+                    <h4 class="font-bold text-white mb-2">Profitability Boost Projection</h4>
+                    <div class="w-full bg-black/20 rounded-full h-4"><div class="bar bg-neon-cyan h-4 rounded-full" style="width: 75%;"></div></div>
+                `;
+                solutionModal.classList.add('visible');
+            });
+        });
+
+        // --- Project Card Interaction ---
+        document.querySelectorAll('.interactive-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const projectId = card.dataset.projectId;
+                const data = projectData[projectId];
+                if (!data) return;
+                
+                let metricsHTML = Object.entries(data.metrics).map(([key, value]) => `
+                    <div class="text-center bg-black/20 p-3 rounded-lg">
+                        <p class="text-sm text-neon-cyan">${key}</p>
+                        <p class="text-xl font-bold text-white">${value}</p>
+                    </div>
+                `).join('');
+
+                projectContent.innerHTML = `
+                    <div class="flex justify-between items-start">
+                         <h2 class="text-3xl font-bold mb-4">${data.title}</h2>
+                         <button class="text-3xl font-semibold text-white hover:text-neon-cyan leading-none -mt-2" onclick="document.getElementById('projectModal').classList.remove('visible')">&times;</button>
+                    </div>
+                    <img src="${data.img}" alt="${data.title}" class="w-full h-64 object-cover rounded-lg mb-6 border-2 border-container-border">
+                    <p class="mb-6">${data.description}</p>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Key Metrics</h3>
+                    <div class="grid grid-cols-3 gap-4 mb-6">${metricsHTML}</div>
+                    <div class="text-center">
+                        <a href="${data.link}" target="_blank" class="glow-button">Visit Live Project</a>
+                    </div>
+                `;
+                projectModal.classList.add('visible');
+            });
+        });
+
+        // --- Keyboard Escape to close modals ---
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeAllModals();
+            }
+        });
+    });
+    </script>
+</body>
+</html>
