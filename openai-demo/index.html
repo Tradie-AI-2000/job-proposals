@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" x-data="darkMode()" :class="{ 'dark': isDark }" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joe Ward | Interactive Proposal</title>
+  <!-- Tailwind & Alpine & GSAP & Chart.js -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --neon-cyan: #00F5FF;
+      --neon-cyan-hover: #00B8D4;
+      --accent-magenta: #FF00FF;
+      --bg-start: #0A0A1A;
+      --bg-end: #1A202C;
+    }
+    body {
+      @apply font-inter bg-gradient-to-br from-[var(--bg-start)] to-[var(--bg-end)] text-secondary-dark antialiased;
+    }
+  </style>
+</head>
+<body class="relative">
+  <!-- Dark Mode Toggle -->
+  <button @click="toggle()" class="fixed bottom-4 right-4 bg-neon-cyan p-3 rounded-full shadow-lg z-50">
+    <template x-if="!isDark">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-bg-start" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 3v2m0 14v2m9-9h-2m-14 0H3m16.364-6.364l-1.414 1.414M6.05 17.95l-1.414 1.414M17.95 17.95l-1.414-1.414M6.05 6.05L4.636 7.464"/></svg>
+    </template>
+    <template x-if="isDark">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M21 12.79A9 9 0 1111.21 3c.06 2.07.92 4.11 2.48 5.65A6.993 6.993 0 0021 12.79z"/></svg>
+    </template>
+  </button>
+
+  <!-- Header -->
+  <header class="sticky top-0 backdrop-blur bg-black/30 z-40" x-init="highlightNav()">
+    <nav class="container mx-auto px-6 flex justify-between items-center py-4">
+      <h1 class="text-2xl font-bold text-white">JOE WARD</h1>
+      <div class="space-x-6 hidden md:flex">
+        <a href="#journey" :class="{'text-neon-cyan': active=='journey'}" @click="active='journey'" class="text-white hover:text-neon-cyan">JOURNEY</a>
+        <a href="#matrix" :class="{'text-neon-cyan': active=='matrix'}" @click="active='matrix'" class="text-white hover:text-neon-cyan">MATRIX</a>
+        <a href="#proof" :class="{'text-neon-cyan': active=='proof'}" @click="active='proof'" class="text-white hover:text-neon-cyan">PROOF</a>
+        <a href="#audit" :class="{'text-neon-cyan': active=='audit'}" @click="active='audit'" class="text-white hover:text-neon-cyan">AI AUDIT</a>
+      </div>
+      <a href="#contact" class="glow-button hidden md:inline-block">CONNECT</a>
+    </nav>
+  </header>
+
+  <main class="container mx-auto px-6">
+
+    <!-- Home Hero -->
+    <section id="home" class="min-h-[80vh] flex items-center justify-center section-container">
+      <div class="text-center" x-intersect.once="gsap.from($el, { y:50, opacity:0, duration:1 })">
+        <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-neon-cyan shadow-lg object-cover">
+        <h2 class="text-5xl font-bold text-white mb-4">Sales & Channel Architect</h2>
+        <p class="text-xl text-secondary mb-2 max-w-2xl mx-auto">I build solutions & drive growth with AI, SaaS & B2B expertise.</p>
+        <a href="#journey" class="glow-button mt-4">Begin The Journey</a>
+      </div>
+    </section>
+
+    <!-- Journey Timeline -->
+    <section id="journey" class="section-container relative" x-intersect.once="active='journey'">
+      <h2 class="text-4xl font-bold text-white text-center mb-6">Journey to Impact</h2>
+      <div class="relative border-l-2 border-dashed border-secondary-dark ml-4 pl-6">
+        <template x-for="(item,index) in timeline" :key="index">
+          <div class="timeline-node mb-12" @click="openDetail(index)" x-bind:class="{'cursor-pointer':true}" x-intersect.once="gsap.from($el, { x:-30, opacity:0, duration:1, delay:index*0.2 })">
+            <div class="flex items-center">
+              <div class="w-4 h-4 rounded-full bg-neon-cyan mr-4"></div>
+              <div>
+                <h3 class="text-2xl font-bold text-white" x-text="item.title"></h3>
+                <p class="text-cyan-200" x-text="item.period"></p>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+      <!-- Detail Slide-in Panel -->
+      <div x-show="selected!==null" x-transition class="fixed top-1/2 right-0 transform -translate-y-1/2 bg-black/80 p-6 rounded-l-lg w-96 z-40">
+        <button @click="selected=null" class="text-white float-right">✕</button>
+        <h4 class="text-xl font-bold text-white mb-2" x-text="timeline[selected].title"></h4>
+        <p class="text-secondary-dark mb-4" x-text="timeline[selected].desc"></p>
+        <div class="grid grid-cols-2 gap-4">
+          <template x-for="(m,i) in timeline[selected].metrics" :key="i">
+            <div class="text-center">
+              <p class="text-cyan-300" x-text="m.label"></p>
+              <p class="text-white font-bold" x-text="m.value"></p>
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem-Solution Matrix with Modal Carousel -->
+    <section id="matrix" class="section-container" x-intersect.once="active='matrix'">
+      <h2 class="text-4xl font-bold text-white text-center mb-6">Problem-Solution Matrix</h2>
+      <div class="relative content-box h-96 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+        <template x-for="(p,i) in problems" :key="i">
+          <div @click="current=i; openModal=true" class="problem-hotspot" x-bind:style="`top:${p.y};left:${p.x}`" x-text="p.label"></div>
+        </template>
+      </div>
+      <!-- Modal Carousel -->
+      <div x-show="openModal" class="modal-overlay flex" @click="openModal=false">
+        <div @click.stop class="solution-capsule content-box max-w-lg mx-auto">
+          <template x-if="current!==null">
+            <div>
+              <h3 class="text-2xl font-bold mb-2" x-text="solutions[current].title"></h3>
+              <p class="mb-2"><strong>Strategy:</strong> <span x-text="solutions[current].strategy"></span></p>
+              <p class="mb-4"><strong>Tools:</strong> <span x-text="solutions[current].tools"></span></p>
+              <canvas id="impactChart"></canvas>
+            </div>
+          </template>
+          <button @click="openModal=false" class="glow-button mt-4">Close</button>
+        </div>
+      </div>
+      <script>
+        document.addEventListener('alpine:init', () => {
+          Alpine.store('charts', {
+            render() {
+              const ctx = document.getElementById('impactChart').getContext('2d');
+              new Chart(ctx, {type:'bar', data:{labels:['ROI','Efficiency'], datasets:[{label:'Impact',data:[85,75]}]}});
+            }
+          });
+        });
+      </script>
+    </section>
+
+    <!-- Project Deep Dive Carousels -->
+    <section id="proof" class="section-container" x-intersect.once="active='proof'">
+      <h2 class="text-4xl font-bold text-white text-center mb-6">Project Deep Dive</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <template x-for="(p,i) in projects" :key="i">
+          <div @click="openProject=i; projModal=true" class="content-box hover:border-neon-cyan cursor-pointer transition">
+            <h3 class="text-2xl font-bold text-white mb-1" x-text="p.title"></h3>
+            <p class="text-secondary-dark text-sm" x-text="p.short"></p>
+          </div>
+        </template>
+      </div>
+      <div x-show="projModal" class="modal-overlay flex" @click="projModal=false">
+        <div @click.stop class="modal-content content-box">
+          <button @click="projModal=false" class="text-white float-right">✕</button>
+          <h3 class="text-3xl font-bold mb-4" x-text="projects[openProject].title"></h3>
+          <img :src="projects[openProject].img" alt="" class="w-full h-64 object-cover rounded-lg mb-4">
+          <p class="text-secondary-dark mb-4" x-text="projects[openProject].full"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Audit with Interactive Charts -->
+    <section id="audit" class="section-container" x-intersect.once="active='audit'">
+      <h2 class="text-4xl font-bold text-white text-center mb-6">My Consultative Process</h2>
+      <div class="content-box">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-2xl font-bold text-white mb-4">Live Audit Report</h3>
+            <p class="text-secondary-dark mb-6">Explore how I diagnose needs and recommend AI solutions tailored to your business.</p>
+            <a href="https://www.tradieai.co.nz/lifebuilt-ai-audit-report" target="_blank" class="glow-button">View Report</a>
+          </div>
+          <div>
+            <canvas id="auditChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <script>
+        document.addEventListener('alpine:init', ()=>{
+          new Chart(document.getElementById('auditChart'),{type:'radar',data:{labels:['Quoting','Scheduling','Follow-up','Reporting'],datasets:[{label:'Efficiency Score',data:[78,85,70,90]}]}});
+        });
+      </script>
+    </section>
+
+    <!-- Contact CTA -->
+    <section id="contact" class="section-container text-center" x-intersect.once="active='contact'">
+      <h2 class="text-4xl font-bold text-white mb-4">Let's Drive Growth Together</h2>
+      <p class="text-lg text-secondary-dark mb-8">Territory Manager Expertise | Channel Relationships | AI & SaaS Solutions</p>
+      <div class="flex justify-center space-x-6">
+        <a href="mailto:joe@tradieai.co.nz" class="glow-button">Email Me</a>
+        <a href="tel:+6421993285" class="glow-button">Call: +64 21 993 285</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Alpine Data -->
+  <script>
+    function darkMode(){ return {
+      isDark: false,
+      active: null,
+      timeline: [
+        { title:'Founder & CEO — TradieAI', period:'2025–Present', desc:'Building AI automations for trades.', metrics:[{label:'Retention',value:'80%'},{label:'Growth',value:'120%'}] },
+        { title:'Business Manager — EBOS', period:'2014–2019', desc:'Led sales in NZ/AU.', metrics:[{label:'YoY Sales',value:'+20%'},{label:'Team',value:'15+ members'}] },
+        { title:'Rugby Pro & Coach', period:'1999–2015', desc:'High-performance teamwork.', metrics:[{label:'Matches',value:'100+'},{label:'Titles',value:'3'}] }
+      ],
+      problems: [ {label:'Leads',x:'10%',y:'15%'}, {label:'Sales Cycle',x:'30%',y:'55%'},{label:'Channel',x:'75%',y:'25%'},{label:'Ops',x:'85%',y:'65%'} ],
+      solutions: [
+        { title:'Qualified Leads', strategy:'AI lead scoring + targeted outreach.', tools:'CRM, AI tools' },
+        { title:'Sales Cycle', strategy:'Automate proposals & follow-ups.', tools:'Zapier, n8n' },
+        { title:'Partner Enablement', strategy:'Training & co-selling.', tools:'Portals, CRM' },
+        { title:'Operational AI', strategy:'Workflow automation.', tools:'Apps Script, n8n' }
+      ],
+      projects: [
+        { title:'TradieAI Engine', short:'AI-driven sales engine.', full:'End-to-end B2B AI sales platform.', img:'https://static.wixstatic.com/media/7b20bf_5132ad6d359e467c88404bbb59681508~mv2.png' },
+        { title:'Performance SaaS', short:'Sports analytics tool.', full:'Real-time performance insights for coaches.', img:'https://static.wixstatic.com/media/7b20bf_6311bb07696b48759ad871ae968359e7~mv2.png' }
+      ],
+      selected:null, current:null, openModal:false, projModal:false,
+      toggle(){ this.isDark = !this.isDark },
+      highlightNav(){ const sections=['home','journey','matrix','proof','audit','contact'];
+        window.addEventListener('scroll',()=>{
+          sections.forEach(s=>{
+            if(window.scrollY >= document.getElementById(s).offsetTop - 100) this.active=s;
+          });
+        });
+      },
+      openDetail(i){ this.selected=i },
+    }}
+  </script>
+</body>
+</html>
