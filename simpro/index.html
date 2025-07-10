@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joe Ward | Interactive Proposal: Business Development Representative - Simpro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #00F5FF;
+            --neon-cyan-hover: #00B8D4;
+            --accent-magenta: #FF00FF;
+            --bg-gradient-start: #0A0A1A;
+            --bg-gradient-end: #1A202C;
+            --container-bg: rgba(26, 32, 44, 0.7);
+            --container-border: rgba(0, 245, 255, 0.2);
+            --text-primary: #F7FAFC;
+            --text-secondary: #A0AEC0;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-secondary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-primary);
+            text-shadow: 0 0 8px rgba(0, 245, 255, 0.3);
+        }
+        .section-container { padding-top: 6rem; padding-bottom: 6rem; }
+        .content-box {
+            background-color: var(--container-bg);
+            border: 1px solid var(--container-border);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .glow-button {
+            background-color: var(--neon-cyan);
+            color: var(--bg-gradient-end);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.7);
+            border: 0;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .glow-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--neon-cyan);
+            background-color: var(--neon-cyan-hover);
+        }
+        
+        /* Journey to Impact Timeline Styles */
+        .timeline-node {
+            position: relative;
+            padding: 20px 0;
+            cursor: pointer;
+        }
+        .timeline-node:before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--container-bg);
+            border: 4px solid var(--neon-cyan);
+            transition: all 0.3s ease;
+        }
+        .timeline-node:hover:before {
+            transform: translateY(-50%) scale(1.2);
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+        .data-card {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-in-out, padding 0.7s ease-in-out;
+            padding: 0 1.5rem;
+            border-left: 2px solid var(--neon-cyan);
+            margin-left: -22px;
+            margin-top: 10px;
+        }
+        .data-card.open {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+        .skill-badge {
+            background: var(--container-bg);
+            color: var(--text-secondary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            transition: all 0.5s ease;
+            border: 1px solid var(--container-border);
+        }
+        .skill-badge.unlocked {
+            background: var(--neon-cyan);
+            color: var(--bg-gradient-end);
+            box-shadow: 0 0 10px var(--neon-cyan);
+            font-weight: 600;
+        }
+
+        /* Problem-Solution Matrix Styles */
+        .problem-matrix {
+            position: relative;
+            background: linear-gradient(rgba(10,10,26,0.9), rgba(10,10,26,0.9)), url('https://www.transparenttextures.com/patterns/cubes.png');
+            height: 400px;
+            border-radius: 12px;
+        }
+        .problem-hotspot {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 2px dashed var(--container-border);
+            border-radius: 50%;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            padding: 5px;
+        }
+        .problem-hotspot:hover {
+            border-style: solid;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+            transform: scale(1.05);
+        }
+        .solution-capsule {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 600px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 100;
+        }
+        .solution-capsule.visible {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+        .impact-graph .bar {
+            width: 0%;
+            transition: width 1s ease-out;
+        }
+        .solution-capsule.visible .impact-graph .bar {
+            width: 85%; /* Animate to this width */
+        }
+        
+        /* Project Deep Dive Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="sticky top-0 z-40 backdrop-blur-lg bg-black/30">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">JOE WARD</h1>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#journey" class="font-semibold text-white hover:text-neon-cyan transition-colors">JOURNEY</a>
+                <a href="#matrix" class="font-semibold text-white hover:text-neon-cyan transition-colors">MATRIX</a>
+                <a href="#proof" class="font-semibold text-white hover:text-neon-cyan transition-colors">PROOF</a>
+                <a href="#audit" class="font-semibold text-white hover:text-neon-cyan transition-colors">AI AUDIT</a>
+            </div>
+            <a href="#contact" class="glow-button hidden md:block">CONNECT</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <section id="home" class="section-container flex items-center justify-center min-h-[80vh]">
+            <div class="text-center">
+                <img src="https://static.wixstatic.com/media/7b20bf_f5bbb0dfcffd42558c955d72740f7472~mv2.jpeg" alt="Joe Ward" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 border-neon-cyan shadow-[0_0_20px_var(--neon-cyan)]">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">Bridging Trades & Tech for Simpro's Growth.</h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">
+                    Kia ora! My name is Joe Ward, and I'm a Kiwi entrepreneur with a unique blend of trade and construction experience fused with a massive passion for AI and business automation. I'm incredibly excited by the opportunity to join Simpro as a Business Development Representative, ready to leverage my firsthand understanding of field service workflows and my expertise in building AI/automation products for tradies in NZ to drive your revenue growth.
+                </p>
+                <a href="#journey" class="glow-button">Begin The Journey</a>
+            </div>
+        </section>
+
+        <section id="journey" class="section-container">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold">Journey to Impact</h2>
+                <p class="text-lg max-w-3xl mx-auto mt-4">My career isn't just a list of jobs; it's a story of evolving skills and delivering results. Click each node to see the impact.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="md:col-span-2">
+                    <div class="relative border-l-2 border-dashed border-container-border ml-2">
+                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard('card1', ['skill-trade-biz', 'skill-consultative-sales', 'skill-ai-automation', 'skill-lead-gen', 'skill-crm'])">
+                            <h3 class="text-xl font-bold ml-10">Entrepreneur & Founder (TradieAI)</h3>
+                            <p class="text-sm text-neon-cyan ml-10">2025 - Present</p>
+                            <div id="card1" class="data-card">
+                                <p class="mb-4">As founder of TradieAI, I've directly engaged with trade and construction businesses, understanding their unique workflows and pain points. I've built and sold AI/automation products tailored specifically for tradies in NZ, demonstrating a strong consultative sales approach, lead generation capabilities, and the ability to effectively communicate technology's value within this sector. This experience provides me with invaluable insight into the very customers Simpro serves.</p>
+                                <h4 class="font-bold text-white mb-2">Quantifiable Achievement:</h4>
+                                <div class="w-full bg-container-bg rounded-full h-2.5 mb-4"><div class="bg-neon-cyan h-2.5 rounded-full" style="width: 90%"></div></div>
+                                <p class="text-sm italic">Successfully implemented AI solutions that streamlined operations for multiple trade businesses, leading to significant efficiency gains.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-node ml-[-12px]" onclick="toggleDataCard('card2', ['skill-sales-acumen', 'skill-relationship-building', 'skill-target-achievement', 'skill-biz-acumen'])">
+                            <h3 class="text-xl font-bold ml-10">NZ/AU Business Manager (EBOS Group)</h3>
+                            <p class="text-sm text-neon-cyan ml-10">2014 - 2019</p>
+                            <div id="card2" class="data-card">
+                                <p class="mb-4">Managed B2B sales and operations across two countries, consistently achieving and exceeding ambitious sales targets. This role provided extensive experience in structured sales cycles, pipeline management, and cultivating strong relationships with senior executives across diverse industries. It instilled a strong discipline for metric-driven performance and proactive problem-solving essential for sales success.</p>
+                                <h4 class="font-bold text-white mb-2">Quantifiable Achievement:</h4>
+                                <div class="w-full bg-container-bg rounded-full h-2.5 mb-4"><div class="bg-neon-cyan h-2.5 rounded-full" style="width: 85%"></div></div>
+                                <p class="text-sm italic">Exceeded sales targets by an average of 20% year-on-year across New Zealand and Australia, demonstrating consistent performance.</p>
+                            </div>
+                        </div>
+                         <div class="timeline-node ml-[-12px]" onclick="toggleDataCard('card3', ['skill-resilience', 'skill-communication', 'skill-teamwork'])">
+                            <h3 class="text-xl font-bold ml-10">Professional Rugby Player & Coach</h3>
+                            <p class="text-sm text-neon-cyan ml-10">1999 - 2015</p>
+                            <div id="card3" class="data-card">
+                                <p class="mb-4">A career in high-performance sport instilled unwavering discipline, resilience, and a relentless focus on achieving ambitious goals. This experience translates directly to the ability to work effectively under pressure, consistently hit sales targets, and contribute positively to a team-oriented culture, all vital for a BDR role at Simpro.</p>
+                                <h4 class="font-bold text-white mb-2">Key Trait:</h4>
+                                <p>Cultivated a results-focused mindset, thriving under pressure and demonstrating exceptional resilience in pursuit of team objectives.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-1">
+                    <div class="content-box sticky top-24">
+                        <h3 class="text-2xl font-bold mb-4">Skills Dashboard</h3>
+                        <div id="skills-dashboard" class="flex flex-wrap gap-3">
+                           <span id="skill-trade-biz" class="skill-badge">Trade & Field Service Business Acumen</span>
+                           <span id="skill-consultative-sales" class="skill-badge">Consultative Sales</span>
+                           <span id="skill-ai-automation" class="skill-badge">AI & Automation Products</span>
+                           <span id="skill-lead-gen" class="skill-badge">Lead Generation & Qualification</span>
+                           <span id="skill-crm" class="skill-badge">CRM Proficiency (Salesforce)</span>
+                           <span id="skill-sales-acumen" class="skill-badge">Sales Acumen</span>
+                           <span id="skill-relationship-building" class="skill-badge">Relationship Building</span>
+                           <span id="skill-target-achievement" class="skill-badge">Target Achievement</span>
+                           <span id="skill-biz-acumen" class="skill-badge">Business Acumen</span>
+                           <span id="skill-resilience" class="skill-badge">Resilience</span>
+                           <span id="skill-communication" class="skill-badge">Communication (Verbal/Written)</span>
+                           <span id="skill-teamwork" class="skill-badge">Teamwork & Culture Contribution</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="matrix" class="section-container">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">The Problem-Solution Matrix for Field Service</h2>
+                <p class="text-lg max-w-3xl mx-auto mt-4">I've analyzed common challenges faced by trade and field service businesses. Click a problem hotspot to see how Simpro's value proposition aligns with my approach.</p>
+            </div>
+            <div class="problem-matrix content-box p-0">
+                <div class="problem-hotspot" style="top: 15%; left: 10%;" onclick="showSolution('solution1')"><span>Inefficient Job Management</span></div>
+                <div class="problem-hotspot" style="top: 55%; left: 25%;" onclick="showSolution('solution2')"><span>Poor Quoting & Invoicing</span></div>
+                <div class="problem-hotspot" style="top: 25%; right: 15%;" onclick="showSolution('solution3')"><span>Disjointed Communication</span></div>
+                <div class="problem-hotspot" style="top: 65%; right: 5%;" onclick="showSolution('solution4')"><span>Lack of Business Visibility</span></div>
+            </div>
+        </section>
+
+        <section id="proof" class="section-container">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">Project Deep Dive</h2>
+                <p class="text-lg max-w-3xl mx-auto mt-4">Don't just take my word for it. Interact with my work, especially how it relates to understanding and solving problems for trade businesses.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="content-box cursor-pointer hover:border-neon-cyan transition-colors" onclick="openProjectModal('tradieai')">
+                    <h3 class="text-2xl font-bold mb-2">TradieAI: Building & Selling Solutions for Tradies</h3>
+                    <p>My own venture, demonstrating my deep understanding of trade contracting and field service business workflows, and my ability to effectively communicate the value of software solutions like Simpro.</p>
+                </div>
+                 <div class="content-box cursor-pointer hover:border-neon-cyan transition-colors" onclick="openProjectModal('rugbyapp')">
+                    <h3 class="text-2xl font-bold mb-2">North Harbour Performance SaaS: Learning Complex Software</h3>
+                    <p>A ground-up SaaS build showcasing my ability to quickly learn and master comprehensive software platforms, a key requirement for understanding and positioning Simpro's product effectively.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="audit" class="section-container">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">My Consultative Process: The AI Audit</h2>
+                <p class="text-lg max-w-4xl mx-auto mt-4">
+                    The goal of showing you this AI Audit and report? To show you how I would tackle the consultative process when dealing with clients, leveraging the practical ways AI, automation & SaaS products can tackle operational niggles, from quoting and scheduling to keeping clients happy and the cash flow healthy. We're not about baffling you with buzzwords; we're about finding real solutions that fit your business.
+                </p>
+            </div>
+            <div class="content-box">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">A Real-World Example for Trade Businesses</h3>
+                        <p class="mb-6">This is a link to a live, interactive report generated for a real client in the trades. It demonstrates my ability to analyze a business's needs, identify key pain points (like those Simpro solves), and present tailored, high-value digital solutions in a clear and compelling way. This consultative approach is fundamental to building strong relationships and effectively positioning Simpro's value proposition.</p>
+                        <a href="https://www.tradieai.co.nz/lifebuilt-ai-audit-report" target="_blank" class="glow-button">View Live AI Audit Report</a>
+                    </div>
+                    <div>
+                        <img src="https://static.wixstatic.com/media/7b20bf_2273933dc26c42d7a6ec016cb4b67889~mv2.png" alt="AI Audit Report Example" class="rounded-lg shadow-lg border-2 border-container-border">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="section-container text-center">
+             <h2 class="text-3xl md:text-4xl font-bold">Let's Make Better Happen.</h2>
+                <p class="text-lg max-w-2xl mx-auto mt-4 mb-8">
+                    I bring a unique fusion of hands-on trade experience, a consultative sales approach, and a proven track record in lead generation and hitting targets. I'm eager to contribute to Simpro's growth and positive culture.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                    <a href="mailto:joe@tradieai.co.nz" class="glow-button">Email Me: joe@tradieai.co.nz</a>
+                    <p class="text-xl font-semibold text-text-primary">Call: 021 993 285</p>
+                </div>
+        </section>
+
+    </main>
+
+    <div id="solution-overlay" class="modal-overlay" onclick="closeAllModals()">
+        <div id="solution1" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
+        <div id="solution2" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
+        <div id="solution3" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
+        <div id="solution4" class="solution-capsule content-box" onclick="event.stopPropagation()"></div>
+    </div>
+    <div id="projectModal" class="modal-overlay" onclick="closeAllModals()">
+        <div class="modal-content content-box" onclick="event.stopPropagation()"></div>
+    </div>
+   
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Journey to Impact ---
+        const skillsDashboard = document.getElementById('skills-dashboard');
+        const allSkillBadges = skillsDashboard.querySelectorAll('.skill-badge');
+
+        window.toggleDataCard = function(cardId, skillsToUnlock) {
+            document.querySelectorAll('.data-card').forEach(c => {
+                if(c.id !== cardId) c.classList.remove('open');
+            });
+            const card = document.getElementById(cardId);
+            card.classList.toggle('open');
+            
+            allSkillBadges.forEach(badge => badge.classList.remove('unlocked'));
+            
+            if (card.classList.contains('open')) {
+                skillsToUnlock.forEach(skillId => {
+                    document.getElementById(skillId).classList.add('unlocked');
+                });
+            }
+        }
+
+        // --- Problem-Solution Matrix ---
+        const solutionOverlay = document.getElementById('solution-overlay');
+        const solutionCapsulesData = {
+            solution1: {
+                title: "Solution for Inefficient Job Management",
+                strategy: "Highlight Simpro's comprehensive job management features, from scheduling and dispatch to real-time tracking, showing how it centralizes operations and reduces administrative burden. Emphasize the seamless flow of information from initial quote to final invoice, ensuring no details are missed and jobs are completed on time.",
+                tools: "Simpro Job Management Modules, Mobile Field Service Apps, Real-time Dashboards",
+            },
+            solution2: {
+                title: "Solution for Poor Quoting & Invoicing",
+                strategy: "Showcase Simpro's accurate and professional quoting tools that integrate with pricing databases, and its streamlined invoicing process. Stress how this improves cash flow, reduces errors, and enhances customer satisfaction by providing transparent and timely financial interactions.",
+                tools: "Simpro Quoting & Invoicing, Integrated Price Books, Automated Payment Reminders",
+            },
+            solution3: {
+                title: "Solution for Disjointed Communication",
+                strategy: "Focus on Simpro's ability to centralize all communication – internal team chat, client updates, and job notes – within a single platform. Explain how this eliminates miscommunication, improves collaboration between office and field staff, and ensures everyone is always on the same page, leading to better service delivery.",
+                tools: "Simpro Connect, In-app Messaging, Automated Client Notifications",
+            },
+            solution4: {
+                title: "Solution for Lack of Business Visibility",
+                strategy: "Demonstrate Simpro's powerful reporting and analytics capabilities. Explain how real-time insights into profitability, technician performance, and project status empower business owners to make informed decisions, identify areas for improvement, and drive sustainable growth, moving from reactive to proactive management.",
+                tools: "Simpro Reporting & Analytics, Custom Dashboards, Financial Integrations",
+            }
+        };
+
+        window.showSolution = function(solutionId) {
+            closeAllModals();
+            const capsule = document.getElementById(solutionId);
+            const data = solutionCapsulesData[solutionId];
+            capsule.innerHTML = `
+                <h3 class="text-2xl font-bold mb-4">${data.title}</h3>
+                <p class="mb-2"><strong>Strategy:</strong> ${data.strategy}</p>
+                <p class="mb-4"><strong>My Toolkit:</strong> ${data.tools}</p>
+                <h4 class="font-bold text-white mb-2">Impact Projection:</h4>
+                <div class="impact-graph w-full bg-black/20 rounded-full h-4"><div class="bar bg-neon-cyan h-4 rounded-full"></div></div>
+                <button class="glow-button mt-6" onclick="closeAllModals()">Close</button>
+            `;
+            solutionOverlay.classList.add('visible');
+            capsule.classList.add('visible');
+        }
+
+        // --- Project Deep Dive ---
+        const projectModal = document.getElementById('projectModal');
+        const projectModalContent = projectModal.querySelector('.modal-content');
+        const projectData = {
+            tradieai: {
+                title: "Deep Dive: TradieAI - Building & Selling Solutions for Tradies",
+                description: "This venture is my live case study in understanding the unique operational challenges of trade and field service businesses. It involved developing and selling AI/automation products directly to tradies in NZ, demonstrating my ability to identify pain points, craft compelling value propositions, and manage the full sales cycle within this specific industry. This experience directly informs my understanding of Simpro's target market and how to effectively position its solutions.",
+                img: "https://static.wixstatic.com/media/7b20bf_5132ad6d359e467c88404bbb59681508~mv2.png", 
+                metrics: { "Trade Client Engagement": "High", "Workflow Automation": "Tailored Solutions", "Consultative Sales": "Proven Track Record" },
+                link: "https://www.tradieai.co.nz"
+            },
+            rugbyapp: {
+                title: "Deep Dive: North Harbour Performance SaaS - Learning Complex Software",
+                description: "Building this AI-powered performance analysis SaaS from the ground up showcases my ability to quickly learn, understand, and master comprehensive software platforms. This technical aptitude is crucial for a BDR to effectively communicate the value and functionality of Simpro's robust software to potential customers, ensuring I can confidently advise on its capabilities and benefits.",
+                img: "https://static.wixstatic.com/media/7b20bf_6311bb07696b48759ad871ae968359e7~mv2.png",
+                metrics: { "Software Comprehension": "Rapid", "Technical Communication": "Clear & Concise", "Platform Mastery": "Demonstrated" },
+                link: "https://north-harbour-performance-tradiesai.replit.app/"
+            }
+        };
+
+        window.openProjectModal = function(projectId) {
+            const data = projectData[projectId];
+            let metricsHTML = Object.entries(data.metrics).map(([key, value]) => `
+                <div class="text-center">
+                    <p class="text-sm text-neon-cyan">${key}</p>
+                    <p class="text-xl font-bold">${value}</p>
+                </div>
+            `).join('');
+
+            projectModalContent.innerHTML = `
+                <h2 class="text-3xl font-bold mb-4">${data.title}</h2>
+                <img src="${data.img}" alt="${data.title}" class="w-full h-64 object-cover rounded-lg mb-4">
+                <p class="mb-6">${data.description}</p>
+                <h3 class="text-2xl font-bold mb-4 text-center">Key Metrics Dashboard</h3>
+                <div class="grid grid-cols-3 gap-4 content-box">${metricsHTML}</div>
+                <div class="text-center mt-6">
+                    <a href="${data.link}" target="_blank" class="glow-button">View Live Project</a>
+                </div>
+                 <button class="glow-button mt-6" onclick="closeAllModals()">Close</button>
+            `;
+            projectModal.classList.add('visible');
+        }
+
+        // --- General Modal Closing ---
+        window.closeAllModals = function() {
+            document.querySelectorAll('.solution-capsule.visible').forEach(el => el.classList.remove('visible'));
+            document.querySelectorAll('.modal-overlay.visible').forEach(el => el.classList.remove('visible'));
+        }
+    });
+    </script>
+</body>
+</html>
