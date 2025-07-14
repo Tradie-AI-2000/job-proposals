@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stryker Territory Manager: Joe Ward's 9-Month Strategic Growth Plan</title>
+    <title>Beyond Strategy AI: Joe Ward's 9-Month Strategic Sales Roadmap</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Subtle Blues (with stronger blues for emphasis) -->
+    <!-- Application Structure Plan: A single-page, multi-section interactive presentation. It begins with an impactful introduction, followed by a concise overview of Beyond's value. The core is a detailed 9-month roadmap presented through interactive tabs/sections, breaking down each quarter into specific activities, tools, and KPIs. It includes a "Day in the Life" simulation and a dedicated KPI dashboard. This structure is chosen to provide a comprehensive yet easily navigable overview of the strategic plan, emphasizing clarity, control, and measurable outcomes. -->
+    <!-- Visualization & Content Choices:
+        - Overall Roadmap: Interactive tabs for Q1, Q2, Q3, each revealing detailed text, lists, and specific KPIs. Justification: Allows for deep dive into each phase without overwhelming the user upfront.
+        - KPI Dashboard: Chart.js for bar charts (e.g., Lead Conversion Rate, Deal Velocity), line charts (e.g., Revenue Growth), and doughnut charts (e.g., Client Segmentation). Justification: Provides clear, quantifiable targets and visual progress tracking.
+        - Sales Funnel: Custom HTML/CSS funnel or stacked bar chart (Chart.js) to visualize conversion stages. Justification: Illustrates the sales process and potential bottlenecks.
+        - "Day in the Life": Stepper/toggle buttons to reveal sequential activities and associated tools. Justification: Offers an engaging, practical insight into daily operations.
+        - Tool Stack: Interactive cards with hover effects for tool descriptions. Justification: Visually presents the tech stack and its purpose.
+        - Meeting Effectiveness/Client Satisfaction: Mock interactive rating/feedback system. Justification: Demonstrates focus on continuous improvement and client success.
+        - Prospecting Filter (Mock): A simple dropdown/button group to show targeting strategy. Justification: Highlights data-driven lead generation. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F0F2F5; /* Lighter background for professional feel */
+            background-color: #F8F7F4;
             color: #1F2937;
-        }
-        .stryker-blue {
-            background-color: #0077C8; /* Stryker's primary blue */
-        }
-        .stryker-darkblue {
-            color: #004D99; /* Darker blue for text emphasis */
-        }
-        .stryker-light-bg {
-            background-color: #E6F3FA; /* Light blue tint */
         }
         .chart-container {
             position: relative;
@@ -42,10 +44,10 @@
             transition: color 0.3s ease;
         }
         .nav-link:hover {
-            color: #0077C8;
+            color: #3B82F6;
         }
         .section-content {
-            opacity: 0;
+            /* Removed opacity: 0; to ensure content is visible by default */
             transform: translateY(20px);
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
@@ -54,7 +56,7 @@
             transform: translateY(0);
         }
         .roadmap-tab {
-            background-color: #CFD8DC; /* Light gray */
+            background-color: #E5E7EB;
             color: #4B5563;
             padding: 1rem 1.5rem;
             border-radius: 0.5rem;
@@ -62,7 +64,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         .roadmap-tab.active {
-            background-color: #0077C8;
+            background-color: #3B82F6;
             color: white;
             font-weight: 600;
         }
@@ -92,309 +94,323 @@
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-gray-800">
-                <span class="text-stryker-darkblue">STRYKER</span> Sports Medicine
+                <span class="text-blue-600">BEYOND</span> Strategy
             </div>
             <div class="hidden md:flex space-x-8">
                 <a href="#intro" class="nav-link text-gray-600 font-medium">Introduction</a>
-                <a href="#my-value" class="nav-link text-gray-600 font-medium">My Value Prop</a>
-                <a href="#roadmap" class="nav-link text-gray-600 font-medium">My Growth Plan</a>
+                <a href="#beyond-value" class="nav-link text-gray-600 font-medium">Beyond's Value</a>
+                <a href="#roadmap" class="nav-link text-gray-600 font-medium">My Roadmap</a>
                 <a href="#day-in-life" class="nav-link text-gray-600 font-medium">A Day in Life</a>
                 <a href="#kpis" class="nav-link text-gray-600 font-medium">KPIs</a>
                 <a href="#contact" class="nav-link text-gray-600 font-medium">Contact</a>
             </div>
-            <a href="#roadmap" class="hidden md:block stryker-blue text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition-colors">View Plan</a>
+            <a href="#roadmap" class="hidden md:block bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">View Roadmap</a>
         </nav>
     </header>
 
     <main>
         <section id="intro" class="py-20 md:py-32">
             <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4 leading-tight">Driving Sports Medicine Growth: My Strategic Roadmap for Stryker</h1>
-                [cite_start]<p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-6">**Message from Joe Ward:** Thank you for the opportunity to present my vision for the Territory Manager - Sports Medicine role in Auckland. [cite: 58]</p>
-                [cite_start]<p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-6">My diverse background in business management, sales, and direct medical supply distribution, combined with a highly competitive drive, aligns perfectly with Stryker's mission to improve patient care through innovative solutions. [cite: 14, 15, 71]</p>
-                [cite_start]<p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">This roadmap details a focused, accountable, and results-driven approach to maximize sales, expand market presence, and foster lasting relationships within your established Auckland territory. [cite: 15]</p>
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4 leading-tight">Driving Growth: My Strategic Roadmap for Beyond</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-6">**Message from Joe Ward:** Hi Logan and Uli, thanks for taking the time to view my proposal.</p>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-6">It's an honor to present a comprehensive vision for accelerating Beyond's market presence and revenue. This roadmap is designed for clarity, accountability, and measurable results, reflecting the very principles Beyond embodies.</p>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">My commitment is to translate Beyond's powerful value proposition into tangible success for our clients, ensuring every interaction drives strategic execution and sustainable growth.</p>
             </div>
         </section>
 
-        <section id="my-value" class="py-20 bg-white">
-            <div class="container mx-auto px-6 section-content">
+        <section id="beyond-value" class="py-20 bg-white section-content">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My Value Proposition: Drive, Experience & Results for Stryker</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Leveraging a unique blend of competitive drive, direct medical sales experience, and entrepreneurial acumen to deliver exceptional territory growth.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Beyond's Core Value: Clarity & Control for Results</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Beyond helps businesses run focused meetings, track progress, and keep their senior leadership team moving forward. No more lost actions or forgotten decisions. It's built to integrate seamlessly with existing tool stacks.</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-                    <div class="stryker-light-bg rounded-xl p-6 shadow-sm">
-                        <span class="text-4xl mb-4 block">🏆</span>
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Competitive Drive</h3>
-                        [cite_start]<p class="text-gray-600 text-sm">Proven hunger for success from professional rugby background. [cite: 16, 74]</p>
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm">
+                        <span class="text-4xl mb-4 block">💡</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Run Meetings That Matter</h3>
+                        <p class="text-gray-600 text-sm">Clear agendas, automatic minutes, continuous improvement.</p>
                     </div>
-                    <div class="stryker-light-bg rounded-xl p-6 shadow-sm">
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm">
+                        <span class="text-4xl mb-4 block">🎯</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Track Actions, Not Promises</h3>
+                        <p class="text-gray-600 text-sm">Clear ownership, visual progress, 'nudge' feature.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm">
+                        <span class="text-4xl mb-4 block">🔗</span>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Stay Aligned. Keep Accountable.</h3>
+                        <p class="text-gray-600 text-sm">Real-time visibility, shared notes, strategic goal linkage.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-sm">
                         <span class="text-4xl mb-4 block">📈</span>
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Sales & Business Growth</h3>
-                        [cite_start]<p class="text-gray-600 text-sm">Track record in driving sales, optimizing operations, and expanding client bases. [cite: 15, 71]</p>
-                    </div>
-                    <div class="stryker-light-bg rounded-xl p-6 shadow-sm">
-                        <span class="text-4xl mb-4 block">🏥</span>
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Direct Medical Experience</h3>
-                        [cite_start]<p class="text-gray-600 text-sm">Experience selling sports medical supplies directly to clinics and hospitals. [cite: 71]</p>
-                    </div>
-                    <div class="stryker-light-bg rounded-xl p-6 shadow-sm">
-                        <span class="text-4xl mb-4 block">🤝</span>
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Team Collaboration</h3>
-                        [cite_start]<p class="text-gray-600 text-sm">Skilled in team leadership, thriving in collaborative environments. [cite: 15, 28, 48]</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Drive Your Strategy Forward</h3>
+                        <p class="text-gray-600 text-sm">One-page strategy, track key initiatives, measure what matters.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="roadmap" class="py-20">
-            <div class="container mx-auto px-6 section-content">
+        <section id="roadmap" class="py-20 section-content">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My 9-Month Strategic Growth Plan for the Stryker Territory</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">A phased approach to rapid onboarding, new business generation, and sustained territory growth within Sports Medicine.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My 9-Month Strategic Execution Roadmap</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">A phased approach to establish market presence, accelerate sales, and build lasting client relationships.</p>
                 </div>
 
                 <div class="flex justify-center space-x-4 mb-8">
-                    <button class="roadmap-tab active" data-tab="q1">Q1: Immersion & Initial Blitz</button>
-                    <button class="roadmap-tab" data-tab="q2">Q2: Deep Dive & Expansion</button>
-                    <button class="roadmap-tab" data-tab="q3">Q3: Optimization & Legacy Building</button>
+                    <button class="roadmap-tab active" data-tab="q1">Q1: Foundation & Sales Blitz</button>
+                    <button class="roadmap-tab" data-tab="q2">Q2: Engagement & Conversion Acceleration</button>
+                    <button class="roadmap-tab" data-tab="q3">Q3: Relationship Nurturing & Expansion</button>
                 </div>
 
                 <div id="q1-content" class="roadmap-content active bg-white rounded-xl p-8 shadow-lg border border-gray-200/50">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Q1: Immersion & Initial Blitz (Months 1-3)</h3>
-                    <p class="text-gray-600 mb-6">**Objective:** Rapidly integrate into Stryker, understand the existing territory, and immediately initiate targeted sales efforts to generate early wins and build pipeline momentum for Sports Medicine products.</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Q1: Foundation & Sales Blitz (Months 1-3)</h3>
+                    <p class="text-gray-600 mb-6">**Objective:** Rapidly onboard, understand the market, and immediately initiate targeted sales efforts to generate early wins and build pipeline momentum.</p>
                     
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 1: Stryker Immersion & Territory Mapping</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 1: Immersion & Immediate GTM</h4>
                     <ul class="list-disc list-inside text-gray-600 mb-4">
-                        [cite_start]<li>**Day 1-5: Product & Systems Deep Dive:** Full immersion into Stryker's Sports Medicine product portfolio (including Donjoy bracing [cite: 71][cite_start]), clinical applications, sales processes, and CRM system. [cite: 27, 49]</li>
-                        <li>**Week 1-2: Territory Audit & Key Account Identification:** Analyze existing territory performance data. [cite_start]Identify top-tier existing accounts (hospitals, large clinics [cite: 71]) for immediate relationship building and quick wins.</li>
-                        <li>**Week 2-4: Shadowing & Collaborative Learning:** Shadow experienced TMs and clinical specialists. Work closely with the dedicated five-person support team to understand operational nuances and service delivery.</li>
-                        <li>**Initial Outreach Strategy:** Begin planning personalized outreach to existing high-value clients to introduce myself and reinforce relationships.</li>
+                        <li>**Day 1-5: Deep Dive & Onboarding:** Full immersion into Beyond's platform, features, and existing client case studies. Shadowing product/dev teams.</li>
+                        <li>**Week 1-2: Initial Market Mapping & ICP Definition:**
+                            <ul class="list-circle list-inside ml-5">
+                                <li>Identify Ideal Customer Profile (ICP) based on initial understanding (e.g., growing SMEs, family-owned businesses, professional services, manufacturing).</li>
+                                <li>Analyze high-level industry pain points (meeting productivity, action tracking, strategy execution).</li>
+                            </ul>
+                        </li>
+                        <li>**Week 2-4: Rapid Prospecting & Outreach Launch:**
+                            <ul class="list-circle list-inside ml-5">
+                                <li>**Immediate List Building:** Leverage LinkedIn Sales Navigator and initial data enrichment tools to build a first wave of qualified prospect lists.</li>
+                                <li>**Personalized Cold Outreach:** Launch targeted, pain-point-driven email sequences and LinkedIn messages. Focus on booking initial discovery calls.</li>
+                                <li>**First Discovery Calls:** Begin conducting discovery calls, focusing on active listening and identifying immediate pain points where Beyond can provide quick wins.</li>
+                            </ul>
+                        </li>
+                        <li>**Tools Setup:** CRM (e.g., Salesforce/HubSpot), Sales Engagement Platform (e.g., Outreach.io/Salesloft), LinkedIn Sales Navigator, Data Enrichment Tools (e.g., ZoomInfo/Apollo.io).</li>
                     </ul>
 
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 2: New Business Hunt & Product Focus</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 2: Pipeline Building & Audit Initiation</h4>
                     <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>**Aggressive Prospecting:** Proactively 'hunt for new business' within the territory. [cite_start]Leverage professional network and medical directories to identify new physiotherapists, clinic owners, and emerging healthcare facilities. [cite: 71]</li>
-                        <li>**Targeted Product Education:** Focus on demonstrating key Sports Medicine products to identified prospects, highlighting features and benefits. [cite_start]Draw on past experience with relevant medical supplies [cite: 71] to articulate value.</li>
-                        <li>**Initial Sales Presentations & Demos:** Conduct first product demonstrations and sales presentations, focusing on understanding customer needs and positioning Stryker solutions.</li>
-                        <li>**Pipeline Build-Out:** Actively populate the CRM with new leads and progress existing opportunities through the sales funnel.</li>
+                        <li>**Aggressive Lead Generation:** Continue targeted list building and multi-channel outreach campaigns.</li>
+                        <li>**AI-Automated Lead Scoring:** Implement AI-driven lead scoring within CRM to prioritize prospects based on engagement and fit, ensuring focus on high-potential opportunities.</li>
+                        <li>**Qualification & Audit Framework Introduction:** Rigorous qualification of leads. Introduce the "AI Audit" framework early in the sales cycle to systematically uncover client needs and align them with Beyond's solutions.</li>
+                        <li>**Initial Audit Presentations:** Conduct first audits, demonstrating Beyond's understanding of their business challenges and potential solutions.</li>
                     </ul>
 
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 3: Early Wins & Feedback Loop</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 3: Early Wins & Process Refinement</h4>
                     <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>**Negotiation & Closing:** Drive initial deals to closure, demonstrating a competitive spirit and hunger for success. Target specific product lines for early sales traction.</li>
-                        <li>**Customer Feedback & Refinement:** Gather feedback from initial sales (both wins and losses) to refine approach, messaging, and product focus for the territory.</li>
-                        <li>**Internal Reporting & KPIs:** Regularly update internal teams on pipeline status, forecast, and sales activities. Focus on metrics like number of new qualified leads and initial deals closed.</li>
-                        <li>**Cross-functional Collaboration:** Continue to build strong relationships with the support team and clinical specialists to ensure seamless customer experience.</li>
+                        <li>**Proposal Development & Presentation:** Develop and present tailored proposals based on audit findings, focusing on clear ROI.</li>
+                        <li>**Negotiation & Closing:** Actively engage in negotiations, focusing on value-based selling. Aim for initial pilot programs or smaller deals to secure early wins.</li>
+                        <li>**Feedback Loop:** Collect feedback from initial interactions (both wins and losses) to continuously refine sales process, messaging, and target ICP.</li>
+                        <li>**KPI Focus:** Number of discovery calls booked, audits initiated, initial proposals submitted, and crucially, **first deals closed.**</li>
                     </ul>
-                    <p class="text-sm text-gray-500 mt-4">**Expected KPIs (Q1):** Achieve 70% of quarterly sales target. Generate 50+ new qualified leads. Conduct 20+ product demonstrations/presentations.</p>
                 </div>
 
                 <div id="q2-content" class="roadmap-content bg-white rounded-xl p-8 shadow-lg border border-gray-200/50">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Q2: Deep Dive & Expansion (Months 4-6)</h3>
-                    <p class="text-gray-600 mb-6">**Objective:** Deepen engagement with key accounts, accelerate conversion rates, and identify expansion opportunities within both existing and new client segments.</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Q2: Engagement & Conversion Acceleration (Months 4-6)</h3>
+                    <p class="text-gray-600 mb-6">**Objective:** Deepen client engagement, refine the sales process, and drive initial conversions by clearly demonstrating ROI.</p>
 
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 4: Strategic Account Engagement & Solution Selling</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 4: Tailored Solution & Proposal Development</h4>
                     <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>**Key Account Strategy Implementation:** Develop and execute tailored strategies for high-potential accounts, focusing on a broader range of Sports Medicine products.</li>
-                        <li>**Value-Based Conversations:** Shift conversations from product features to comprehensive solutions that address specific clinical challenges and improve patient outcomes.</li>
-                        <li>**Clinical Collaboration:** Facilitate deeper engagement between client clinical staff and Stryker clinical specialists for advanced product education and support.</li>
+                        <li>**Deep Dive Audit & Analysis:** Conduct detailed follow-up sessions based on initial audit findings. Use Beyond's internal tools to map client workflows.</li>
+                        <li>**Value Proposition Customization:** Tailor Beyond's features to specific client pain points, demonstrating how "Meetings That Matter" or "Track Actions, Not Promises" directly solve their issues (e.g., for a manufacturing client, how Beyond streamlines production meetings and tracks shop floor actions).</li>
+                        <li>**Proposal Crafting:** Develop bespoke proposals, including clear ROI projections and implementation roadmaps. Leverage AI for data-driven ROI calculations.</li>
+                        <li>**Interactive Presentation Development:** Create dynamic HTML presentations for each key prospect, visually articulating the value.</li>
                     </ul>
 
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 5: Objection Mastery & Advanced Negotiation</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 5: Negotiation & Closing Strategies</h4>
                     <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>**Advanced Objection Handling:** Proactively address complex objections related to competitive products, pricing, or adoption. Leverage in-depth product knowledge and clinical data.</li>
-                        <li>**Strategic Negotiations:** Conduct multi-stakeholder negotiations, focusing on long-term value propositions and mutually beneficial agreements.</li>
-                        <li>**Product Adoption & Training:** Work with the support team to ensure effective product implementation and ongoing training for new clients.</li>
+                        <li>**Objection Handling Workshop:** Proactively identify and prepare for common sales objections, focusing on Beyond's integration capabilities and ease of adoption.</li>
+                        <li>**Value-Based Negotiation:** Focus discussions on the value Beyond delivers, not just cost. Utilize case studies and testimonials.</li>
+                        <li>**Trial/Pilot Programs:** Offer structured pilot programs for key prospects to experience Beyond's benefits firsthand, with clear success metrics.</li>
+                        <li>**Closing Techniques:** Implement effective closing strategies, ensuring all stakeholders are aligned.</li>
                     </ul>
 
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 6: Pipeline Acceleration & Market Penetration</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 6: Onboarding Handoff & Initial Success</h4>
                     <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>**Pipeline Optimization:** Rigorously manage the sales pipeline, focusing on accelerating deal velocity and converting qualified opportunities.</li>
-                        <li>**Market Penetration Initiatives:** Identify untapped segments within the territory (e.g., specialized clinics, sports teams) and develop strategies for market entry.</li>
-                        <li>**Competitive Wins:** Actively pursue opportunities to displace competitor products by clearly articulating Stryker's superior value.</li>
+                        <li>**Seamless Handoff:** Ensure smooth transition of new clients to the onboarding/customer success team.</li>
+                        <li>**First Success Stories:** Work closely with customer success to identify and document initial client wins and positive feedback.</li>
+                        <li>**Feedback Loop:** Collect feedback from closed/lost deals to continuously refine sales process and messaging.</li>
+                        <li>**KPI Focus:** Number of proposals submitted, pilot programs initiated, deals closed, average deal size.</li>
                     </ul>
-                    <p class="text-sm text-gray-500 mt-4">**Expected KPIs (Q2):** Achieve 90% of quarterly sales target. Increase average deal size by 15%. Improve lead-to-opportunity conversion rate by 10%.</p>
                 </div>
 
                 <div id="q3-content" class="roadmap-content bg-white rounded-xl p-8 shadow-lg border border-gray-200/50">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Q3: Optimization & Legacy Building (Months 7-9)</h3>
-                    <p class="text-gray-600 mb-6">**Objective:** Consolidate success, optimize territory performance, cultivate long-term client loyalty, and identify strategic growth opportunities for the future.</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Q3: Relationship Nurturing & Expansion (Months 7-9)</h3>
+                    <p class="text-gray-600 mb-6">**Objective:** Cultivate long-term client relationships, drive adoption, identify expansion opportunities, and generate referrals.</p>
 
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 7: Account Optimization & Deepening Relationships</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 7: Account Management & Value Reinforcement</h4>
                     <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>**Strategic Account Reviews:** Conduct in-depth business reviews with top clients, demonstrating ROI and identifying opportunities for expanded product usage.</li>
-                        <li>**Client Education & Workshops:** Facilitate educational sessions or workshops for client staff on new Stryker products or advanced techniques.</li>
-                        <li>**Feedback Integration for Product Development:** Channel client feedback and market insights to Stryker's product development and marketing teams.</li>
+                        <li>**Regular Check-ins:** Schedule proactive check-ins with existing clients to ensure satisfaction and identify new use cases.</li>
+                        <li>**Value Reviews:** Conduct quarterly business reviews (QBRs) showcasing the ROI Beyond has delivered for their business using data from Beyond's scorecards.</li>
+                        <li>**Problem Solving:** Act as a strategic advisor, helping clients leverage Beyond to solve evolving challenges.</li>
+                        <li>**Feedback Integration:** Gather client feedback on product features and relay to product team for continuous improvement.</li>
                     </ul>
 
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 8: Upselling, Cross-selling & Referral Generation</h4>
+                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 8: Upselling, Cross-selling & Referrals</h4>
                     <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>**Maximize Account Potential:** Proactively identify opportunities to upsell higher-value Sports Medicine solutions or cross-sell complementary Stryker products within existing accounts.</li>
-                        <li>**Referral Program Activation:** Systematically encourage satisfied clients to provide testimonials and direct referrals for new business.</li>
-                        <li>**Case Study Development:** Collaborate with Stryker marketing to develop compelling case studies from successful territory implementations.</li>
+                        <li>**Identify Expansion Opportunities:** Based on client success, identify opportunities to upsell additional Beyond features or cross-sell to other departments within the client organization.</li>
+                        <li>**Referral Program Activation:** Encourage satisfied clients to provide testimonials and referrals.</li>
+                        <li>**Case Study Development:** Collaborate with marketing to develop compelling case studies from successful client implementations.</li>
+                        <li>**Industry Events:** Represent Beyond at relevant industry events and conferences, leveraging client success stories.</li>
                     </ul>
 
                     <h4 class="text-xl font-semibold text-gray-700 mb-3">Month 9: Strategic Review & Future Planning</h4>
                     <ul class="list-disc list-inside text-gray-600 mb-4">
-                        <li>**Comprehensive Territory Performance Review:** Analyze overall Q1-Q3 performance against all KPIs and annual targets.</li>
-                        <li>**Annual Planning Input:** Develop a detailed plan for the next year, outlining strategic accounts, growth initiatives, and market penetration goals.</li>
-                        [cite_start]<li>**Innovation Scouting:** Stay abreast of new technologies (including AI trends [cite: 59]) and market shifts relevant to Sports Medicine, feeding insights back to Stryker.</li>
+                        <li>**Performance Review:** Comprehensive review of Q1-Q3 performance against KPIs.</li>
+                        <li>**Market Insights Contribution:** Provide insights from client interactions and market trends to inform Beyond's product roadmap and sales strategy for the next year.</li>
+                        <li>**Strategic Account Planning:** Develop detailed plans for key accounts to maximize lifetime value.</li>
+                        <li>**KPI Focus:** Client retention rate, upsell/cross-sell revenue, number of referrals, client satisfaction scores.</li>
                     </ul>
-                    <p class="text-sm text-gray-500 mt-4">**Expected KPIs (Q3):** Achieve 100%+ of quarterly sales target. Secure 2+ new strategic partnerships. Generate 5+ qualified referrals. Maintain 90%+ client satisfaction rate (based on surveys/feedback).</p>
                 </div>
             </div>
         </section>
 
-        <section id="day-in-life" class="py-20 bg-white">
-            <div class="container mx-auto px-6 section-content">
+        <section id="day-in-life" class="py-20 bg-white section-content">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">A Day in the Life of Joe Ward: Driving Stryker's Sports Medicine Growth</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">A typical day balancing strategic outreach, direct client engagement, and efficient territory management for maximum impact.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">A Day in the Life of Joe Ward: On the Road to Growth</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">A typical day balancing proactive outreach, client engagement, and strategic planning, all powered by smart tools.</p>
                 </div>
 
-                <div class="max-w-3xl mx-auto bg-stryker-light-bg rounded-xl p-8 shadow-lg border border-gray-200/50">
+                <div class="max-w-3xl mx-auto bg-gray-50 rounded-xl p-8 shadow-lg border border-gray-200/50">
                     <div id="day-in-life-steps-container">
                         <div id="step-1" class="day-in-life-step active">
-                            <h3 class="text-xl font-bold text-stryker-darkblue mb-2">7:00 AM - 8:00 AM: Strategic Start & Territory Prep</h3>
-                            <p class="text-gray-600">Review CRM for sales funnel progression and upcoming appointments. Identify top 3 priorities, focusing on high-potential leads and critical existing accounts. [cite_start]Plan route for field visits. [cite: 24, 46]</p>
-                            <p class="text-sm text-gray-500 mt-2">**Tools:** Stryker CRM, Sales Pipeline Dashboard.</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">7:00 AM - 8:00 AM: Strategic Start</h3>
+                            <p class="text-gray-600">Review Beyond's internal 'Meeting Scorecards' for yesterday's internal meetings. Check CRM for high-priority 'nudge' alerts on off-track actions from key prospects. Plan top 3 priorities for the day.</p>
+                            <p class="text-sm text-gray-500 mt-2">**Tools:** Beyond Platform (Meeting Scorecards, Action Tracking), CRM.</p>
                         </div>
                         <div id="step-2" class="day-in-life-step">
-                            <h3 class="text-xl font-bold text-stryker-darkblue mb-2">8:00 AM - 10:00 AM: New Business Prospecting & Outreach</h3>
-                            <p class="text-gray-600">Leverage professional networks and industry databases to identify new clinic owners, physiotherapists, and hospital managers. [cite_start]Craft personalized outreach (calls/emails) to schedule introductory meetings, referencing past experience in medical distribution. [cite: 71]</p>
-                            [cite_start]<p class="text-sm text-gray-500 mt-2">**Tools:** LinkedIn Sales Navigator[cite: 22], CRM, Email/Phone.</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">8:00 AM - 10:00 AM: Prospecting & AI-Powered Outreach</h3>
+                            <p class="text-gray-600">Leverage LinkedIn Sales Navigator to identify new ICPs. Use data enrichment tools to pull contact info. Launch personalized email sequences via Sales Engagement Platform, integrating AI-generated subject lines for optimal open rates.</p>
+                            <p class="text-sm text-gray-500 mt-2">**Tools:** LinkedIn Sales Navigator, Data Enrichment Tool, Sales Engagement Platform (with AI features).</p>
                         </div>
                         <div id="step-3" class="day-in-life-step">
-                            <h3 class="text-xl font-bold text-stryker-darkblue mb-2">10:00 AM - 12:00 PM: Client Visit (Clinic/Hospital) & Product Demo</h3>
-                            <p class="text-gray-600">On-site meeting with a prospective or existing client (e.g., physiotherapist clinic). Conduct a dynamic demonstration of a Stryker Sports Medicine product, addressing their specific needs and showcasing clinical benefits. [cite_start]Discuss Donjoy bracing solutions if relevant. [cite: 71]</p>
-                            <p class="text-sm text-gray-500 mt-2">**Tools:** Stryker Product Samples/Demo Units, Clinical Data, Tablet/Laptop for presentations.</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">10:00 AM - 12:00 PM: Discovery & Audit Session (e.g., New Client)</h3>
+                            <p class="text-gray-600">Conduct a virtual discovery call. Actively listen to uncover pain points related to meeting productivity and strategic alignment. Initiate a sample "AI Audit" using the Beyond framework, demonstrating how Beyond can provide clarity and control.</p>
+                            <p class="text-sm text-gray-500 mt-2">**Tools:** Video Conferencing (Zoom/Google Meet), Beyond Audit Framework, Digital Whiteboard.</p>
                         </div>
                         <div id="step-4" class="day-in-life-step">
-                            <h3 class="text-xl font-bold text-stryker-darkblue mb-2">12:00 PM - 1:00 PM: Lunch & Admin</h3>
-                            <p class="text-gray-600">Quick lunch. [cite_start]Update CRM with notes from morning meetings, log activities, and respond to urgent emails/calls from the support team. [cite: 27, 49]</p>
-                            <p class="text-sm text-gray-500 mt-2">**Tools:** Stryker CRM, Mobile Device.</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">12:00 PM - 1:00 PM: Lunch & Learning</h3>
+                            <p class="text-gray-600">Quick lunch. Catch up on industry news and trends. Review Beyond's internal knowledge base for new product updates or sales collateral.</p>
+                            <p class="text-sm text-gray-500 mt-2">**Tools:** Industry News Feeds, Beyond Knowledge Base.</p>
                         </div>
                         <div id="step-5" class="day-in-life-step">
-                            <h3 class="text-xl font-bold text-stryker-darkblue mb-2">1:00 PM - 3:00 PM: Strategic Account Management & Follow-up</h3>
-                            <p class="text-gray-600">Follow up with a key hospital contact (e.g., procurement manager) regarding a recent order or upcoming tender for medical supplies. [cite_start]Discuss ongoing needs and identify potential cross-sell opportunities for other Stryker divisions. [cite: 71]</p>
-                            <p class="text-sm text-gray-500 mt-2">**Tools:** Stryker CRM, Internal Sales Resources.</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">1:00 PM - 3:00 PM: Proposal Development & Tailored Presentation</h3>
+                            <p class="text-gray-600">Craft a bespoke proposal for a qualified prospect. Use an interactive HTML template to customize the presentation, embedding relevant charts and specific benefits for their business. Focus on clear ROI.</p>
+                            <p class="text-sm text-gray-500 mt-2">**Tools:** CRM (for client data), Custom HTML Templates, Beyond Case Studies.</p>
                         </div>
                         <div id="step-6" class="day-in-life-step">
-                            <h3 class="text-xl font-bold text-stryker-darkblue mb-2">3:00 PM - 4:30 PM: Collaboration & Internal Alignment</h3>
-                            <p class="text-gray-600">Virtual check-in with the dedicated five-person support team to review upcoming deliveries, customer service issues, or complex product inquiries. Share market insights and gather necessary resources for future client engagements.</p>
-                            <p class="text-sm text-gray-500 mt-2">**Tools:** Video Conferencing, Internal Communication Platform.</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">3:00 PM - 4:30 PM: Follow-up & Nurturing</h3>
+                            <p class="text-gray-600">Follow up on outstanding proposals and active pipelines. Send personalized 'nudge' messages through Beyond's system or CRM to keep conversations alive and address any blockers.</p>
+                            <p class="text-sm text-gray-500 mt-2">**Tools:** CRM, Beyond Platform ('Nudge' feature), Sales Engagement Platform.</p>
                         </div>
                         <div id="step-7" class="day-in-life-step">
-                            <h3 class="text-xl font-bold text-stryker-darkblue mb-2">4:30 PM - 5:00 PM: Daily Review & Planning</h3>
-                            <p class="text-gray-600">Update CRM with all pending tasks and next steps. Review daily sales activities against targets. [cite_start]Plan the schedule and objectives for the next day, ensuring optimal territory coverage and lead prioritization. [cite: 24, 46]</p>
-                            <p class="text-sm text-gray-500 mt-2">**Tools:** Stryker CRM, Calendar, Personal Planner.</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">4:30 PM - 5:00 PM: Daily Review & Planning</h3>
+                            <p class="text-gray-600">Update CRM with all activities. Review daily KPIs. Plan tasks for tomorrow, ensuring alignment with weekly and monthly targets. Document any new insights from client interactions.</p>
+                            <p class="text-sm text-gray-500 mt-2">**Tools:** CRM, Beyond Platform (Action Tracking, KPI Dashboard).</p>
                         </div>
                     </div>
                     <div class="flex justify-between mt-6">
                         <button id="prev-step" class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">Previous</button>
-                        <button id="next-step" class="stryker-blue text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition-colors">Next</button>
+                        <button id="next-step" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">Next</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="tools" class="py-20">
-            <div class="container mx-auto px-6 section-content">
+        <section id="tools" class="py-20 section-content">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My Integrated Tools & Resource Stack for Territory Success</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Leveraging essential technologies and internal resources for efficient sales management and superior client service.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My Integrated Tool & Automation Stack</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Leveraging best-in-class technologies for efficiency, insight, and seamless operations.</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="tool-card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Stryker CRM (e.g., Salesforce)</h3>
-                        <p class="text-gray-600 text-sm">Central hub for pipeline management, account history, forecasting, and tracking all customer interactions. [cite_start]Critical for territory analysis and targeting. [cite: 27, 49]</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">CRM (e.g., HubSpot/Salesforce)</h3>
+                        <p class="text-gray-600 text-sm">Central hub for all client interactions, pipeline management, and sales forecasting. Integrates directly with Beyond for action tracking and strategy alignment.</p>
                     </div>
                     <div class="tool-card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Product Catalogues & Clinical Data</h3>
-                        <p class="text-gray-600 text-sm">In-depth knowledge base for all Sports Medicine products, including technical specifications, clinical studies, and best-use cases for effective demonstrations.</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Sales Engagement Platform (e.g., Outreach.io)</h3>
+                        <p class="text-gray-600 text-sm">Automates personalized multi-channel outreach (email, LinkedIn, calls). AI-powered content optimization for higher engagement.</p>
                     </div>
                     <div class="tool-card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">LinkedIn Sales Navigator</h3>
-                        [cite_start]<p class="text-gray-600 text-sm">Targeted lead identification, networking with healthcare professionals, and understanding key decision-makers within the Auckland territory. [cite: 22, 30, 52]</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">LinkedIn Sales Navigator</h3>
+                        <p class="text-gray-600 text-sm">Targeted lead identification, account insights, and direct communication for strategic prospecting.</p>
                     </div>
                     <div class="tool-card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Video Conferencing Tools (e.g., Zoom)</h3>
-                        [cite_start]<p class="text-gray-600 text-sm">For virtual meetings, product overviews, and collaborating effectively with the internal support team. [cite: 29, 51]</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Data Enrichment (e.g., ZoomInfo/Apollo.io)</h3>
+                        <p class="text-gray-600 text-sm">Automated data collection and verification to build accurate and comprehensive prospect profiles, ensuring quality leads.</p>
                     </div>
                     <div class="tool-card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Internal Stryker Support Team</h3>
-                        <p class="text-gray-600 text-sm">Leveraging the expertise of the dedicated five-person team for clinical support, logistics, customer service, and seamless delivery to clients.</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Beyond Platform (Core)</h3>
+                        <p class="text-gray-600 text-sm">The central brain for meeting management, action tracking, strategic alignment, and performance scorecards. My primary tool for delivering client value.</p>
                     </div>
                     <div class="tool-card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Mobile Sales Productivity Apps</h3>
-                        [cite_start]<p class="text-gray-600 text-sm">For on-the-go access to CRM, product information, and streamlined order processing, ensuring efficiency in the field. [cite: 27, 49]</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Interactive Presentation Tools (HTML/JS)</h3>
+                        <p class="text-gray-600 text-sm">Custom-built, dynamic presentations to visually articulate Beyond's value proposition and audit findings.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="kpis" class="py-20 bg-white">
-            <div class="container mx-auto px-6 section-content">
+        <section id="kpis" class="py-20 bg-white section-content">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Key Performance Indicators & Success Metrics for Territory Growth</h2>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Tracking what truly matters for maximizing sales, expanding market presence, and improving patient care.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Key Performance Indicators & Success Metrics</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Tracking what matters: from initial engagement to revenue generation and client satisfaction.</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8 mb-12">
-                    <div class="stryker-light-bg rounded-xl p-6 shadow-md">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-4">Sales Target Attainment (%)</h3>
-                        <div class="chart-container"><canvas id="salesTargetChart"></canvas></div>
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Sales Funnel Conversion Rates</h3>
+                        <div class="chart-container"><canvas id="salesFunnelChart"></canvas></div>
                     </div>
-                    <div class="stryker-light-bg rounded-xl p-6 shadow-md">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-4">New Account Acquisition (Monthly)</h3>
-                        <div class="chart-container"><canvas id="newAccountChart"></canvas></div>
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Quarterly Revenue Growth (Target)</h3>
+                        <div class="chart-container"><canvas id="revenueGrowthChart"></canvas></div>
                     </div>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="stryker-light-bg rounded-xl p-6 shadow-md text-center">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Territory Revenue Growth</h3>
-                        <p class="text-5xl font-bold text-stryker-blue">↑ 15-20%</p>
-                        <p class="text-gray-600">YoY Target</p>
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-md text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Qualified Leads Generated</h3>
+                        <p class="text-5xl font-bold text-blue-600">150+</p>
+                        <p class="text-gray-600">per quarter</p>
                     </div>
-                    <div class="stryker-light-bg rounded-xl p-6 shadow-md text-center">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Product Adoption Rate</h3>
-                        <p class="text-5xl font-bold text-stryker-blue">80%</p>
-                        <p class="text-gray-600">for new products within 6 months</p>
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-md text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Audit-to-Proposal Rate</h3>
+                        <p class="text-5xl font-bold text-blue-600">70%</p>
+                        <p class="text-gray-600">target</p>
                     </div>
-                    <div class="stryker-light-bg rounded-xl p-6 shadow-md text-center">
-                        <h3 class="text-xl font-bold text-stryker-darkblue mb-2">Customer Satisfaction (NPS)</h3>
-                        <p class="text-5xl font-bold text-stryker-blue">9+</p>
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-md text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Client Satisfaction (NPS)</h3>
+                        <p class="text-5xl font-bold text-blue-600">9+</p>
                         <p class="text-gray-600">on a 10-point scale</p>
                     </div>
                 </div>
 
                 <div class="mt-12 text-center">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Client Segment Focus (Interactive)</h3>
-                    <p class="text-gray-600 mb-4">Select a focus area to see target client types for Sports Medicine:</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Client Prospecting Focus (Interactive)</h3>
+                    <p class="text-gray-600 mb-4">Select a focus area to see target client types:</p>
                     <div class="flex justify-center space-x-4">
-                        <button id="prospect-physio" class="stryker-blue text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition-colors">Physiotherapists</button>
-                        <button id="prospect-hospitals" class="stryker-blue text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition-colors">Hospitals/Clinics</button>
-                        <button id="prospect-sports" class="stryker-blue text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition-colors">Sports Organizations</button>
+                        <button id="prospect-sme" class="bg-blue-100 text-blue-800 font-bold py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors">Growing SMEs</button>
+                        <button id="prospect-family" class="bg-blue-100 text-blue-800 font-bold py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors">Family Businesses</button>
+                        <button id="prospect-profserv" class="bg-blue-100 text-blue-800 font-bold py-2 px-4 rounded-lg hover:bg-blue-200 transition-colors">Professional Services</button>
                     </div>
-                    [cite_start]<p id="prospect-output" class="mt-6 text-lg text-gray-700 font-semibold">Click a button to see specific client examples. [cite: 71]</p>
+                    <p id="prospect-output" class="mt-6 text-lg text-gray-700 font-semibold">Click a button to see target client examples.</p>
                 </div>
             </div>
         </section>
 
-        <footer id="contact" class="bg-gray-800 text-white py-16">
-            <div class="container mx-auto px-6 text-center section-content">
-                <h2 class="text-3xl font-bold mb-4">Let's Drive Stryker's Sports Medicine Success Together.</h2>
-                [cite_start]<p class="text-gray-300 mb-8 max-w-xl mx-auto">My commitment is to leverage my proven sales drive and direct medical experience to be a proactive, high-performing Territory Manager for Stryker. [cite: 14, 15, 71]</p>
+        <footer id="contact" class="bg-gray-800 text-white py-16 section-content">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold mb-4">Let's Drive Beyond's Success Together.</h2>
+                <p class="text-gray-300 mb-8 max-w-xl mx-auto">This roadmap is a living document, ready to adapt and evolve with market dynamics and Beyond's strategic direction. My commitment is to deliver exceptional results and be a true growth partner.</p>
                 <div class="mt-8 text-gray-400">
                     <p class="font-bold">Joe Ward</p>
-                    <p>Territory Manager Candidate</p>
-                    [cite_start]<p>Email: <a href="mailto:joe@tradieai.co.nz" class="text-blue-400 hover:underline">joe@tradieai.co.nz</a> [cite: 34]</p>
-                    [cite_start]<p>Phone: 021 993 285 [cite: 33]</p>
-                    [cite_start]<p>Location: Silverdale, Auckland [cite: 35]</p>
+                    <p>Strategic Growth Consultant</p>
+                    <p>Email: <a href="mailto:joe@tradieai.co.nz" class="text-blue-400 hover:underline">joe@tradieai.co.nz</a></p>
+                    <p>Phone: 021 993 285</p>
+                    <p>LinkedIn: <a href="https://www.linkedin.com/in/olwardo/" target="_blank" class="text-blue-400 hover:underline">linkedin.com/in/olwardo/</a></p>
                 </div>
             </div>
         </footer>
@@ -421,6 +437,7 @@
                 });
             }, { threshold: 0.1 });
 
+            // Observe all sections that should animate
             document.querySelectorAll('.section-content').forEach(section => {
                 observer.observe(section);
             });
@@ -478,24 +495,26 @@
 
             showDayInLifeStep(currentStep); // Initialize first step
 
-            // Chart.js - Sales Target Attainment (%)
-            const salesTargetCtx = document.getElementById('salesTargetChart').getContext('2d');
-            new Chart(salesTargetCtx, {
+            // Chart.js - Sales Funnel Conversion Rates
+            const salesFunnelCtx = document.getElementById('salesFunnelChart').getContext('2d');
+            new Chart(salesFunnelCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Q1 Target', 'Q1 Actual', 'Q2 Target', 'Q2 Actual', 'Q3 Target', 'Q3 Actual'],
+                    labels: ['Leads', 'Qualified', 'Proposals', 'Closed-Won'],
                     datasets: [{
-                        label: 'Target Attainment (%)',
-                        data: [70, 75, 90, 95, 100, 105], // Hypothetical progression
+                        label: 'Conversion Rate %',
+                        data: [100, 40, 25, 10], // Hypothetical percentages
                         backgroundColor: [
-                            'rgba(0, 119, 200, 0.6)', 'rgba(0, 77, 153, 0.8)',
-                            'rgba(0, 119, 200, 0.6)', 'rgba(0, 77, 153, 0.8)',
-                            'rgba(0, 119, 200, 0.6)', 'rgba(0, 77, 153, 0.8)'
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(96, 165, 250, 0.8)',
+                            'rgba(147, 197, 253, 0.8)',
+                            'rgba(203, 213, 225, 0.8)'
                         ],
                         borderColor: [
-                            'rgb(0, 119, 200)', 'rgb(0, 77, 153)',
-                            'rgb(0, 119, 200)', 'rgb(0, 77, 153)',
-                            'rgb(0, 119, 200)', 'rgb(0, 77, 153)'
+                            'rgb(59, 130, 246)',
+                            'rgb(96, 165, 250)',
+                            'rgb(147, 197, 253)',
+                            'rgb(203, 213, 225)'
                         ],
                         borderWidth: 1
                     }]
@@ -503,16 +522,17 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    indexAxis: 'y', // Horizontal bars for funnel effect
                     scales: {
-                        y: {
+                        x: {
                             beginAtZero: true,
-                            max: 110,
+                            max: 100,
                             title: {
                                 display: true,
-                                text: 'Percentage'
+                                text: 'Percentage of Initial Leads'
                             }
                         },
-                        x: {
+                        y: {
                             grid: {
                                 display: false
                             }
@@ -525,7 +545,7 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                    return context.dataset.label + ': ' + context.parsed.x + '%';
                                 }
                             }
                         }
@@ -533,17 +553,17 @@
                 }
             });
 
-            // Chart.js - New Account Acquisition (Monthly)
-            const newAccountCtx = document.getElementById('newAccountChart').getContext('2d');
-            new Chart(newAccountCtx, {
+            // Chart.js - Quarterly Revenue Growth (Target)
+            const revenueGrowthCtx = document.getElementById('revenueGrowthChart').getContext('2d');
+            new Chart(revenueGrowthCtx, {
                 type: 'line',
                 data: {
-                    labels: ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6', 'Month 7', 'Month 8', 'Month 9'],
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4 (Projected)'],
                     datasets: [{
-                        label: 'New Accounts Acquired',
-                        data: [3, 5, 7, 8, 10, 12, 10, 11, 13], // Hypothetical growth
-                        borderColor: 'rgb(0, 119, 200)',
-                        backgroundColor: 'rgba(0, 119, 200, 0.2)',
+                        label: 'Revenue ($K)',
+                        data: [50, 150, 300, 500], // Hypothetical growth
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
                         tension: 0.3,
                         fill: true
                     }]
@@ -556,7 +576,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Number of Accounts'
+                                text: 'Revenue ($K)'
                             }
                         },
                         x: {
@@ -573,14 +593,14 @@
                 }
             });
 
-            // Client Segment Focus Interactive Element
-            const prospectButtons = document.querySelectorAll('#prospect-physio, #prospect-hospitals, #prospect-sports');
+            // Prospecting Focus Interactive Element
+            const prospectButtons = document.querySelectorAll('#prospect-sme, #prospect-family, #prospect-profserv');
             const prospectOutput = document.getElementById('prospect-output');
 
             const prospectData = {
-                [cite_start]physio: "Targeting private physiotherapy clinics, sports rehabilitation centers, and individual practitioners specializing in orthopedics and sports injury management. [cite: 71]",
-                [cite_start]hospitals: "Focusing on hospital orthopedic departments, surgical centers, and large multi-disciplinary medical groups requiring advanced sports medicine solutions. [cite: 71]",
-                [cite_start]sports: "Engaging professional and semi-professional sports teams, national sports organizations, and athletic training facilities for comprehensive sports injury prevention and treatment. [cite: 71]"
+                sme: "Targeting growing Small to Medium Enterprises (SMEs) with 20-200 employees, experiencing growth pains in operational efficiency and team alignment.",
+                family: "Focusing on established family-owned businesses with strong legacy values, seeking to optimize processes without losing their personal touch.",
+                profserv: "Engaging professional services firms (e.g., legal, consulting, accounting) struggling with meeting productivity and project action tracking for client deliverables."
             };
 
             prospectButtons.forEach(button => {
@@ -593,3 +613,4 @@
     </script>
 </body>
 </html>
+
