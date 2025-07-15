@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joe Ward - Interactive CV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #00F5FF; /* From simprocv.html, for highlights */
+            --bg-dark-primary: #1A202C; /* Dark background from simprocv.html */
+            --container-border: rgba(0, 245, 255, 0.2); /* From simprocv.html */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F2F5; /* Lighter background for professional feel */
+            color: #1F2937;
+        }
+        .primary-blue {
+            background-color: #3B82F6; /* A generic professional blue */
+        }
+        .dark-blue-text {
+            color: #1E40AF; /* Darker blue for text emphasis */
+        }
+        .light-bg {
+            background-color: #DBEAFE; /* Light blue tint */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #3B82F6;
+        }
+        /* Corrected section-content for fade-in effect */
+        .section-content {
+            opacity: 0; /* Start hidden */
+            transform: translateY(20px); /* Start slightly below */
+            transition: opacity 0.6s ease, transform 0.6s ease; /* Transition to visible state */
+        }
+        .section-content.visible {
+            opacity: 1; /* End fully visible */
+            transform: translateY(0); /* End at original position */
+        }
+
+        .tab-button {
+            background-color: #CFD8DC; /* Light gray */
+            color: #4B5563;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #3B82F6;
+            color: white;
+            font-weight: 600;
+        }
+        /* Ensure these are initially hidden by default, and only 'active' is shown */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Styles for Project Deep Dive Modal (from simprocv.html) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background-color: rgba(26, 32, 44, 0.9); /* Darker background for modal */
+            border: 1px solid rgba(0, 245, 255, 0.2); /* Neon border */
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            color: #F7FAFC; /* Primary text for modal */
+        }
+        .glow-button {
+            background-color: var(--neon-cyan);
+            color: var(--bg-dark-primary); /* Dark text for button */
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.7);
+            border: 0;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .glow-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--neon-cyan);
+            background-color: #00B8D4; /* neon-cyan-hover */
+        }
+        .content-box {
+            background-color: rgba(26, 32, 44, 0.7); /* From simprocv.html */
+            border: 1px solid var(--container-border); /* From simprocv.html */
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            color: #A0AEC0; /* Secondary text for content-box */
+        }
+        .text-neon-cyan {
+            color: var(--neon-cyan);
+        }
+
+        /* Project Card Specific Styles for better visibility and interaction */
+        .project-card {
+            background-color: var(--bg-dark-primary); /* Dark background for the cards themselves */
+            border: 1px solid var(--container-border);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            padding: 2rem;
+            color: #F7FAFC; /* Light text for titles */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative; /* For the "Click to learn more" overlay */
+            overflow: hidden; /* To keep the overlay within bounds */
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px var(--neon-cyan);
+            border-color: var(--neon-cyan);
+        }
+        .project-card .project-title {
+            color: #F7FAFC; /* Ensure title is bright */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .project-card .project-description {
+            color: #A0AEC0; /* Lighter grey for description */
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .click-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+            color: var(--neon-cyan);
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .project-card:hover .click-indicator {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">
+                <span class="dark-blue-text">Joe Ward</span> CV
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#intro" class="nav-link text-gray-600 font-medium">Introduction</a>
+                <a href="#profile" class="nav-link text-gray-600 font-medium">Profile</a>
+                <a href="#my-value" class="nav-link text-gray-600 font-medium">My Value</a>
+                <a href="#experience" class="nav-link text-gray-600 font-medium">Experience</a>
+                <a href="#projects" class="nav-link text-gray-600 font-medium">Projects</a>
+                <a href="#consultative-process" class="nav-link text-gray-600 font-medium">AI Audit</a>
+                <a href="#skills" class="nav-link text-gray-600 font-medium">Skills</a>
+                <a href="#education" class="nav-link text-gray-600 font-medium">Education</a>
+                <a href="#contact" class="nav-link text-gray-600 font-medium">Contact</a>
+            </div>
+            <a href="#experience" class="hidden md:block primary-blue text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition-colors">View Experience</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="intro" class="py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <!-- Profile Image -->
+                <div class="flex justify-center mb-8">
+                    <img src="https://static.wixstatic.com/media/7b20bf_8c20fe85cfa543e28562a73ebb0b4e6a~mv2.png" alt="Joe Ward Profile" class="rounded-full w-48 h-48 mx-auto object-cover shadow-lg">
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4 leading-tight">Joe Ward: Entrepreneur, AI Enthusiast & Experienced Professional</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-6">I am a highly motivated and adaptable professional with a strong entrepreneurial background in the trades & services, sport & healthcare sectors, seeking an opportunity to transition into the Tech Sector fulltime.</p>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">My absolute passion is AI & Automation! The ability of this technology to alleviate Business pain points and unlock growth is astonishing! I am eager to apply my practical business experience and foundational knowledge of AI tools, SaaS products & Automation to help SMEs audit and streamline their operations.</p>
+            </div>
+        </section>
+
+        <section id="profile" class="py-20 bg-white section-content">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My Profile: Drive, Experience & Adaptability</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Leveraging a unique blend of competitive drive, diverse professional experience, and entrepreneurial acumen.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div class="light-bg rounded-xl p-6 shadow-sm">
+                        <span class="text-4xl mb-4 block">🏆</span>
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Competitive Drive</h3>
+                        <p class="text-gray-600 text-sm">Proven hunger for success from professional rugby background.</p>
+                    </div>
+                    <div class="light-bg rounded-xl p-6 shadow-sm">
+                        <span class="text-4xl mb-4 block">📈</span>
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Business Growth</h3>
+                        <p class="text-gray-600 text-sm">Track record in driving sales, optimizing operations, and expanding client bases.</p>
+                    </div>
+                    <div class="light-bg rounded-xl p-6 shadow-sm">
+                        <span class="text-4xl mb-4 block">💡</span>
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">AI & Automation Enthusiast</h3>
+                        <p class="text-gray-600 text-sm">Experience building AI Automations, Apps, Websites, and using Google Cloud (Vertex AI).</p>
+                    </div>
+                    <div class="light-bg rounded-xl p-6 shadow-sm">
+                        <span class="text-4xl mb-4 block">🤝</span>
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Team Collaboration</h3>
+                        <p class="text-gray-600 text-sm">Skilled in team leadership, thriving in collaborative environments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="my-value" class="py-20 section-content">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">What I Bring to Your Organization</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">I offer a unique blend of entrepreneurial drive, practical business experience, and a deep passion for leveraging AI and automation to solve real-world problems. My background in managing and growing businesses, coupled with hands-on experience in AI tools and web development, allows me to bridge the gap between strategic vision and technical implementation. I am a highly adaptable team player, eager to contribute to innovative projects and drive tangible results for your organization.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-20 bg-white section-content">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Professional Experience</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">A summary of my diverse professional journey.</p>
+                </div>
+
+                <div class="flex justify-center space-x-4 mb-8">
+                    <button class="tab-button active" data-tab="business">Business Experience</button>
+                    <button class="tab-button" data-tab="career-other">Other Career Highlights</button>
+                </div>
+
+                <div id="business-content" class="tab-content active bg-white rounded-xl p-8 shadow-lg border border-gray-200/50">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Business Experience</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-4">
+                        <li>
+                            <p class="font-semibold text-lg dark-blue-text">Owner/Director - TradieAI - AI Consultancy (2025 - Present)</p>
+                            <p class="text-sm">Specializing in building AI Automations, APPS, and Websites to streamline business operations and remove time-consuming tasks for SMEs.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-lg dark-blue-text">Owner/Director - Angry Weeds Landscaping & Construction (2022-2025)</p>
+                            <p class="text-sm">Managed and directed operations, demonstrating entrepreneurial skills in the trades and services sector.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-lg dark-blue-text">Owner/Director - Next Level Sport & Health (Sold) (2019-2022)</p>
+                            <p class="text-sm">Founded and grew a business in the sport & healthcare sectors, successfully leading to its sale.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-lg dark-blue-text">NZ/AU Business Manager - EBOS Group Ltd Endeavour Consumer Health (2014-2019)</p>
+                            <p class="text-sm">Managed business operations across New Zealand and Australia, focusing on consumer health products.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="career-other-content" class="tab-content bg-white rounded-xl p-8 shadow-lg border border-gray-200/50">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Other Career Highlights</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-4">
+                        <li>
+                            <p class="font-semibold text-lg dark-blue-text">Professional Rugby Player & Coach (1999-2015)</p>
+                            <ul class="list-disc list-inside ml-5 text-sm">
+                                <li>Toyota Shokki Top 14-Japan (Coach) (2014-2015)</li>
+                                <li>North Harbour Rugby B (Head Coach) (2015)</li>
+                                <li>Sale Sharks UK Premiership (Player) (2011-2013)</li>
+                                <li>England Rugby (Player) (2008-2009)</li>
+                                <li>London Wasps UK Premiership (Player) (2005-2011)</li>
+                                <li>Hurricanes Super Rugby (Player) (2002-2005)</li>
+                                <li>North Harbour Rugby (Player) (2000-2005)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 section-content">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Project Deep Dive</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Click on a project below to learn more about my work and how it relates to solving business problems.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="project-card" onclick="openProjectModal('tradieai')">
+                        <h3 class="project-title text-2xl mb-2">TradieAI: Building & Selling Solutions for Trades</h3>
+                        <p class="project-description">My own venture, demonstrating my deep understanding of trade contracting and field service business workflows, and my ability to effectively communicate the value of software solutions.</p>
+                        <div class="click-indicator">
+                            Click to learn more <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </div>
+                    </div>
+                    <div class="project-card" onclick="openProjectModal('north-harbour-saas')">
+                        <h3 class="project-title text-2xl mb-2">North Harbour Performance SaaS: Learning Complex Software</h3>
+                        <p class="project-description">A ground-up SaaS build showcasing my ability to quickly learn and master comprehensive software platforms, a key requirement for understanding and positioning complex products effectively.</p>
+                        <div class="click-indicator">
+                            Click to learn more <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="consultative-process" class="py-20 bg-white section-content">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">My Consultative Process: The AI Audit</h2>
+                    <p class="text-lg max-w-4xl mx-auto mt-4">
+                        The goal of showing you this AI Audit and report? To illustrate my consultative approach with clients, leveraging AI, automation, and SaaS products to tackle operational challenges, from quoting and scheduling to client satisfaction and cash flow. We focus on real solutions, not just buzzwords.
+                    </p>
+                </div>
+                <div class="content-box bg-white rounded-xl p-8 shadow-lg border border-gray-200/50">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">A Real-World Example for Trade Businesses</h3>
+                            <p class="text-gray-600 mb-6">This is a link to a live, interactive report generated for a real client in the trades. It demonstrates my ability to analyze a business's needs, identify key pain points, and present tailored, high-value digital solutions in a clear and compelling way. This consultative approach is fundamental to building strong relationships and effectively positioning value propositions.</p>
+                            <a href="https://www.tradieai.co.nz/lifebuilt-ai-audit-report" target="_blank" class="glow-button">View Live AI Audit Report</a>
+                        </div>
+                        <div>
+                            <img src="https://static.wixstatic.com/media/7b20bf_2273933dc26c42d7a6ec016cb4b67889~mv2.png" alt="AI Audit Report Example" class="rounded-lg shadow-lg border-2 border-gray-200/50">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 bg-white section-content">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Key Skills & Expertise</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">My diverse skill set, blending business acumen with a passion for technology.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">AI/IT & Connected Systems</h3>
+                        <p class="text-gray-600 text-sm">Experience in building AI Automations, APPS, Websites, and using Google Cloud (Vertex AI platform).</p>
+                        <p class="text-gray-600 text-sm mt-2">Familiar with: Cursor, Replit, Xcode, Make.com, N8N, Zapier, LindyAI, VertexAI, AppSheet/APPScript, Workspace, AI Studio, WordPress, WIX, WooCommerce, Gemini Pro, NotebookLM, OpenAI, Perplexity.</p>
+                    </div>
+                    <div class="card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Business Development & Sales</h3>
+                        <p class="text-gray-600 text-sm">Proven ability to drive sales growth, optimize operations, and expand client bases. Skilled in customer engagement and strategic planning.</p>
+                    </div>
+                    <div class="card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Project Management & Entrepreneurship</h3>
+                        <p class="text-gray-600 text-sm">Experienced in managing projects from conception to completion and successfully launching and growing businesses.</p>
+                    </div>
+                    <div class="card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Leadership & Coaching</h3>
+                        <p class="text-gray-600 text-sm">Skilled in team leadership, talent development, and fostering collaborative environments, honed through professional rugby and business roles.</p>
+                    </div>
+                    <div class="card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Communication & Networking</h3>
+                        <p class="text-gray-600 text-sm">Strong communication skills and a knack for building effective professional networks.</p>
+                    </div>
+                    <div class="card bg-white rounded-xl p-6 shadow-md border border-gray-200/50">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Digital Marketing & Design</h3>
+                        <p class="text-gray-600 text-sm">Familiar with Canva, Gamma, Figma/FigJam for design, and various digital marketing strategies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-20 section-content">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Education</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">My academic background and continuous learning journey.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="light-bg rounded-xl p-6 shadow-md text-center">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Google Generative AI Leader</h3>
+                        <p class="text-gray-600">Certification in cutting-edge AI technologies.</p>
+                    </div>
+                    <div class="light-bg rounded-xl p-6 shadow-md text-center">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Bachelor Business Studies</h3>
+                        <p class="text-gray-600">Massey University</p>
+                    </div>
+                    <div class="light-bg rounded-xl p-6 shadow-md text-center">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Dip. Sports Performance (Merit)</h3>
+                        <p class="text-gray-600">Otago Polytechnic</p>
+                    </div>
+                    <div class="light-bg rounded-xl p-6 shadow-md text-center">
+                        <h3 class="text-xl font-bold dark-blue-text mb-2">Post Grad Dip. Terrorism Studies</h3>
+                        <p class="text-gray-600">St Andrews University</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact" class="bg-gray-800 text-white py-16 section-content">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold mb-4">Let's Connect!</h2>
+                <p class="text-gray-300 mb-8 max-w-xl mx-auto">I'm always open to discussing new opportunities and collaborations.</p>
+                <div class="mt-8 text-gray-400">
+                    <p class="font-bold">Joe Ward</p>
+                    <p>Entrepreneur | AI Enthusiast</p>
+                    <p>Email: <a href="mailto:joe@tradieai.co.nz" class="text-blue-400 hover:underline">joe@tradieai.co.nz</a></p>
+                    <p>Phone: 021 993 285</p>
+                    <p>Location: Silverdale, Auckland</p>
+                    <p>Website: <a href="https://www.tradieai.co.nz" class="text-blue-400 hover:underline" target="_blank">www.tradieai.co.nz</a></p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Project Deep Dive Modal -->
+    <div id="projectModal" class="modal-overlay" onclick="closeAllModals()">
+        <div class="modal-content" onclick="event.stopPropagation()"></div>
+    </div>
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Section visibility observer for fade-in effect
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Observe all sections that should animate
+            document.querySelectorAll('.section-content').forEach(section => {
+                observer.observe(section);
+            });
+
+            // Tab functionality for Experience section
+            const tabs = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const targetTab = tab.dataset.tab;
+                    tabContents.forEach(content => {
+                        if (content.id === `${targetTab}-content`) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // Project Deep Dive Modal functionality
+            const projectModal = document.getElementById('projectModal');
+            const projectModalContent = projectModal.querySelector('.modal-content');
+
+            const projectData = {
+                tradieai: {
+                    title: "Deep Dive: TradieAI - Building & Selling Solutions for Trades",
+                    description: "This venture is my live case study in understanding the unique operational challenges of trade and field service businesses. It involved developing and selling AI/automation products directly to tradies in NZ, demonstrating my ability to identify pain points, craft compelling value propositions, and manage the full sales cycle within this specific industry. This experience directly informs my understanding of Simpro's target market and how to effectively position its solutions.",
+                    img: "https://static.wixstatic.com/media/7b20bf_5132ad6d359e467c88404bbb59681508~mv2.png",
+                    metrics: { "Trade Client Engagement": "High", "Workflow Automation": "Tailored Solutions", "Consultative Sales": "Proven Track Record" },
+                    link: "https://www.tradieai.co.nz"
+                },
+                'north-harbour-saas': {
+                    title: "Deep Dive: North Harbour Performance SaaS: Learning Complex Software",
+                    description: "Building this AI-powered performance analysis SaaS from the ground up showcases my ability to quickly learn, understand, and master comprehensive software platforms. This technical aptitude is crucial for effectively communicating the value and functionality of robust software to potential customers, ensuring I can confidently advise on its capabilities and benefits.",
+                    img: "https://static.wixstatic.com/media/7b20bf_6311bb07696b48759ad871ae968359e7~mv2.png",
+                    metrics: { "Software Comprehension": "Rapid", "Technical Communication": "Clear & Concise", "Platform Mastery": "Demonstrated" },
+                    link: "https://north-harbour-performance-tradiesai.replit.app/"
+                }
+            };
+
+            window.openProjectModal = function(projectId) {
+                const data = projectData[projectId];
+                let metricsHTML = Object.entries(data.metrics).map(([key, value]) => `
+                    <div class="text-center">
+                        <p class="text-sm text-neon-cyan">${key}</p>
+                        <p class="text-xl font-bold text-white">${value}</p>
+                    </div>
+                `).join('');
+
+                projectModalContent.innerHTML = `
+                    <h2 class="text-3xl font-bold text-white mb-4">${data.title}</h2>
+                    <img src="${data.img}" alt="${data.title}" class="w-full h-64 object-cover rounded-lg mb-4">
+                    <p class="mb-6">${data.description}</p>
+                    <h3 class="text-2xl font-bold text-white mb-4 text-center">Key Metrics Dashboard</h3>
+                    <div class="grid grid-cols-3 gap-4 content-box">${metricsHTML}</div>
+                    <div class="text-center mt-6">
+                        <a href="${data.link}" target="_blank" class="glow-button">View Live Project</a>
+                    </div>
+                    <button class="glow-button mt-6" onclick="closeAllModals()">Close</button>
+                `;
+                projectModal.classList.add('visible');
+            }
+
+            // General Modal Closing
+            window.closeAllModals = function() {
+                document.querySelectorAll('.modal-overlay.visible').forEach(el => el.classList.remove('visible'));
+            }
+        });
+    </script>
+</body>
+</html>
